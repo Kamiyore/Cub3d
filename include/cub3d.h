@@ -6,7 +6,7 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 12:05:56 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/14 19:17:50 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/15 15:53:35 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,9 @@ int			parse_file(t_config *config, const char *filename);
 int			parse_rgb(const char *str, int *dst);
 int			ft_array_len(char **array);
 void		ft_free_split(char **split);
-
+int			parse_configuration(t_config *config, char *line);
+int			parse_map_lines(t_config *config, char **lines);
+int			validate_map(t_config *config);
+int			is_player(char c);
+int			is_surrounded_by_walls(char **map);
 #endif

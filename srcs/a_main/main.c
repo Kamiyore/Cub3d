@@ -6,7 +6,7 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 12:12:03 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/14 19:47:37 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/15 13:50:58 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	valid_map_file(const char *filename)
 
 int	main(int argc, char **argv)
 {
-	int			color;
 	t_config	config;
 
 	if (argc != 2)
@@ -42,6 +41,7 @@ int	main(int argc, char **argv)
 		return (ft_error("Invalid file format. Only '.ber'"));
 	if (!parse_file(&config, argv[1]))
 		return (1);
+	if(!validate_map(&config))
+	return(1);
 	return (0);
 }
-
