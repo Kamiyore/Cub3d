@@ -17,8 +17,12 @@ LIBFT_DIR = libft
 LIBFT = libft/libft.a
 INC_DIR = includes
 MAIN_DIR = srcs/a_main
+PARSER_DIR = srcs/parsing
+UTILS_DIR = srcs/utils
 
-SRCS = srcs/raycaster/main.c
+SRCS = srcs/a_main/main.c\
+		srcs/parsing/reading_file.c\
+		srcs/utils/free.c\
 
 OBJS = $(SRCS:.c=.o)
 

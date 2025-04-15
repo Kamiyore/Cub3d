@@ -6,7 +6,7 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 12:05:56 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/13 14:32:12 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/14 19:17:50 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,23 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+
+typedef struct s_config
+{
+	char	*no_path;
+	char	*so_path;
+	char	*we_path;
+	char	*ea_path;
+	int		f_color;
+	int		c_color;
+	char	**map;
+	// t_player player;
+}			t_config;
+
+int			ft_error(char *message);
+int			parse_file(t_config *config, const char *filename);
+int			parse_rgb(const char *str, int *dst);
+int			ft_array_len(char **array);
+void		ft_free_split(char **split);
 
 #endif

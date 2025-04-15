@@ -180,17 +180,17 @@ void	set_map(t_data *data)
 	ft_memcpy(data->map, literal, sizeof(literal));
 }
 
-int	main(void)
-{
-	t_data data;
-	data.mlx = mlx_init();
-	data.win = mlx_new_window(data.mlx, MAP_CELL * TILE_SIZE, MAP_CELL
-			* TILE_SIZE, "Hello world!");
-	data.x = WIN_WIDTH / 2;
-	data.y = WIN_HEIGHT / 2;
-	set_map(&data);
-	redraw(&data);
-	mlx_key_hook(data.win, key_hook, &data);
-	mlx_loop(data.mlx);
-	return (0);
-}
+// int	main(void)
+// {
+// 	t_data data;
+// 	data.mlx = mlx_init();
+// 	data.win = mlx_new_window(data.mlx, MAP_CELL * TILE_SIZE, MAP_CELL
+// 			* TILE_SIZE, "Hello world!");
+// 	data.x = WIN_WIDTH / 2;
+// 	data.y = WIN_HEIGHT / 2;
+// 	set_map(&data);
+// 	redraw(&data);
+// 	mlx_key_hook(data.win, key_hook, &data);
+// 	mlx_loop(data.mlx);
+// 	return (0);
+// }
