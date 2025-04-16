@@ -23,6 +23,7 @@ UTILS_DIR = srcs/utils
 SRCS = srcs/a_main/main.c\
 		srcs/parsing/reading_file.c\
 		srcs/utils/free.c\
+		srcs/raycaster/main.c
 
 OBJS = $(SRCS:.c=.o)
 
