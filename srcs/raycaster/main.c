@@ -1,222 +1,23 @@
 
-
-// #include "../../include/cub3d.h"
-// #include "../../libft/libft.h"
-
-// #define WIN_WIDTH 800
-// #define WIN_HEIGHT 600
-// #define DOT_SIZE 8
-// #define LEFT 65361
-// #define RIGHT 65363
-// #define UP 65362
-// #define DOWN 65364
-// #define ESC 65307
-// #define TILE_SIZE 64
-// #define MAP_CELL 8
-
-// // MATH
-// #define PI 3.14159265359
-
-// typedef struct s_cub_data
-// {
-// 	void	*mlx;
-// 	void	*win;
-// 	int		map[MAP_CELL][MAP_CELL];
-// 	int		x;
-// 	int		y;
-// 	float	pdx;
-// 	float	pdy;
-// 	float	pa;
-// }			t_cub;
-
-// #define WALL_COLOR 0x000000 // black for 1
-// #define FLOOR_COLOR 0xFFFFFF // white for 0
-// #define GRID_COLOR 0x888888 // optional: gray grid lines
-// #define CURSOR_COLOR 0xFF0000 // e.g. red cursor
-
-// void	draw_tile(t_cub *cub, int x0, int y0, int color)
-// {
-// 	int	i;
-// 	int	j;
-
-// 	i = 0;
-// 	while (i < TILE_SIZE)
-// 	{
-// 		j = 0;
-// 		while (j < TILE_SIZE)
-// 		{
-// 			mlx_pixel_put(cub->mlx, cub->win, x0 + j, y0 + i, color);
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// }
-
-// static void	redraw(t_cub *d)
-// {
-// 	int row, col;
-// 	int x0, y0;
-// 	mlx_clear_window(d->mlx, d->win);
-// 	/* draw floor & walls */
-// 	for (row = 0; row < MAP_CELL; row++)
-// 	{
-// 		for (col = 0; col < MAP_CELL; col++)
-// 		{
-// 			x0 = col * TILE_SIZE;
-// 			y0 = row * TILE_SIZE;
-// 			if (d->map[row][col] == 1)
-// 				draw_tile(d, x0, y0, WALL_COLOR);
-// 			else
-// 				draw_tile(d, x0, y0, FLOOR_COLOR);
-// 		}
-// 	}
-// 	/* draw grid lines (optional) */
-// 	for (row = 0; row <= MAP_CELL; row++)
-// 		for (col = 0; col < MAP_CELL * TILE_SIZE; col++)
-// 			mlx_pixel_put(d->mlx, d->win, col, row * TILE_SIZE, GRID_COLOR);
-// 	for (col = 0; col <= MAP_CELL; col++)
-// 		for (row = 0; row < MAP_CELL * TILE_SIZE; row++)
-// 			mlx_pixel_put(d->mlx, d->win, col * TILE_SIZE, row, GRID_COLOR);
-// 	/* draw cursor highlight */
-// 	x0 = d->x * TILE_SIZE;
-// 	y0 = d->y * TILE_SIZE;
-// 	for (int i = 0; i < TILE_SIZE; i++)
-// 	{
-// 		mlx_pixel_put(d->mlx, d->win, x0 + i, y0, CURSOR_COLOR);
-// 		mlx_pixel_put(d->mlx, d->win, x0 + i, y0 + TILE_SIZE - 1, CURSOR_COLOR);
-// 		mlx_pixel_put(d->mlx, d->win, x0, y0 + i, CURSOR_COLOR);
-// 		mlx_pixel_put(d->mlx, d->win, x0 + TILE_SIZE - 1, y0 + i, CURSOR_COLOR);
-// 	}
-// }
-
-// void	draw_dot(t_cub *cub)
-// {
-// 	int	i;
-// 	int	j;
-
-// 	i = 0;
-// 	while (i < 10)
-// 	{
-// 		j = 0;
-// 		while (j < 10)
-// 		{
-// 			mlx_pixel_put(cub->mlx, cub->win, cub->x + j, cub->y + i, 0xFF0000);
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// }
-
-// int	key_hook(int keycode, t_cub *cub)
-// {
-// 	int	new_x;
-// 	int	new_y;
-
-// 	new_x = cub->x;
-// 	new_y = cub->y;
-// 	int tx1, ty1, tx2, ty2;
-// 	if (keycode == LEFT)
-// 		new_x -= DOT_SIZE;
-// 	else if (keycode == RIGHT)
-// 		new_x += DOT_SIZE;
-// 	else if (keycode == UP)
-// 		new_y -= DOT_SIZE;
-// 	else if (keycode == DOWN)
-// 		new_y += DOT_SIZE;
-// 	else if (keycode == ESC)
-// 		exit(0);
-// 	else
-// 		return (0);
-// 	/* Decide which two points to test, depending on direction */
-// 	if (keycode == LEFT)
-// 	{
-// 		cub->pa -= 0.1;
-// 		if (cub->pa < 0)
-// 			cub->pa += 2 * PI;
-// 		cub->pdx = cos(cub->pa) * DOT_SIZE;
-// 		cub->pdy = sin(cub->pa) * DOT_SIZE;
-// 	}
-// 	else if (keycode == RIGHT)
-// 	{
-// 		cub->pa += 0.1;
-// 		if (cub->pa > 2 * PI)
-// 			cub->pa -= 2 * PI;
-// 		cub->pdx = cos(cub->pa) * DOT_SIZE;
-// 		cub->pdy = sin(cub->pa) * DOT_SIZE;
-// 	}
-// 	else /* UP or DOWN */
-// 	{
-// 		/* same horizontal span: left and right of the dot */
-// 		tx1 = new_x / TILE_SIZE;
-// 		tx2 = (new_x + DOT_SIZE - 1) / TILE_SIZE;
-// 		if (keycode == UP)
-// 			ty1 = ty2 = new_y / TILE_SIZE;
-// 		else /* DOWN */
-// 			ty1 = ty2 = (new_y + DOT_SIZE - 1) / TILE_SIZE;
-// 	}
-// 	/* Bounds check */
-// 	if (tx1 < 0 || tx1 >= MAP_CELL || tx2 < 0 || tx2 >= MAP_CELL || ty1 < 0
-// 		|| ty1 >= MAP_CELL || ty2 < 0 || ty2 >= MAP_CELL)
-// 	{
-// 		/* out of map—don’t move */
-// 	}
-// 	else
-// 	{
-// 		/* only move if both target tiles are floor (0) */
-// 		if (cub->map[ty1][tx1] == 0 && cub->map[ty2][tx2] == 0)
-// 		{
-// 			cub->x = new_x;
-// 			cub->y = new_y;
-// 		}
-// 	}
-// 	/* redraw */
-// 	mlx_clear_window(cub->mlx, cub->win);
-// 	redraw(cub);
-// 	draw_dot(cub);
-// 	return (0);
-// }
-
-// void	set_map(t_cub *cub)
-// {
-// 	static const int literal[MAP_CELL][MAP_CELL] = {
-// 		{1, 1, 1, 1, 1, 1, 1, 1},
-// 		{1, 0, 0, 0, 0, 0, 0, 1},
-// 		{1, 0, 0, 0, 0, 0, 0, 1},
-// 		{1, 0, 0, 0, 0, 0, 0, 1},
-// 		{1, 0, 0, 0, 0, 0, 0, 1},
-// 		{1, 0, 0, 0, 0, 0, 0, 1},
-// 		{1, 0, 0, 0, 0, 0, 0, 1},
-// 		{1, 1, 1, 1, 1, 1, 1, 1},
-// 	};
-// 	ft_memcpy(cub->map, literal, sizeof(literal));
-// }
-
-// int	main(void)
-// {
-// 	t_cub	cub;
-
-// 	cub.mlx = mlx_init();
-// 	cub.win = mlx_new_window(cub.mlx, MAP_CELL * TILE_SIZE, MAP_CELL
-// 			* TILE_SIZE, "Hello world!");
-// 	cub.x = WIN_WIDTH / 2;
-// 	cub.y = WIN_HEIGHT / 2;
-// 	cub.pdx = 0;
-// 	cub.pdy = 0;
-// 	cub.pa = 0;
-// 	set_map(&cub);
-// 	redraw(&cub);
-// 	mlx_key_hook(cub.win, key_hook, &cub);
-// 	mlx_loop(cub.mlx);
-// 	return (0);
-// }
-
 #include "../../include/cub3d.h"
 #include "../../libft/libft.h"
-#include <math.h> // for cos() and sin()
+#include <math.h> // for cos(), sin(), fabs()
 
+/*========================================================================
+  Window & input definitions
+  ------------------------------------------------------------------------
+  WIN_WIDTH / WIN_HEIGHT: initial start‐position references (not actually
+	used for window size here, but for centering logic)
+  DOT_SIZE: movement increment per keypress or step
+  LEFT/RIGHT/UP/DOWN/ESC: X11 keycodes for arrow keys & Escape
+  TILE_SIZE: size in pixels of each map square
+  MAP_CELL: number of cells per row/column in your 8×8 map
+  PI: mathematical constant π
+  ========================================================================*/
 #define WIN_WIDTH 800
 #define WIN_HEIGHT 600
-#define DOT_SIZE 8 // used for movement increment
+#define DOT_SIZE 8
+#define DOT_DIM 10 // size (in px) of the drawn dot
 #define LEFT 65361
 #define RIGHT 65363
 #define UP 65362
@@ -224,50 +25,62 @@
 #define ESC 65307
 #define TILE_SIZE 64
 #define MAP_CELL 8
-
-// MATH
 #define PI 3.14159265359
 
+/*========================================================================
+  Color definitions
+  ========================================================================*/
+#define WALL_COLOR 0x000000  // black for walls (map value 1)
+#define FLOOR_COLOR 0xFFFFFF // white for floors (map value 0)
+#define GRID_COLOR 0x888888  // gray grid lines
+
+/*========================================================================
+  Main game data structure
+  - mlx, win: MiniLibX context and window
+  - map: 8×8 grid of 0 (floor) / 1 (wall)
+  - x, y: top-left pixel of the player “dot”
+  - pdx, pdy: movement step in x/y based on facing angle
+  - pa: player angle in radians (0 = east, π/2 = south, etc.)
+  ========================================================================*/
 typedef struct s_cub_data
 {
 	void	*mlx;
 	void	*win;
 	int		map[MAP_CELL][MAP_CELL];
-	int x;     // dot’s top-left pixel x-position
-	int y;     // dot’s top-left pixel y-position
-	float pdx; // step in x (for forward movement)
-	float pdy; // step in y (for forward movement)
-	float pa;  // current angle (radians)
+	int x;     // player pixel x (top-left of 10×10 dot)
+	int y;     // player pixel y
+	float pdx; // delta x per forward/back step
+	float pdy; // delta y per forward/back step
+	float pa;  // player facing angle (radians)
 }			t_cub;
 
-#define WALL_COLOR 0x000000 // black for wall (1)
-#define FLOOR_COLOR 0xFFFFFF // white for floor (0)
-#define GRID_COLOR 0x888888 // gray grid lines
-
-/* Draws a square of TILE_SIZE x TILE_SIZE starting at (x0,y0) */
+/*========================================================================
+  draw_tile:
+   - Draws one TILE_SIZE×TILE_SIZE square (either wall or floor)
+   - at map‐cell coordinates (x0, y0)
+  ========================================================================*/
 void	draw_tile(t_cub *cub, int x0, int y0, int color)
 {
 	int i, j;
-	i = 0;
-	while (i < TILE_SIZE)
-	{
-		j = 0;
-		while (j < TILE_SIZE)
-		{
+	for (i = 0; i < TILE_SIZE; i++)
+		for (j = 0; j < TILE_SIZE; j++)
 			mlx_pixel_put(cub->mlx, cub->win, x0 + j, y0 + i, color);
-			j++;
-		}
-		i++;
-	}
 }
 
-/* Redraws the floor, walls, grid and highlights the current cell */
+/*========================================================================
+  redraw:
+   - Clears the window
+   - Draws entire 8×8 map (walls vs floors)
+   - Overlays optional grid lines
+   - (Could also draw a cell highlight here if desired)
+  ========================================================================*/
 static void	redraw(t_cub *d)
 {
 	int row, col;
 	int x0, y0;
+	// Clear previous frame
 	mlx_clear_window(d->mlx, d->win);
-	/* Draw floor & walls */
+	// Draw each map cell
 	for (row = 0; row < MAP_CELL; row++)
 	{
 		for (col = 0; col < MAP_CELL; col++)
@@ -280,38 +93,41 @@ static void	redraw(t_cub *d)
 				draw_tile(d, x0, y0, FLOOR_COLOR);
 		}
 	}
-	/* Draw grid lines (optional) */
+	// Draw horizontal grid lines
 	for (row = 0; row <= MAP_CELL; row++)
 		for (col = 0; col < MAP_CELL * TILE_SIZE; col++)
 			mlx_pixel_put(d->mlx, d->win, col, row * TILE_SIZE, GRID_COLOR);
+	// Draw vertical grid lines
 	for (col = 0; col <= MAP_CELL; col++)
 		for (row = 0; row < MAP_CELL * TILE_SIZE; row++)
 			mlx_pixel_put(d->mlx, d->win, col * TILE_SIZE, row, GRID_COLOR);
-	/* Draw a cell highlight (red border) around the cell in which the dot is */
-	x0 = d->x / TILE_SIZE * TILE_SIZE;
-	y0 = d->y / TILE_SIZE * TILE_SIZE;
 }
 
-/* Draws the dot (the player) as a 10×10 red square */
+/*========================================================================
+  draw_dot:
+   - Draws the player as a small 10×10 red square at (cub->x, cub->y)
+  ========================================================================*/
 void	draw_dot(t_cub *cub)
 {
 	int i, j;
-	i = 0;
-	while (i < 10)
-	{
-		j = 0;
-		while (j < 10)
-		{
+	for (i = 0; i < DOT_DIM; i++)
+		for (j = 0; j < DOT_DIM; j++)
 			mlx_pixel_put(cub->mlx, cub->win, cub->x + j, cub->y + i, 0xFF0000);
-			j++;
-		}
-		i++;
-	}
 }
 
-/* Draws an arrow starting at the center of the dot showing its facing direction */
+/*========================================================================
+  draw_arrow:
+   - Draws a line (arrow) from the center of the dot in the direction
+		the player is facing (cub->pa)
+   - Uses a simple DDA line‐drawing algorithm
+  ========================================================================*/
 void	draw_arrow(t_cub *cub)
 {
+	int		center_x;
+	int		center_y;
+	int		arrow_length;
+	int		end_x;
+	int		end_y;
 	float	dx;
 	float	dy;
 	float	steps;
@@ -320,55 +136,105 @@ void	draw_arrow(t_cub *cub)
 	float	x;
 	float	y;
 
-	int center_x, center_y;
-	int arrow_length = 20; // adjust arrow length as needed
-	int end_x, end_y;
-	// Compute the center of the 10x10 dot.
-	center_x = cub->x + 5;
-	center_y = cub->y + 5;
-	// Compute the end point of the arrow using the current angle.
-	end_x = center_x + (int)(cos(cub->pa) * arrow_length);
-	end_y = center_y + (int)(sin(cub->pa) * arrow_length);
-	/* Simple DDA line drawing algorithm */
+	// Compute dot’s center
+	center_x = cub->x + DOT_DIM / 2;
+	center_y = cub->y + DOT_DIM / 2;
+	// Determine end point based on current angle
+	arrow_length = 200;
+	end_x = center_x + cos(cub->pa) * arrow_length;
+	end_y = center_y + sin(cub->pa) * arrow_length;
+	// DDA setup
 	dx = end_x - center_x;
 	dy = end_y - center_y;
-	steps = (fabs(dx) > fabs(dy)) ? fabs(dx) : fabs(dy);
+	steps = fmaxf(fabsf(dx), fabsf(dy));
 	x_inc = dx / steps;
 	y_inc = dy / steps;
 	x = center_x;
 	y = center_y;
+	// Draw the arrow in blue
 	for (int i = 0; i <= steps; i++)
 	{
 		mlx_pixel_put(cub->mlx, cub->win, (int)x, (int)y, 0x0000FF);
-		// blue arrow
 		x += x_inc;
 		y += y_inc;
 	}
 }
 
-/* The key_hook is now split between rotation (left/right) and movement (up/down)
-   LEFT and RIGHT update the angle (pa) and recompute the directional vector (pdx,
-	pdy).
-   UP moves the dot forward in the direction of pdx, pdy.
-   DOWN moves backwards.
-*/
+/*========================================================================
+  draw_line_until_wall:
+   - Casts a single “ray” from (start_x, start_y) in direction angle
+   - Steps one pixel at a time (dx = cos, dy = sin)
+   - Stops when:
+		• ray goes outside map bounds
+		• ray enters a wall cell (map==1)
+   - Draws each step in the given color
+  ========================================================================*/
+void	draw_line_until_wall(t_cub *cub, float start_x, float start_y,
+		float angle, int color)
+{
+	float	x;
+	float	y;
+	float	dx;
+	float	dy;
+	int		map_x;
+	int		map_y;
+
+	x = start_x;
+	y = start_y;
+	dx = cos(angle);
+	dy = sin(angle);
+	while (1)
+	{
+		map_x = (int)x / TILE_SIZE;
+		map_y = (int)y / TILE_SIZE;
+		// Out of bounds?
+		if (map_x < 0 || map_x >= MAP_CELL || map_y < 0 || map_y >= MAP_CELL)
+			break ;
+		// Hit a wall?
+		if (cub->map[map_y][map_x] == 1)
+			break ;
+		// Draw this pixel of the ray
+		mlx_pixel_put(cub->mlx, cub->win, (int)x, (int)y, color);
+		// Step forward one pixel
+		x += dx;
+		y += dy;
+	}
+}
+
+/*========================================================================
+  key_hook:
+   - LEFT/RIGHT rotate the player by ±0.1 rad,
+		then update pdx/pdy to match the new facing direction
+   - UP/DOWN move the player forward/back by (pdx,pdy),
+		with simple collision checking on the 10×10 dot
+   - ESC quits
+   - After any change, clear + redraw:
+		• map + grid
+		• dot
+		• ray from center
+  ========================================================================*/
 int	key_hook(int keycode, t_cub *cub)
 {
-	int new_x, new_y;
-	int tx1, ty1, tx2, ty2;
+	int	new_x;
+	int	new_y;
+
 	new_x = cub->x;
 	new_y = cub->y;
+	int tx1, ty1, tx2, ty2;
 	if (keycode == LEFT)
 	{
-		cub->pa -= 0.1;
+		// Rotate left
+		cub->pa -= 0.1f;
 		if (cub->pa < 0)
 			cub->pa += 2 * PI;
+		// Update movement vector
 		cub->pdx = cos(cub->pa) * DOT_SIZE;
 		cub->pdy = sin(cub->pa) * DOT_SIZE;
 	}
 	else if (keycode == RIGHT)
 	{
-		cub->pa += 0.1;
+		// Rotate right
+		cub->pa += 0.1f;
 		if (cub->pa > 2 * PI)
 			cub->pa -= 2 * PI;
 		cub->pdx = cos(cub->pa) * DOT_SIZE;
@@ -376,83 +242,91 @@ int	key_hook(int keycode, t_cub *cub)
 	}
 	else if (keycode == UP)
 	{
-		new_x += (int)(cub->pdx);
-		new_y += (int)(cub->pdy);
-		tx1 = new_x / TILE_SIZE;
-		tx2 = (new_x + 10 - 1) / TILE_SIZE;
-		ty1 = new_y / TILE_SIZE;
-		ty2 = (new_y + 10 - 1) / TILE_SIZE;
-		if (tx1 >= 0 && tx2 < MAP_CELL && ty1 >= 0 && ty2 < MAP_CELL)
-		{
-			if (cub->map[ty1][tx1] == 0 && cub->map[ty2][tx2] == 0)
-			{
-				cub->x = new_x;
-				cub->y = new_y;
-			}
-		}
+		// Move forward
+		new_x += (int)cub->pdx;
+		new_y += (int)cub->pdy;
 	}
 	else if (keycode == DOWN)
 	{
-		new_x -= (int)(cub->pdx);
-		new_y -= (int)(cub->pdy);
-		tx1 = new_x / TILE_SIZE;
-		tx2 = (new_x + 10 - 1) / TILE_SIZE;
-		ty1 = new_y / TILE_SIZE;
-		ty2 = (new_y + 10 - 1) / TILE_SIZE;
-		if (tx1 >= 0 && tx2 < MAP_CELL && ty1 >= 0 && ty2 < MAP_CELL)
-		{
-			if (cub->map[ty1][tx1] == 0 && cub->map[ty2][tx2] == 0)
-			{
-				cub->x = new_x;
-				cub->y = new_y;
-			}
-		}
+		// Move backward
+		new_x -= (int)cub->pdx;
+		new_y -= (int)cub->pdy;
 	}
 	else if (keycode == ESC)
+	{
 		exit(0);
+	}
+	// If we pressed UP or DOWN, perform collision check:
+	if (keycode == UP || keycode == DOWN)
+	{
+		tx1 = new_x / TILE_SIZE;
+		tx2 = (new_x + DOT_DIM - 1) / TILE_SIZE;
+		ty1 = new_y / TILE_SIZE;
+		ty2 = (new_y + DOT_DIM - 1) / TILE_SIZE;
+		// Ensure all four corners are within floor cells
+		if (tx1 >= 0 && tx2 < MAP_CELL && ty1 >= 0 && ty2 < MAP_CELL
+			&& cub->map[ty1][tx1] == 0 && cub->map[ty1][tx2] == 0
+			&& cub->map[ty2][tx1] == 0 && cub->map[ty2][tx2] == 0)
+		{
+			cub->x = new_x;
+			cub->y = new_y;
+		}
+	}
+	// Clear & redraw everything
 	mlx_clear_window(cub->mlx, cub->win);
 	redraw(cub);
 	draw_dot(cub);
-	draw_arrow(cub);
+	// Cast a ray from the dot’s center in direction pa (green)
+	draw_line_until_wall(cub, cub->x + DOT_DIM / 2.0f, cub->y + DOT_DIM / 2.0f,
+		cub->pa, 0x00FF00);
 	return (0);
 }
 
-/* Copy a static literal into the map array */
+/*========================================================================
+  set_map:
+   - Copies a hard‑coded 8×8 layout into cub->map
+   - 1 = wall, 0 = floor
+  ========================================================================*/
 void	set_map(t_cub *cub)
 {
 	static const int literal[MAP_CELL][MAP_CELL] = {
 		{1, 1, 1, 1, 1, 1, 1, 1},
 		{1, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 0, 0, 1, 0, 1},
+		{1, 0, 0, 0, 0, 1, 0, 1},
+		{1, 0, 0, 0, 0, 1, 0, 1},
+		{1, 0, 0, 0, 0, 1, 0, 1},
 		{1, 0, 0, 0, 0, 0, 0, 1},
 		{1, 1, 1, 1, 1, 1, 1, 1},
 	};
-	ft_memcpy(cub->map, literal, sizeof(literal));
+	ft_memcpy(cub->map, literal, sizeof literal);
 }
 
+/*========================================================================
+  main: initialize everything, draw initial scene, and enter MLX loop
+  ========================================================================*/
 int	main(void)
 {
 	t_cub	cub;
 
 	cub.mlx = mlx_init();
 	cub.win = mlx_new_window(cub.mlx, MAP_CELL * TILE_SIZE, MAP_CELL
-			* TILE_SIZE, "Hello world!");
-	/* Start the dot near the center of a floor cell.
-		Here, we use WIN_WIDTH/2 and WIN_HEIGHT/2 only as initial values;
-		you might prefer to choose something that lies on a floor (0) cell. */
+			* TILE_SIZE, "cub3D demo");
+	// Start the dot near the center (adjust to a floor tile for a real map)
 	cub.x = WIN_WIDTH / 2;
 	cub.y = WIN_HEIGHT / 2;
-	cub.pa = 0; // initial angle is 0 radians (facing to the right)
-	cub.pdx = cos(cub.pa) * DOT_SIZE;
-	cub.pdy = sin(cub.pa) * DOT_SIZE;
-	set_map(&cub);
-	redraw(&cub);
-	draw_dot(&cub);
-	draw_arrow(&cub);
+	cub.pa = 0.0f;                    // facing east
+	cub.pdx = cos(cub.pa) * DOT_SIZE; // forward step x
+	cub.pdy = sin(cub.pa) * DOT_SIZE; // forward step y
+	set_map(&cub);                    // load the 8×8 map layout
+	redraw(&cub);                     // draw map + grid
+	draw_dot(&cub);                   // draw the player dot
+	// draw initial ray for debug/visualization
+	draw_line_until_wall(&cub, cub.x + DOT_DIM / 2.0f, cub.y + DOT_DIM / 2.0f,
+		cub.pa, 0x00FF00);
+	// Register key handler
 	mlx_key_hook(cub.win, key_hook, &cub);
+	// Enter the MLX loop
 	mlx_loop(cub.mlx);
 	return (0);
 }
