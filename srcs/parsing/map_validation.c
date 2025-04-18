@@ -6,7 +6,7 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 11:09:55 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/15 16:46:11 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:36:26 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,35 +18,38 @@ int	is_valid_symbol(char c)
 		|| c == ' ');
 }
 
-int	is_player(char c)
+bool	is_player(char c)
 {
 	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }
 
-int	validate_map(t_config *config)
+int	validate_map(t_file_data *file)
 {
-	int	horizontal;
-	int	vertical;
-	int	player_position;
+	int		y;
+	int		x;
+	int		player_count;
+	char	**map;
 
-	horizontal = 0;
-	player_position = 0;
-	while (config->map[horizontal] != NULL)
+	map = file->map.map;
+	y = -1;
+	player_count = 0;
+	while (map[++y])
 	{
-		vertical = 0;
-		while (config->map[horizontal][vertical] != '\0')
+		x = -1;
+		while (map[y][++x])
 		{
-			if (!is_valid_symbol(config->map[horizontal][vertical]))
+			if (!is_valid_symbol(map[y][x]))
 				return (ft_error("Invalid symbol inside the map.\n"));
-			if (is_player(config->map[horizontal][vertical]))
-				player_position++;
-			vertical++;
+			if (is_player(map[y][x]))
+			{
+				file->map.player_x = x;
+				file->map.player_y = y;
+				file->map.player_dir = map[y][x];
+				player_count++;
+			}
 		}
-		horizontal++;
 	}
-	if (player_position != 1)
-		return (ft_error("More than one player inside the map.\n"));
-	if (!is_surrounded_by_walls(config->map))
-		return (ft_error("Map is not surrounded by the walls.\n"));
-	return (true);
+	if (player_count != 1)
+		return (ft_error("Map must contain exactly one player.\n"));
+	return (is_surrounded_by_wall(file));
 }

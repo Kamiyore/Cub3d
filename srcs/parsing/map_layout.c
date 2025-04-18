@@ -6,7 +6,7 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:28:59 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/15 17:40:39 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:35:53 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,28 +35,29 @@ char	**copy_map(char **map)
 	return (copy);
 }
 
-int	find_player_pos(char **map, int *x, int *y)
+int	find_player_pos(t_map *map_data)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (map[i])
+	while (map_data->map[i])
 	{
 		j = 0;
-		while (map[i][j])
+		while (map_data->map[i][j])
 		{
-			if (is_player(map[i][j]))
+			if (is_player(map_data->map[i][j]))
 			{
-				*x = j;
-				*y = i;
-				return (1);
+				map_data->player_x = j;
+				map_data->player_y = i;
+				map_data->player_dir = map_data->map[i][j];
+				return (true);
 			}
 			j++;
 		}
 		i++;
 	}
-	return (0);
+	return (false);
 }
 
 int	flood_fill(char **map, int x, int y)
@@ -78,9 +79,9 @@ int	flood_fill(char **map, int x, int y)
 		c = '0';
 	if (c == ' ' || c == '\0')
 		return (0);
-	if (c == '1' || c == 'x')
+	if (c == '1')
 		return (1);
-	map[y][x] = 'x';
+	map[y][x] = '1';
 	if (!flood_fill(map, x + 1, y))
 		return (0);
 	if (!flood_fill(map, x - 1, y))
@@ -92,26 +93,45 @@ int	flood_fill(char **map, int x, int y)
 	return (1);
 }
 
-int	is_surrounded_by_walls(char **map)
+int	check_remaining_open_areas(char **copy)
 {
-	char	**copy;
-	int		x;
-	int		y;
+	int	i;
+	int	j;
 
-	x = 0;
-	y = 0;
-	if (!find_player_pos(map, &x, &y))
-		return (0);
-	copy = copy_map(map);
-	if (!copy)
-		return (ft_error("Memory allocation error"));
-	if (!flood_fill(copy, x, y))
+	i = -1;
+	while (copy[++i])
 	{
-		ft_free_split(copy);
-		return (0);
+		j = -1;
+		while (copy[i][++j])
+		{
+			if (copy[i][j] == ' ')
+				continue ;
+			if (copy[i][j] == '0' && !flood_fill(copy, j, i))
+			{
+				ft_free_split(copy);
+				return (ft_error("Open area not enclosed.\n"));
+			}
+		}
 	}
-	ft_free_split(copy);
 	return (1);
 }
 
+int	is_surrounded_by_wall(t_file_data *file)
+{
+	char	**copy;
 
+	if (!find_player_pos(&file->map))
+		return (ft_error("Player not found.\n"));
+	copy = copy_map(file->map.map);
+	if (!copy)
+		return (ft_error("Memory allocation error.\n"));
+	if (!flood_fill(copy, file->map.player_x, file->map.player_y))
+	{
+		ft_free_split(copy);
+		return (ft_error("Player area not enclosed.\n"));
+	}
+	if (!check_remaining_open_areas(copy))
+		return (0);
+	ft_free_split(copy);
+	return (1);
+}

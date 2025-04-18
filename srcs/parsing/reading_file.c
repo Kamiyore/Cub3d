@@ -6,7 +6,7 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 15:37:49 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/15 16:25:51 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:55:15 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,14 @@ char	**read_file(const char *file, int lines)
 	return (array);
 }
 
-char	**extract_map_start(t_config *config, char **lines)
+char	**extract_map_start(t_texture *config, char **lines)
 {
 	int	i;
 
 	i = 0;
 	while (lines[i])
 	{
-		if (lines[i][0] == '\0' || ft_isspace(lines[i][0]))
+		if (lines[i][0] == '\0' || lines[i][0] == '\n')
 		{
 			i++;
 			continue ;
@@ -99,7 +99,35 @@ char	**extract_map_start(t_config *config, char **lines)
 	return (&lines[i]);
 }
 
-int	parse_file(t_config *config, const char *filename)
+void	print_loaded_map(char **map)
+{
+	int	i;
+
+	i = 0;
+	while (map && map[i])
+	{
+		printf("[%d]: \"%s\"\n", i, map[i]);
+		i++;
+	}
+}
+
+int	validate_config_and_map(t_file_data *file)
+{
+	t_texture	*tex;
+	t_map		*map;
+
+	tex = &file->color;
+	map = &file->map;
+	if (!tex->no_path || !tex->so_path || !tex->we_path || !tex->ea_path)
+		return (ft_error("Missing texture path (NO, SO, WE, EA).\n"));
+	if (tex->f_color == -1 || tex->c_color == -1)
+		return (ft_error("Missing floor or ceiling color.\n"));
+	if (!map->map || !map->map[0])
+		return (ft_error("Map is missing or empty.\n"));
+	return (true);
+}
+
+int	parse_file(t_file_data *file, const char *filename)
 {
 	int		line_count;
 	char	**lines;
@@ -107,15 +135,28 @@ int	parse_file(t_config *config, const char *filename)
 
 	line_count = count_lines(filename);
 	if (line_count <= 0)
-		return (ft_error("Invalid line count or file error"));
+		return (ft_error("Invalid line count or file error.\n"));
 	lines = read_file(filename, line_count);
 	if (!lines)
-		return (ft_error("Could not read file into lines"));
-	map_start = extract_map_start(config, lines);
-	if (map_start < 0)
-		return (ft_error("Error in configuration"));
-	if (!parse_map_lines(config, map_start))
-		return (ft_error("Error in map parsing"));
+		return (ft_error("Could not read file into lines.\n"));
+	map_start = extract_map_start(&file->color, lines);
+	if (!map_start)
+	{
+		ft_free_split(lines);
+		free_file_data(file);
+		return (ft_error("Error in configuration.\n"));
+	}
+	if (!parse_map_lines(&file->map, map_start))
+	{
+		return (ft_error("Error in map parsing.\n"));
+	}
+	if (!validate_config_and_map(file))
+	{
+		ft_free_split(lines);
+		free_file_data(file);
+		return (false);
+	}
+	print_loaded_map(file->map.map);
 	ft_free_split(lines);
-	return (1);
+	return (true);
 }

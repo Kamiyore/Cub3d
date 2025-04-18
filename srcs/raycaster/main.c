@@ -165,20 +165,6 @@ int	key_hook(int keycode, t_data *d)
 	return (0);
 }
 
-void	set_map(t_data *data)
-{
-	static const int literal[MAP_CELL][MAP_CELL] = {
-		{1, 1, 1, 1, 1, 1, 1, 1},
-		{1, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 1},
-		{1, 1, 1, 1, 1, 1, 1, 1},
-	};
-	ft_memcpy(data->map, literal, sizeof(literal));
-}
 
 // int	main(void)
 // {
