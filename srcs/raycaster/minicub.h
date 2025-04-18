@@ -26,7 +26,7 @@ typedef struct s_player
 
 typedef struct s_ray
 {
-	double		ray_angle;
+	double		angle;
 	double		distance;
 	bool		is_wall;
 }				t_ray;
@@ -53,3 +53,22 @@ typedef struct s_cub
 	t_map		*map;
 	t_player	*ply;
 }				t_cub;
+
+typedef struct s_xy
+{
+	float		x;
+	float		y;
+}				t_xy;
+
+//#################################################################################//
+//################################### FUNCTION ####################################//
+//#################################################################################//
+
+float			get_horizontal_intersection(t_cub *cub);
+
+// helper
+int				get_quandrant(float angle);
+float			normalize_angle(float angle);
+int				is_wall(t_cub *cub, t_xy inter);
+float			compute_adjacent(float opposite, float angle);
+float			compute_hypotenuse(float opposite, float adjacent);

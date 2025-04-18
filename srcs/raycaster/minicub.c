@@ -6,16 +6,10 @@
 //############################## THE RAYCASTING CODE ##############################//
 //#################################################################################//
 
-
-float get_horizontal_intersection(t_cub *cub)
+double	start_angle_of_view(t_cub *cub)
 {
-	
-}
+	double	start_angle;
 
-
-double start_angle_of_ray(t_cub *cub)
-{
-	double start_angle;
 	start_angle = cub->ply->angle - (cub->ply->view_radian / 2);
 	return (start_angle);
 }
@@ -27,10 +21,11 @@ void	cast_rays(t_cub *cub)
 	int		ray;
 
 	ray = 0;
-	cub->ray->ray_angle = start_angle_of_ray(cub);
-	while(ray < SCREEN_WIDTH)
+	cub->ray->angle = start_angle_of_view(cub);
+	while (ray < SCREEN_WIDTH)
 	{
 		cub->ray->is_wall = false;
+		cub->ray->angle = normalize_angle(cub->ray->angle);
 		h_inter = get_horizontal_intersection(cub);
 		v_inter = get_vertical_intersection(cub);
 	}
@@ -62,7 +57,7 @@ t_ray	*init_the_ray(void)
 	t_ray	*ray;
 
 	ray = ft_calloc(1, sizeof(t_ray));
-	ray->ray_angle = 0;
+	ray->angle = 0;
 	ray->distance = 0;
 	ray->is_wall = false;
 	return (ray);
