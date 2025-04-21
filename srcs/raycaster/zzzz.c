@@ -305,28 +305,28 @@ void	set_map(t_cub *cub)
 /*========================================================================
   main: initialize everything, draw initial scene, and enter MLX loop
   ========================================================================*/
-int	main(void)
-{
-	t_cub	cub;
+// int	main(void)
+// {
+// 	t_cub	cub;
 
-	cub.mlx = mlx_init();
-	cub.win = mlx_new_window(cub.mlx, MAP_CELL * TILE_SIZE, MAP_CELL
-			* TILE_SIZE, "cub3D demo");
-	// Start the dot near the center (adjust to a floor tile for a real map)
-	cub.x = WIN_WIDTH / 2;
-	cub.y = WIN_HEIGHT / 2;
-	cub.pa = 0.0f;                    // facing east
-	cub.pdx = cos(cub.pa) * DOT_SIZE; // forward step x
-	cub.pdy = sin(cub.pa) * DOT_SIZE; // forward step y
-	set_map(&cub);                    // load the 8×8 map layout
-	redraw(&cub);                     // draw map + grid
-	draw_dot(&cub);                   // draw the player dot
-	// draw initial ray for debug/visualization
-	draw_line_until_wall(&cub, cub.x + DOT_DIM / 2.0f, cub.y + DOT_DIM / 2.0f,
-		cub.pa, 0x00FF00);
-	// Register key handler
-	mlx_key_hook(cub.win, key_hook, &cub);
-	// Enter the MLX loop
-	mlx_loop(cub.mlx);
-	return (0);
-}
+// 	cub.mlx = mlx_init();
+// 	cub.win = mlx_new_window(cub.mlx, MAP_CELL * TILE_SIZE, MAP_CELL
+// 			* TILE_SIZE, "cub3D demo");
+// 	// Start the dot near the center (adjust to a floor tile for a real map)
+// 	cub.x = WIN_WIDTH / 2;
+// 	cub.y = WIN_HEIGHT / 2;
+// 	cub.pa = 0.0f;                    // facing east
+// 	cub.pdx = cos(cub.pa) * DOT_SIZE; // forward step x
+// 	cub.pdy = sin(cub.pa) * DOT_SIZE; // forward step y
+// 	set_map(&cub);                    // load the 8×8 map layout
+// 	redraw(&cub);                     // draw map + grid
+// 	draw_dot(&cub);                   // draw the player dot
+// 	// draw initial ray for debug/visualization
+// 	draw_line_until_wall(&cub, cub.x + DOT_DIM / 2.0f, cub.y + DOT_DIM / 2.0f,
+// 		cub.pa, 0x00FF00);
+// 	// Register key handler
+// 	mlx_key_hook(cub.win, key_hook, &cub);
+// 	// Enter the MLX loop
+// 	mlx_loop(cub.mlx);
+// 	return (0);
+// }

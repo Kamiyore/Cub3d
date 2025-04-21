@@ -27,21 +27,22 @@ float	normalize_angle(float angle)
 	return (angle);
 }
 
-int	is_wall(t_cub *cub, t_xy inter)
+int	is_wall(t_cub *cub, float inter_x, float inter_y)
 {
-	int	map_index_y;
-	int	map_index_x;
-	int	**map2d;
+	int		map_index_y;
+	int		map_index_x;
+	char	**map2d;
 
 	map2d = cub->map->map2d;
-	// maybe need to check inter values are not out of map
-	map_index_y = floor(inter.y / TILE_SIZE);
-	map_index_x = floor(inter.x / TILE_SIZE);
-	// 2) per‐row bounds (only needed if rows vary in length)
+	map_index_y = floor(inter_y / TILE_SIZE);
+	map_index_x = floor(inter_x / TILE_SIZE);
+	if (map_index_y < 0 || map_index_y >= cub->map->height || map_index_x < 0
+		|| map_index_x >= cub->map->width)
+		return (1);
 	if (map2d[map_index_y] == NULL
 		|| map_index_x >= (int)ft_strlen(map2d[map_index_y]))
-		return (0);
-	return (map2d[map_index_y][map_index_x] == 1);
+		return (1);
+	return (map2d[map_index_y][map_index_x] == '1');
 }
 
 /*

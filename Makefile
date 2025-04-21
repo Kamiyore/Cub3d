@@ -20,10 +20,13 @@ MAIN_DIR = srcs/a_main
 PARSER_DIR = srcs/parsing
 UTILS_DIR = srcs/utils
 
-SRCS = srcs/a_main/main.c\
-		srcs/parsing/reading_file.c\
-		srcs/utils/free.c\
-		srcs/raycaster/minicub.c
+RAY_SRCS := $(wildcard srcs/raycaster/*.c)
+
+SRCS = \
+    srcs/a_main/main.c \
+    srcs/parsing/reading_file.c \
+    srcs/utils/free.c \
+    $(RAY_SRCS)
 
 OBJS = $(SRCS:.c=.o)
 

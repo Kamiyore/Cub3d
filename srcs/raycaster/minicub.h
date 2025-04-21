@@ -28,7 +28,7 @@ typedef struct s_ray
 {
 	double		angle;
 	double		distance;
-	bool		is_wall;
+	bool		is_vartical;
 }				t_ray;
 
 typedef struct s_map
@@ -65,10 +65,13 @@ typedef struct s_xy
 //#################################################################################//
 
 float			get_horizontal_intersection(t_cub *cub);
+float			get_vertical_intersection(t_cub *cub);
+void			render_wall(t_cub *cub, int ray_count);
 
 // helper
 int				get_quandrant(float angle);
 float			normalize_angle(float angle);
-int				is_wall(t_cub *cub, t_xy inter);
+int				is_wall(t_cub *cub, float inter_x, float inter_y);
 float			compute_adjacent(float opposite, float angle);
+float			compute_opposite(float adjacent, float angle);
 float			compute_hypotenuse(float opposite, float adjacent);
