@@ -2,6 +2,7 @@
 
 #include "../../include/cub3d.h"
 #include "../../libft/libft.h"
+#include <float.h>
 #include <math.h>
 
 #define SCREEN_WIDTH 1900
@@ -71,7 +72,20 @@ void			render_wall(t_cub *cub, int ray_count);
 // helper
 int				get_quandrant(float angle);
 float			normalize_angle(float angle);
+int				is_out_of_bounds(t_cub *cub, float inter_x, float inter_y);
 int				is_wall(t_cub *cub, float inter_x, float inter_y);
 float			compute_adjacent(float opposite, float angle);
 float			compute_opposite(float adjacent, float angle);
 float			compute_hypotenuse(float opposite, float adjacent);
+
+// get step
+float			get_horizontal_step_x(t_cub *cub);
+float			get_horizontal_step_y(t_cub *cub);
+float			get_vartical_step_y(t_cub *cub);
+float			get_vartical_step_x(t_cub *cub);
+
+// direction helper
+bool			look_left(float angle);
+bool			look_right(float angle);
+bool			look_down(float angle);
+bool			look_up(float angle);

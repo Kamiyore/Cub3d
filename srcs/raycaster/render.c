@@ -12,7 +12,7 @@ float	fix_fisheye(t_cub *cub)
 	float	angle;
 
 	hypotenuse = cub->ray->distance;
-	angle = cub->ray->angle - cub->ply->angle;
+	angle = normalize_angle(cub->ray->angle - cub->ply->angle);
 	return (hypotenuse * cos(angle));
 }
 
@@ -136,13 +136,12 @@ void	draw_floor_ceiling(t_cub *cub, int ray_count, int top_pix, int bot_pix)
 //↓あってそう
 int	get_color(t_cub *cub)
 {
-	float	a;
-
-	a = normalize_angle(cub->ray->angle);
+	// float	a;
+	// a = normalize_angle(cub->ray->angle);
 	if (cub->ray->is_vartical)
 	{
 		// 垂直グリッド → 東西の壁
-		if (a > M_PI_2 && a < 3.0f * M_PI_2)
+		if (cub->ray->angle < M_PI_2 || cub->ray->angle > 3 * M_PI_2)
 			return (0x6FD96FFF); // EAST（右壁：緑）
 		else
 			return (0xE1D66FFF); // WEST（左壁：黄）
@@ -150,7 +149,7 @@ int	get_color(t_cub *cub)
 	else
 	{
 		// 水平グリッド → 南北の壁
-		if (a > 0.0f && a < M_PI)
+		if (cub->ray->angle > 0.0f && cub->ray->angle < M_PI)
 			return (0xD94C4CFF); // SOUTH（下方向の壁：赤）
 		else
 			return (0x4C6ED9FF); // NORTH（上方向の壁：青）

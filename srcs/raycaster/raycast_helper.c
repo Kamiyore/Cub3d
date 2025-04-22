@@ -27,6 +27,23 @@ float	normalize_angle(float angle)
 	return (angle);
 }
 
+int	is_out_of_bounds(t_cub *cub, float inter_x, float inter_y)
+{
+	int		map_index_y;
+	int		map_index_x;
+	char	**map2d;
+
+	map2d = cub->map->map2d;
+	map_index_y = floor(inter_y / TILE_SIZE);
+	map_index_x = floor(inter_x / TILE_SIZE);
+	if (map_index_y < 0 || map_index_y >= cub->map->height)
+		return (1);
+	if (map_index_x < 0 || map_index_x >= cub->map->width)
+		return (1);
+	else
+		return (0);
+}
+
 int	is_wall(t_cub *cub, float inter_x, float inter_y)
 {
 	int		map_index_y;
@@ -36,13 +53,12 @@ int	is_wall(t_cub *cub, float inter_x, float inter_y)
 	map2d = cub->map->map2d;
 	map_index_y = floor(inter_y / TILE_SIZE);
 	map_index_x = floor(inter_x / TILE_SIZE);
-	if (map_index_y < 0 || map_index_y >= cub->map->height || map_index_x < 0
-		|| map_index_x >= cub->map->width)
-		return (1);
-	if (map2d[map_index_y] == NULL
-		|| map_index_x >= (int)ft_strlen(map2d[map_index_y]))
-		return (1);
-	return (map2d[map_index_y][map_index_x] == '1');
+	if (cub->map->map2d[map_index_y]
+		&& map_index_x <= (int)ft_strlen(map2d[map_index_y]))
+		if (map2d[map_index_y][map_index_x] == '1')
+			return (1);
+	return (0);
+	// return (cub->map->map2d[map_index_y][map_index_x] == '1');
 }
 
 /*
@@ -69,5 +85,5 @@ float	compute_opposite(float adjacent, float angle)
 */
 float	compute_hypotenuse(float opposite, float adjacent)
 {
-	return (sqrt(opposite * opposite + adjacent * adjacent));
+	return (sqrt(pow(opposite, 2) + pow(adjacent, 2)));
 }
