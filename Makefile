@@ -18,11 +18,13 @@ LIBFT = libft/libft.a
 INC_DIR = includes
 MAIN_DIR = srcs/a_main
 PARSER_DIR = srcs/parsing
+LOAD_IMAGE_DIR = srcs/load_image
 RAYCASTER_DIR = srcs/raycaster
 UTILS_DIR = srcs/utils
 
 SRCS = $(MAIN_DIR)/main.c \
 		$(PARSER_DIR)/map_validation.c $(PARSER_DIR)/set_config_and_map.c $(PARSER_DIR)/reading_file.c $(PARSER_DIR)/rgb_validation.c $(PARSER_DIR)/map_layout.c\
+		 $(LOAD_IMAGE_DIR)/parsing_images.c $(LOAD_IMAGE_DIR)/key_handler.c \
 		 $(UTILS_DIR)/free.c \
 
 OBJS = $(SRCS:.c=.o)

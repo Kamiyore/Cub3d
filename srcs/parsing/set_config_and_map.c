@@ -6,34 +6,63 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 11:10:00 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/18 19:42:22 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/21 18:04:34 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
+// int	parse_map_lines(t_map *map, char **lines)
+// {
+// 	int	count;
+// 	int	i;
+
+// 	count = 0;
+// 	while (lines[count])
+// 		count++;
+// 	map->map = malloc(sizeof(char *) * (count + 1));
+// 	if (!map->map)
+// 		return (false);
+// 	i = 0;
+// 	while (i < count)
+// 	{
+// 		map->map[i] = ft_strdup(lines[i]);
+// 		if (!map->map[i])
+// 			return (false);
+// 		i++;
+// 	}
+// 	map->map[i] = NULL;
+// 	return (true);
+// }
+
 int	parse_map_lines(t_map *map, char **lines)
 {
 	int	count;
 	int	i;
+	int	max_width;
+	int	len;
 
 	count = 0;
+	i = 0;
+	max_width = 0;
 	while (lines[count])
 		count++;
 	map->map = malloc(sizeof(char *) * (count + 1));
 	if (!map->map)
 		return (false);
-	i = 0;
 	while (i < count)
 	{
 		map->map[i] = ft_strdup(lines[i]);
 		if (!map->map[i])
 			return (false);
+		len = ft_strlen(lines[i]);
+		if (len > max_width)
+			max_width = len;
 		i++;
 	}
 	map->map[i] = NULL;
-	// map->height = count;
-	// map->width = ft_strlen(map->map[0]);
+	map->height = count;
+	map->width = max_width;
 	return (true);
 }
 
@@ -66,13 +95,25 @@ int	validate_texture_path(const char *path)
 		return (0);
 	len = ft_strlen(path);
 	if (len < 4 || ft_strncmp(path + len - 4, ".xpm", 4) != 0)
-		ft_error("Texture file must have .xpm extension.\n");
+		return (ft_error("Texture file must have .xpm extension.\n"));
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
-		ft_error("Texture file not found or inaccessible.\n");
+		return (ft_error("Texture file not found or inaccessible.\n"));
 	close(fd);
 	return (1);
 }
+
+// int	set_texture_path(char **dest, const char *line)
+// {
+// 	if (*dest)
+// 		return (ft_error("Duplicate texture path\n"));
+// 	*dest = ft_strdup(line);
+// 	if (!*dest)
+// 		return (ft_error("Memory allocation failed.\n"));
+// 	if (!validate_texture_path(*dest))
+// 		return (0);
+// 	return (1);
+// }
 
 int	set_texture_path(char **dest, const char *line)
 {
@@ -82,7 +123,11 @@ int	set_texture_path(char **dest, const char *line)
 	if (!*dest)
 		return (ft_error("Memory allocation failed.\n"));
 	if (!validate_texture_path(*dest))
+	{
+		free(*dest);
+		*dest = NULL;
 		return (0);
+	}
 	return (1);
 }
 

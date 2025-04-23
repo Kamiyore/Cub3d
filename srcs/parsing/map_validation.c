@@ -6,7 +6,7 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 11:09:55 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/18 16:36:26 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/22 16:26:29 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ bool	is_player(char c)
 	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }
 
-int	validate_map(t_file_data *file)
+int	validate_map(t_minicube *cube)
 {
 	int		y;
 	int		x;
 	int		player_count;
 	char	**map;
 
-	map = file->map.map;
+	map = cube->data.map.map;
 	y = -1;
 	player_count = 0;
 	while (map[++y])
@@ -42,14 +42,14 @@ int	validate_map(t_file_data *file)
 				return (ft_error("Invalid symbol inside the map.\n"));
 			if (is_player(map[y][x]))
 			{
-				file->map.player_x = x;
-				file->map.player_y = y;
-				file->map.player_dir = map[y][x];
+				cube->data.map.player_x = x;
+				cube->data.map.player_y = y;
+				cube->data.map.player_dir = map[y][x];
 				player_count++;
 			}
 		}
 	}
 	if (player_count != 1)
 		return (ft_error("Map must contain exactly one player.\n"));
-	return (is_surrounded_by_wall(file));
+	return (is_surrounded_by_wall(cube));
 }

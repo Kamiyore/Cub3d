@@ -6,11 +6,25 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:43:42 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/18 17:30:33 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/21 18:40:31 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
+
+static int	has_exact_commas(const char *s, int n)
+{
+	int	count;
+
+	count = 0;
+	while (*s)
+	{
+		if (*s == ',')
+			count++;
+		s++;
+	}
+	return (count == n);
+}
 
 static int	has_three_parts(char **color)
 {
@@ -19,8 +33,11 @@ static int	has_three_parts(char **color)
 
 static int	parts_are_digits(char **color)
 {
-	int i, j;
-	for (i = 0; i < 3; i++)
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < 3)
 	{
 		if (!color[i] || color[i][0] == '\0')
 			return (0);
@@ -31,6 +48,7 @@ static int	parts_are_digits(char **color)
 				return (0);
 			j++;
 		}
+		i++;
 	}
 	return (1);
 }
@@ -46,10 +64,13 @@ static int	values_in_range(char **color)
 	b = ft_atoi(color[2]);
 	return (r >= 0 && r <= 255 && g >= 0 && g <= 255 && b >= 0 && b <= 255);
 }
+
 int	is_valid_rgb_format(const char *str)
 {
 	char	**color;
 
+	if (!has_exact_commas(str, 2))
+		return (ft_error("RGB must contain exactly two commas.\n"));
 	color = ft_split(str, ",");
 	if (!has_three_parts(color))
 	{
