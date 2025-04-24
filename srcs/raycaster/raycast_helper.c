@@ -34,8 +34,8 @@ int	is_out_of_bounds(t_cub *cub, float inter_x, float inter_y)
 	char	**map2d;
 
 	map2d = cub->map->map2d;
-	map_index_y = floor(inter_y / TILE_SIZE);
-	map_index_x = floor(inter_x / TILE_SIZE);
+	map_index_y = floorf(inter_y / TILE_SIZE);
+	map_index_x = floorf(inter_x / TILE_SIZE);
 	if (map_index_y < 0 || map_index_y >= cub->map->height)
 		return (1);
 	if (map_index_x < 0 || map_index_x >= cub->map->width)
@@ -51,8 +51,8 @@ int	is_wall(t_cub *cub, float inter_x, float inter_y)
 	char	**map2d;
 
 	map2d = cub->map->map2d;
-	map_index_y = floor(inter_y / TILE_SIZE);
-	map_index_x = floor(inter_x / TILE_SIZE);
+	map_index_y = floorf(inter_y / TILE_SIZE);
+	map_index_x = floorf(inter_x / TILE_SIZE);
 	if (cub->map->map2d[map_index_y]
 		&& map_index_x <= (int)ft_strlen(map2d[map_index_y]))
 		if (map2d[map_index_y][map_index_x] == '1')
