@@ -6,7 +6,7 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 12:05:56 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/24 18:57:14 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/25 18:28:59 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,14 @@
 # define MOVEMENT_SPEED 4
 # define TILE_CENTER (TILE_SIZE / 2)
 
+typedef struct s_texture_slice
+{
+	int *data;     // ukazatel na raw pixely textury
+	double offset; // offset ve směru X (0.0–1.0)
+	int			width;
+	int			height;
+}				t_texture_slice;
+
 typedef struct s_texture
 {
 	char		*no_path;
@@ -68,6 +76,10 @@ typedef struct s_mlx
 	void		*img_no;
 	int			img_w;
 	int			img_h;
+	int			*tex_no_data;
+	int			*tex_so_data;
+	int			*tex_we_data;
+	int			*tex_ea_data;
 }				t_mlx;
 
 typedef struct s_keyboard
@@ -96,9 +108,9 @@ typedef struct s_ray
 {
 	double		angle;
 	double		distance;
-	double  hit_x;
-    double  hit_y;
-	bool		is_vartical;
+	double		hit_x;
+	double		hit_y;
+	bool		is_vertical;
 }				t_ray;
 
 typedef struct s_cub
@@ -148,6 +160,7 @@ int				game_loop(void *param);
 void			draw_floor_ceiling(t_cub *cub, int ray_count, int top_pix,
 					int bot_pix);
 void			safe_mlx_pixel_put(t_cub *cub, int x, int y, int argb);
+t_player		*init_the_player(t_cub *cub);
 #endif
 
 float			get_horizontal_intersection(t_cub *cub);
@@ -165,8 +178,8 @@ float			compute_hypotenuse(float opposite, float adjacent);
 // get step
 float			get_horizontal_step_x(t_cub *cub);
 float			get_horizontal_step_y(t_cub *cub);
-float			get_vartical_step_y(t_cub *cub);
-float			get_vartical_step_x(t_cub *cub);
+float			get_vertical_step_y(t_cub *cub);
+float			get_vertical_step_x(t_cub *cub);
 
 // direction helper
 bool			look_left(float angle);

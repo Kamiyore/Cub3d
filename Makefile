@@ -26,7 +26,7 @@ SRCS = $(MAIN_DIR)/main.c \
 		$(PARSER_DIR)/map_validation.c $(PARSER_DIR)/set_config_and_map.c $(PARSER_DIR)/reading_file.c $(PARSER_DIR)/rgb_validation.c $(PARSER_DIR)/map_layout.c\
 		 $(LOAD_IMAGE_DIR)/parsing_images.c $(LOAD_IMAGE_DIR)/key_handler.c \
 		 $(DESIGN_DIR)/floor_and_ceiling.c \
-		 $(RAYCASTER_DIR)/get_step.c $(RAYCASTER_DIR)/get_hori_inter.c $(RAYCASTER_DIR)/get_verti_int.c $(RAYCASTER_DIR)/minicub.c $(RAYCASTER_DIR)/ray_direction.c $(RAYCASTER_DIR)/raycast_helper.c $(RAYCASTER_DIR)/render.c \
+		 $(RAYCASTER_DIR)/get_step.c $(RAYCASTER_DIR)/get_hori_inter.c $(RAYCASTER_DIR)/get_verti_int.c $(RAYCASTER_DIR)/minicub.c $(RAYCASTER_DIR)/player_direction.c $(RAYCASTER_DIR)/ray_direction.c $(RAYCASTER_DIR)/raycast_helper.c $(RAYCASTER_DIR)/render.c \
 		 $(UTILS_DIR)/free.c \
 
 OBJS = $(SRCS:.c=.o)
