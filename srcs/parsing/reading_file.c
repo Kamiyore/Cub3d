@@ -6,7 +6,7 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 15:37:49 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/22 16:33:06 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/24 16:36:03 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,23 +111,23 @@ void	print_loaded_map(char **map)
 	}
 }
 
-int	validate_config_and_map(t_minicube *cube)
+int	validate_config_and_map(t_cub *cub)
 {
 	t_texture	*tex;
 	t_map		*map;
 
-	tex = &cube->data.color;
-	map = &cube->data.map;
+	tex = &cub->color;
+	map = cub->map;
 	if (!tex->no_path || !tex->so_path || !tex->we_path || !tex->ea_path)
 		return (ft_error("Missing texture path (NO, SO, WE, EA).\n"));
 	if (tex->f_color == -1 || tex->c_color == -1)
 		return (ft_error("Missing floor or ceiling color.\n"));
-	if (!map->map || !map->map[0])
+	if (!map->map2d || !map->map2d[0])
 		return (ft_error("Map is missing or empty.\n"));
 	return (true);
 }
 
-int	parse_file(t_minicube *cube, const char *filename)
+int	parse_file(t_cub *cub, const char *filename)
 {
 	int		line_count;
 	char	**lines;
@@ -139,26 +139,26 @@ int	parse_file(t_minicube *cube, const char *filename)
 	lines = read_file(filename, line_count);
 	if (!lines)
 		return (ft_error("Could not read file into lines.\n"));
-	map_start = extract_map_start(&cube->data.color, lines);
+	map_start = extract_map_start(&cub->color, lines);
 	if (!map_start)
 	{
 		ft_free_split(lines);
-		free_file_data(&cube->data);
+		free_file_data(cub);
 		exit(1);
 		return (ft_error("Error in configuration.\n"));
 	}
-	if (!parse_map_lines(&cube->data.map, map_start))
+	if (!parse_map_lines(cub->map, map_start))
 	{
 		ft_free_split(lines);
 		return (ft_error("Error in map parsing.\n"));
 	}
-	if (!validate_config_and_map(cube))
+	if (!validate_config_and_map(cub))
 	{
 		ft_free_split(lines);
-		free_file_data(&cube->data);
+		free_file_data(cub);
 		return (false);
 	}
-	print_loaded_map(cube->data.map.map);
+	print_loaded_map(cub->map->map2d);
 	ft_free_split(lines);
 	return (true);
 }

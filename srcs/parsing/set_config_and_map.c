@@ -6,34 +6,11 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 11:10:00 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/21 18:04:34 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/23 18:58:25 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
-
-// int	parse_map_lines(t_map *map, char **lines)
-// {
-// 	int	count;
-// 	int	i;
-
-// 	count = 0;
-// 	while (lines[count])
-// 		count++;
-// 	map->map = malloc(sizeof(char *) * (count + 1));
-// 	if (!map->map)
-// 		return (false);
-// 	i = 0;
-// 	while (i < count)
-// 	{
-// 		map->map[i] = ft_strdup(lines[i]);
-// 		if (!map->map[i])
-// 			return (false);
-// 		i++;
-// 	}
-// 	map->map[i] = NULL;
-// 	return (true);
-// }
 
 int	parse_map_lines(t_map *map, char **lines)
 {
@@ -47,20 +24,20 @@ int	parse_map_lines(t_map *map, char **lines)
 	max_width = 0;
 	while (lines[count])
 		count++;
-	map->map = malloc(sizeof(char *) * (count + 1));
-	if (!map->map)
+	map->map2d = malloc(sizeof(char *) * (count + 1));
+	if (!map->map2d)
 		return (false);
 	while (i < count)
 	{
-		map->map[i] = ft_strdup(lines[i]);
-		if (!map->map[i])
+		map->map2d[i] = ft_strdup(lines[i]);
+		if (!map->map2d[i])
 			return (false);
 		len = ft_strlen(lines[i]);
 		if (len > max_width)
 			max_width = len;
 		i++;
 	}
-	map->map[i] = NULL;
+	map->map2d[i] = NULL;
 	map->height = count;
 	map->width = max_width;
 	return (true);
@@ -81,10 +58,15 @@ int	parse_rgb(const char *str, int *dst)
 	r = ft_atoi(color[0]);
 	g = ft_atoi(color[1]);
 	b = ft_atoi(color[2]);
-	*dst = (r << 16) | (g << 8) | b;
+	// *dst = (r << 16) | (g << 8) | b;
+	*dst = (0xFF << 24) // alfa = 0xFF
+	| (r << 16)     // červená
+	| (g << 8)      // zelená
+	| (b << 0);     // modrá
 	ft_free_split(color);
 	return (0);
 }
+
 
 int	validate_texture_path(const char *path)
 {

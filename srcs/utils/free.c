@@ -6,7 +6,7 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 18:48:57 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/18 19:58:20 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/24 11:47:57 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_free_split(char **split)
 
 int	ft_array_len(char **array)
 {
-	int i;
+	int	i;
 
 	if (!array)
 		return (0);
@@ -39,17 +39,17 @@ int	ft_array_len(char **array)
 	return (i);
 }
 
-void	free_file_data(t_file_data *file)
+void	free_file_data(t_cub *cub)
 {
-	if (file->color.no_path)
-		free(file->color.no_path);
-	if (file->color.so_path)
-		free(file->color.so_path);
-	if (file->color.we_path)
-		free(file->color.we_path);
-	if (file->color.ea_path)
-		free(file->color.ea_path);
-	if (file->map.map)
-		ft_free_split(file->map.map);
+	if (cub->color.no_path)
+		free(cub->color.no_path);
+	if (cub->color.so_path)
+		free(cub->color.so_path);
+	if (cub->color.we_path)
+		free(cub->color.we_path);
+	if (cub->color.ea_path)
+		free(cub->color.ea_path);
+	if (cub->map->map2d)
+		ft_free_split(cub->map->map2d);
 	exit(1);
 }
