@@ -71,26 +71,71 @@ double	compute_wall_height(t_cub *cub)
 // 	//  NORTH
 // }
 
-static t_texture_slice	choose_texture_slice(t_cub *cub)
-{
-	t_texture_slice	slice;
-	int				tile;
+// static t_texture_slice	choose_texture_slice(t_cub *cub)
+// {
+// 	t_texture_slice	slice;
+// 	double			tile;
 
-	tile = TILE_SIZE;
-	if (cub->ray->is_vertical)
-	{
-		slice.data = (cub->ray->angle < M_PI_2 || cub->ray->angle > 3
-				* M_PI_2) ? cub->mlx.tex_ea_data : cub->mlx.tex_we_data;
-		slice.offset = fmod(cub->ray->hit_y, tile) / (double)tile;
-	}
-	else
-	{
-		slice.data = (cub->ray->angle > 0
-				&& cub->ray->angle < M_PI) ? cub->mlx.tex_so_data : cub->mlx.tex_no_data;
-		slice.offset = fmod(cub->ray->hit_x, tile) / (double)tile;
-	}
-	return (slice);
+// 	tile = (double)TILE_SIZE;
+// 	if (cub->ray->is_vertical)
+// 	{
+// 		slice.data = (cub->ray->angle < M_PI_2 || cub->ray->angle > 3
+// 				* M_PI_2) ? cub->mlx.tex_ea_data : cub->mlx.tex_we_data;
+// 		slice.offset = fmod(cub->ray->hit_y, tile) / (double)tile;
+// 	}
+// 	else
+// 	{
+// 		slice.data = (cub->ray->angle > 0
+// 				&& cub->ray->angle < M_PI) ? cub->mlx.tex_so_data : cub->mlx.tex_no_data;
+// 		slice.offset = fmod(cub->ray->hit_x, tile) / (double)tile;
+// 	}
+// 	return (slice);
+// }
+
+static t_texture_slice choose_texture_slice(t_cub *cub)
+{
+    t_texture_slice slice;
+    double           tile      = (double)TILE_SIZE;
+    double           hit_pos;
+
+    if (cub->ray->is_vertical)
+    {
+        if (cub->ray->angle < M_PI_2 || cub->ray->angle > 3*M_PI_2)
+            slice.data = cub->mlx.tex_ea_data;
+        else
+            slice.data = cub->mlx.tex_we_data;
+        hit_pos = cub->ray->hit_y;
+    }
+    else
+    {
+        if (cub->ray->angle > 0 && cub->ray->angle < M_PI)
+            slice.data = cub->mlx.tex_so_data;
+        else
+            slice.data = cub->mlx.tex_no_data;
+        hit_pos = cub->ray->hit_x;
+    }
+
+    // výpočet offsetu [0..1]
+    hit_pos = fmod(hit_pos, tile);
+    if (hit_pos < 0) hit_pos += tile;
+    slice.offset = hit_pos / tile;
+
+    // --- DEBUG PRINTS: zde ---
+    {
+        int tex_w = cub->mlx.img_w;
+        int tex_x = (int)(slice.offset * tex_w);
+        if (cub->ray->is_vertical)
+            printf("[DEBUG] VERT wall: hit_y=%.3f  offset=%.3f  tex_x=%d\n",
+                   cub->ray->hit_y, slice.offset, tex_x);
+        else
+            printf("[DEBUG] HORIZ wall: hit_x=%.3f  offset=%.3f  tex_x=%d\n",
+                   cub->ray->hit_x, slice.offset, tex_x);
+    }
+    // --- konec DEBUG ---
+
+    return slice;
 }
+
 
 void	draw_wall(t_cub *cub, int ray_x, int top, int bottom)
 {
