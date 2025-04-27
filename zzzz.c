@@ -64,7 +64,7 @@ typedef struct s_cub_data
 // 	int i, j;
 // 	for (i = 0; i < TILE_SIZE; i++)
 // 		for (j = 0; j < TILE_SIZE; j++)
-// 			mlx_pixel_put(cub->mlx, cub->win, x0 + j, y0 + i, color);
+// 			mlx_pixel_put(cub->mlx.mlx cub->mlx.window, x0 + j, y0 + i, color);
 // }
 
 /*========================================================================
@@ -112,7 +112,8 @@ void	draw_dot(t_cub *cub)
 	int i, j;
 	for (i = 0; i < DOT_DIM; i++)
 		for (j = 0; j < DOT_DIM; j++)
-			mlx_pixel_put(cub->mlx, cub->win, cub->x + j, cub->y + i, 0xFF0000);
+			mlx_pixel_put(cub->mlx.mlx cub->mlx.window, cub->x + j, cub->y + i,
+				0xFF0000);
 }
 
 /*========================================================================
@@ -154,7 +155,7 @@ void	draw_arrow(t_cub *cub)
 	// Draw the arrow in blue
 	for (int i = 0; i <= steps; i++)
 	{
-		mlx_pixel_put(cub->mlx, cub->win, (int)x, (int)y, 0x0000FF);
+		mlx_pixel_put(cub->mlx.mlx cub->mlx.window, (int)x, (int)y, 0x0000FF);
 		x += x_inc;
 		y += y_inc;
 	}
@@ -194,7 +195,7 @@ void	draw_line_until_wall(t_cub *cub, float start_x, float start_y,
 		if (cub->map[map_y][map_x] == 1)
 			break ;
 		// Draw this pixel of the ray
-		mlx_pixel_put(cub->mlx, cub->win, (int)x, (int)y, color);
+		mlx_pixel_put(cub->mlx.mlx cub->mlx.window, (int)x, (int)y, color);
 		// Step forward one pixel
 		x += dx;
 		y += dy;
@@ -273,7 +274,7 @@ int	key_hook(int keycode, t_cub *cub)
 		}
 	}
 	// Clear & redraw everything
-	mlx_clear_window(cub->mlx, cub->win);
+	mlx_clear_window(cub->mlx.mlx cub->mlx.window);
 	redraw(cub);
 	draw_dot(cub);
 	// Cast a ray from the dot’s center in direction pa (green)

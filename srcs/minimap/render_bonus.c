@@ -71,7 +71,7 @@ void	safe_mlx_pixel_put_bonus(t_cub *cub, int x, int y, int color)
 	cub->mini.img_data[idx] = pack_bgra_bonus(color);
 }
 
-void	draw_tile(t_cub *cub, t_xy_i start, int tile_size, int color)
+void	draw_tile_bonus(t_cub *cub, t_xy_i start, int tile_size, int color)
 {
 	t_xy_i	px;
 
@@ -135,7 +135,7 @@ void	draw_ray_minimap_bonus(t_cub *cub, double angle, double distance)
 	mlen = 0.0f;
 	center.x = (int)mx - 3;
 	center.y = (int)my - 3;
-	draw_tile(cub, center, 7, 0xFF0000FF);
+	draw_tile_bonus(cub, center, 7, 0xFF0000FF);
 	// step until either we hit a wall or exceed max_mlen
 	while (mlen < max_mlen)
 	{
@@ -178,7 +178,7 @@ void	render_minimap_bonus(t_cub *cub)
 			color = (cub->map->map2d[map_i.y][map_i.x] == '1') ? 0x808080FF : 0xFFFFFFFF;
 			pixel.x = map_i.x * cub->mini.tile_size;
 			pixel.y = map_i.y * cub->mini.tile_size;
-			draw_tile(cub, pixel, cub->mini.tile_size, color);
+			draw_tile_bonus(cub, pixel, cub->mini.tile_size, color);
 			map_i.x++;
 		}
 		map_i.y++;

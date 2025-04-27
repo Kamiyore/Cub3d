@@ -1,8 +1,4 @@
 
-<<<<<<< HEAD
-
-=======
->>>>>>> kiki
 #include "../../include/cub3d.h"
 
 /*
@@ -61,21 +57,20 @@ double	compute_wall_height(t_cub *cub)
 	return (screen_wall_height);
 }
 
-<<<<<<< HEAD
-static inline int	pack_bgra(int raw_rgba)
-{
-	unsigned char	r;
-	unsigned char	g;
-	unsigned char	b;
-	unsigned char	a;
+// static inline int	pack_bgra(int raw_rgba)
+// {
+// 	unsigned char	r;
+// 	unsigned char	g;
+// 	unsigned char	b;
+// 	unsigned char	a;
 
-	r = (raw_rgba >> 24) & 0xFF;
-	g = (raw_rgba >> 16) & 0xFF;
-	b = (raw_rgba >> 8) & 0xFF;
-	a = raw_rgba & 0xFF;
-	// Image buffer expects: [ byte0=B ][ byte1=G ][ byte2=R ][ byte3=A ]
-	return ((a << 24) | (r << 16) | (g << 8) | b);
-}
+// 	r = (raw_rgba >> 24) & 0xFF;
+// 	g = (raw_rgba >> 16) & 0xFF;
+// 	b = (raw_rgba >> 8) & 0xFF;
+// 	a = raw_rgba & 0xFF;
+// 	// Image buffer expects: [ byte0=B ][ byte1=G ][ byte2=R ][ byte3=A ]
+// 	return ((a << 24) | (r << 16) | (g << 8) | b);
+// }
 
 void	safe_mlx_pixel_put(t_cub *cub, int x, int y, int color)
 {
@@ -92,7 +87,7 @@ void	safe_mlx_pixel_put(t_cub *cub, int x, int y, int color)
 	// size_l is the number of bytes per scanline
 	// divide by 4 because img_data is an int* (4 bytes per pixel)
 	idx = y * (cub->size_l / 4) + x;
-	cub->img_data[idx] = pack_bgra(color);
+	cub->img_data[idx] = color;
 }
 
 void	draw_floor_ceiling(t_cub *cub, int ray_count, int top_pix, int bot_pix)
@@ -102,152 +97,128 @@ void	draw_floor_ceiling(t_cub *cub, int ray_count, int top_pix, int bot_pix)
 	i = bot_pix;
 	while (i < SCREEN_HEIGHT)
 	{
-		safe_mlx_pixel_put(cub, ray_count, i, 0xB99470FF); // todo floor color
+		safe_mlx_pixel_put(cub, ray_count, i, cub->color.f_color);
 		i++;
 	}
 	i = 0;
 	while (i < top_pix)
 	{
-		safe_mlx_pixel_put(cub, ray_count, i, 0x89CFF3FF); // todo ceiling color
+		safe_mlx_pixel_put(cub, ray_count, i, cub->color.c_color);
 		i++;
 	}
 }
 
-int	get_color(t_cub *cub)
+t_texture_data	get_texture_data(t_cub *cub)
 {
-	if (cub->ray->is_vartical)
+	if (cub->ray->is_vertical_wall)
 	{
 		if (look_right(cub->ray->angle))
-			return (0x6FD96FFF);
+			return (cub->mlx.tex_ea_data);
 		else
-			return (0xE1D66FFF);
+			return (cub->mlx.tex_we_data);
 	}
 	else
 	{
 		if (look_down(cub->ray->angle))
-			return (0xD94C4CFF);
+			return (cub->mlx.tex_so_data);
 		else
-			return (0x4C6ED9FF);
+			return (cub->mlx.tex_no_data);
 	}
-=======
-// static void	*get_wall_image(t_cub *cub)
-// {
-// 	if (cub->ray->is_vertical)
-// 		return (cub->ray->angle < M_PI_2 || cub->ray->angle > 3
-// 			* M_PI_2) ? cub->mlx.img_ea // EAST
-// 																			: cub->mlx.img_we;
-// 	//  WEST
-// 	else
-// 		return (cub->ray->angle > 0.0f
-// 			&& cub->ray->angle < M_PI) ? cub->mlx.img_so // SOUTH
-// 																	: cub->mlx.img_no;
-// 	//  NORTH
-// }
-
-// static t_texture_slice	choose_texture_slice(t_cub *cub)
-// {
-// 	t_texture_slice	slice;
-// 	double			tile;
-
-// 	tile = (double)TILE_SIZE;
-// 	if (cub->ray->is_vertical)
-// 	{
-// 		slice.data = (cub->ray->angle < M_PI_2 || cub->ray->angle > 3
-// 				* M_PI_2) ? cub->mlx.tex_ea_data : cub->mlx.tex_we_data;
-// 		slice.offset = fmod(cub->ray->hit_y, tile) / (double)tile;
-// 	}
-// 	else
-// 	{
-// 		slice.data = (cub->ray->angle > 0
-// 				&& cub->ray->angle < M_PI) ? cub->mlx.tex_so_data : cub->mlx.tex_no_data;
-// 		slice.offset = fmod(cub->ray->hit_x, tile) / (double)tile;
-// 	}
-// 	return (slice);
-// }
-
-static t_texture_slice choose_texture_slice(t_cub *cub)
-{
-    t_texture_slice slice;
-    double           tile      = (double)TILE_SIZE;
-    double           hit_pos;
-
-    if (cub->ray->is_vertical)
-    {
-        if (cub->ray->angle < M_PI_2 || cub->ray->angle > 3*M_PI_2)
-            slice.data = cub->mlx.tex_ea_data;
-        else
-            slice.data = cub->mlx.tex_we_data;
-        hit_pos = cub->ray->hit_y;
-    }
-    else
-    {
-        if (cub->ray->angle > 0 && cub->ray->angle < M_PI)
-            slice.data = cub->mlx.tex_so_data;
-        else
-            slice.data = cub->mlx.tex_no_data;
-        hit_pos = cub->ray->hit_x;
-    }
-
-    // výpočet offsetu [0..1]
-    hit_pos = fmod(hit_pos, tile);
-    if (hit_pos < 0) hit_pos += tile;
-    slice.offset = hit_pos / tile;
-
-    // --- DEBUG PRINTS: zde ---
-    {
-        int tex_w = cub->mlx.img_w;
-        int tex_x = (int)(slice.offset * tex_w);
-        if (cub->ray->is_vertical)
-            printf("[DEBUG] VERT wall: hit_y=%.3f  offset=%.3f  tex_x=%d\n",
-                   cub->ray->hit_y, slice.offset, tex_x);
-        else
-            printf("[DEBUG] HORIZ wall: hit_x=%.3f  offset=%.3f  tex_x=%d\n",
-                   cub->ray->hit_x, slice.offset, tex_x);
-    }
-    // --- konec DEBUG ---
-
-    return slice;
->>>>>>> kiki
 }
 
-
-void	draw_wall(t_cub *cub, int ray_x, int top, int bottom)
+/**
+ * Compute which column of the texture to sample based on where
+ * the ray hit within a TILE_SIZE‐wide wall tile.
+ */
+double	get_texture_x(t_cub *cub, t_texture_data sl)
 {
-	t_texture_slice	sl;
-	int				tex_w;
-	int				tex_h;
-	double			wall_h;
-	int				tex_x;
-	int				color;
+	double	hit;
 
-	sl = choose_texture_slice(cub);
-	tex_w = cub->mlx.img_w;
-	tex_h = cub->mlx.img_h;
-	wall_h = bottom - top;
-	tex_x = (int)(sl.offset * tex_w);
-	for (int y = top; y < bottom; y++)
+	hit = fmod(cub->ray->inter_midpoint, TILE_SIZE);
+	return (hit * ((double)sl.width / TILE_SIZE));
+}
+/**
+ * calculate_texture_start_row()
+ * -----------------------------
+ * Given a wall slice whose top may be above the screen, compute the
+ * starting Y offset within the wall texture so sampling lines up
+ * with the visible portion.
+ *
+ * real_top               = theoretical wall‐slice top Y (can be <0)
+ * screen_top             = clamped draw start Y on screen (≥0)
+ * wall_height            = wall slice height in screen pixels
+ * tex_to_screen_ratio    = texture_height / wall_height
+ *
+ * returns: first texture row to sample (≥0)
+ */
+double	calculate_texture_start_row(t_wall wall, double tex_to_screen_ratio)
+{
+	double	skipped_rows;
+	double	tex_y_start;
+	double	real_top;
+	double	screen_top;
+	double	wall_height;
+
+	real_top = wall.top_pix;
+	screen_top = wall.top_screen;
+	wall_height = wall.height;
+	skipped_rows = screen_top - real_top;
+	tex_y_start = skipped_rows * tex_to_screen_ratio;
+	return (tex_y_start);
+}
+
+static int	get_color_from_texture(t_cub *cub, t_texture_data tx, int tex_y)
+{
+	int	color;
+	int	tex_x;
+
+	tex_x = get_texture_x(cub, tx);
+	color = tx.data[tex_y * tx.width + tex_x];
+	return (color);
+}
+
+void	draw_wall(t_cub *cub, int ray_x, t_wall wall)
+{
+	t_texture_data	tx;
+	double			tx_step_y;
+	double			tex_y;
+	int				color;
+	int				y;
+
+	y = wall.top_screen;
+	tx = get_texture_data(cub);
+	tx_step_y = (double)tx.height / wall.height;
+	tex_y = calculate_texture_start_row(wall, tx_step_y);
+	while (y < wall.bot_screen)
 	{
-		double rel = (y - top) / wall_h; // 0..1
-		int tex_y = (int)(rel * tex_h);  // 0..tex_h-1
-		color = sl.data[tex_y * tex_w + tex_x];
+		// if ((int)tex_y > (int)tx.height)
+		// {
+		// 	tex_y = tx.height - 1;
+		// 	printf("ty = %f tx.height = %d \n", tex_y, tx.height);
+		// }
+		color = get_color_from_texture(cub, tx, tex_y);
 		safe_mlx_pixel_put(cub, ray_x, y, color);
+		tex_y += tx_step_y;
+		y++;
 	}
 }
 
 void	render_wall(t_cub *cub, int ray_count)
 {
-	double	wall_height;
-	double	bot_pix;
-	double	top_pix;
+	t_wall	wall;
 
 	cub->ray->distance = fix_fisheye(cub);
-	wall_height = compute_wall_height(cub);
-	bot_pix = (SCREEN_HEIGHT / 2) + (wall_height / 2);
-	if (bot_pix > SCREEN_HEIGHT)
-		bot_pix = SCREEN_HEIGHT;
-	top_pix = (SCREEN_HEIGHT / 2) - (wall_height / 2);
-	if (top_pix < 0)
-		top_pix = 0;
-	draw_wall(cub, ray_count, top_pix, bot_pix);
-	draw_floor_ceiling(cub, ray_count, top_pix, bot_pix);
+	wall.height = compute_wall_height(cub);
+	wall.bot_pix = (SCREEN_HEIGHT / 2) + (wall.height / 2);
+	wall.top_pix = (SCREEN_HEIGHT / 2) - (wall.height / 2);
+	if (wall.bot_pix > SCREEN_HEIGHT)
+		wall.bot_screen = SCREEN_HEIGHT;
+	else
+		wall.bot_screen = wall.bot_pix;
+	if (wall.top_pix < 0)
+		wall.top_screen = 0;
+	else
+		wall.top_screen = wall.top_pix;
+	draw_wall(cub, ray_count, wall);
+	draw_floor_ceiling(cub, ray_count, wall.top_screen, wall.bot_screen);
 }

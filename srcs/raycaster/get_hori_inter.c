@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 
-=======
->>>>>>> kiki
 #include "../../include/cub3d.h"
 
 // static float	get_step_y(t_cub *cub)
@@ -47,31 +44,31 @@ static float	inside_adjust_y(t_cub *cub)
 		return (-0.0001f);
 }
 
-float	get_horizontal_intersection(t_cub *cub)
+t_inter	get_horizontal_intersection(t_cub *cub)
 {
-	t_xy	next_inter_step;
-	float	inter_x;
-	float	inter_y;
-	t_xy	dist_to_wall;
+	t_xy_f	next_inter_step;
+	t_xy_f	dist_to_wall;
+	t_inter	inter;
 
 	next_inter_step.x = get_horizontal_step_x(cub);
 	next_inter_step.y = get_horizontal_step_y(cub);
-	inter_y = get_first_intersection_y(cub);
-	inter_x = get_first_intersection_x(cub, inter_y);
-	while (!is_out_of_bounds(cub, inter_x, inter_y + inside_adjust_y(cub)))
+	inter.y = get_first_intersection_y(cub);
+	inter.x = get_first_intersection_x(cub, inter.y);
+	while (!is_out_of_bounds(cub, inter.x, inter.y + inside_adjust_y(cub)))
 	{
-		if (is_wall(cub, inter_x, inter_y + inside_adjust_y(cub)))
+		if (is_wall(cub, inter.x, inter.y + inside_adjust_y(cub)))
 		{
-			cub->ray->hit_x = inter_x;
-			cub->ray->hit_y = inter_y;
-			dist_to_wall.y = inter_y - cub->ply->pixel_y;
-			dist_to_wall.x = inter_x - cub->ply->pixel_x;
-			return (compute_hypotenuse(dist_to_wall.x, dist_to_wall.y));
+			dist_to_wall.y = inter.y - cub->ply->pixel_y;
+			dist_to_wall.x = inter.x - cub->ply->pixel_x;
+			inter.len_to_wall = compute_hypotenuse(dist_to_wall.x,
+					dist_to_wall.y);
+			return (inter);
 		}
-		inter_y += next_inter_step.y;
-		inter_x += next_inter_step.x;
+		inter.y += next_inter_step.y;
+		inter.x += next_inter_step.x;
 	}
-	return (FLT_MAX);
+	inter.len_to_wall = FLT_MAX;
+	return (inter);
 }
 
 // int	inter_check(float angle, float *inter)
@@ -89,7 +86,7 @@ float	get_horizontal_intersection(t_cub *cub)
 // {
 // 	float	h_x;
 // 	float	h_y;
-// 	t_xy	step;
+// 	t_xy_f	step;
 // 	int		pixel;
 // 	float	angle;
 

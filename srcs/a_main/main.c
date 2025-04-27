@@ -6,7 +6,7 @@
 /*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 10:01:50 by oyuhi             #+#    #+#             */
-/*   Updated: 2025/04/27 10:01:55 by oyuhi            ###   ########.fr       */
+/*   Updated: 2025/04/27 11:36:01 by oyuhi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ void	start_game(t_cub *cub)
 	cub->img_ptr = mlx_new_image(cub->mlx.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	cub->img_data = (int *)mlx_get_data_addr(cub->img_ptr, &cub->bpp,
 			&cub->size_l, &cub->endian);
-	mlx_loop_hook(cub->mlx.mlx, &game_loop, cub);
-	mlx_hook(cub->mlx.window, 2, 1L << 0, key_press, cub);
+	mlx_loop_hook(cub->mlx.mlx, &mlx_game_loop, cub);
+	mlx_hook(cub->mlx.window, 2, 1L << 0, mlx_key_press, cub);
 	mlx_hook(cub->mlx.window, 17, 0, x_button_exit, cub);
-	mlx_key_hook(cub->mlx.window, key_press, cub);
-	mlx_hook(cub->mlx.window, 3, 1L << 1, key_release, cub);
+	mlx_key_hook(cub->mlx.window, mlx_key_press, cub);
+	mlx_hook(cub->mlx.window, 3, 1L << 1, mlx_key_release, cub);
 	mlx_loop(cub->mlx.mlx);
 }
 
