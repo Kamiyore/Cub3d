@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "stdio.h": "c",
-        "keysym.h": "c"
+        "keysym.h": "c",
+        "minimap_bonus.h": "c",
+        "unistd.h": "c"
     }
 }

@@ -1,6 +1,6 @@
 
 
-#include "minicub.h"
+#include "../../include/cub3d.h"
 
 int	mlx_key_press(int keycode, void *param)
 {

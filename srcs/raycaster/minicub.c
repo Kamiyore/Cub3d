@@ -1,6 +1,6 @@
 
 
-#include "minicub.h"
+#include "../../include/cub3d.h"
 
 //##############################################################################################//
 //############################## START THE GAME AND THE GAME LOOP ##############################//
@@ -18,8 +18,19 @@ int	mlx_game_loop(void *param)
 	// 3) movement & rotation
 	movement(cub);
 	// 4) raycast into mlx->img_data[]
+	render_minimap_bonus(cub);
 	cast_rays(cub);
 	mlx_put_image_to_window(cub->mlx, cub->win, cub->img_ptr, 0, 0);
+	// mlx_put_image_to_window(cub->mlx, cub->win, cub->mini.img_ptr, 0, 0);
+	// 1) redraw the minimap into its image buffer
+	// 2) blit the minimap at the **left** corner
+	if (BONUS_MODE == true)
+		mlx_put_image_to_window(cub->mlx,
+								cub->win,
+								cub->mini.img_ptr,
+								0, // x = 0 (left edge)
+								0  // y = 0 (top)
+		);
 	return (0);
 }
 
@@ -61,6 +72,7 @@ void	start_the_game(t_map *map)
 	cub.img_ptr = mlx_new_image(cub.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	cub.img_data = (int *)mlx_get_data_addr(cub.img_ptr, &cub.bpp, &cub.size_l,
 			&cub.endian);
+	init_minimap_bonus(&cub);
 	mlx_loop_hook(cub.mlx, &mlx_game_loop, &cub);
 	mlx_hook(cub.win, KeyPress, KeyPressMask, &mlx_key_press, &cub);
 	mlx_hook(cub.win, KeyRelease, KeyReleaseMask, &mlx_key_release, &cub);
@@ -78,13 +90,13 @@ t_map	*init_map(void)
 	map = ft_calloc(1, sizeof(t_map));
 	map->map2d = calloc(10, sizeof(char *));                // init the map
 	map->map2d[0] = ft_strdup("1111111111110111111111111"); // fill the map
-	map->map2d[1] = ft_strdup("1000000000001000000000011");
-	map->map2d[2] = ft_strdup("1000000000000000000000001");
-	map->map2d[3] = ft_strdup("1000000000000010001000001");
+	map->map2d[1] = ft_strdup("1000000000001000011000011");
+	map->map2d[2] = ft_strdup("1011100110011100001000001");
+	map->map2d[3] = ft_strdup("1000000011100010001000001");
 	map->map2d[4] = ft_strdup("10000000000000P0000100001");
-	map->map2d[5] = ft_strdup("1000000000000000000000001");
-	map->map2d[6] = ft_strdup("1000000000000000000000001");
-	map->map2d[7] = ft_strdup("1000000000000000000000001");
+	map->map2d[5] = ft_strdup("1111000010000000000000001");
+	map->map2d[6] = ft_strdup("1001100000000010000000001");
+	map->map2d[7] = ft_strdup("1000000010010000000000001");
 	map->map2d[8] = ft_strdup("1111111111111111111111111");
 	map->map2d[9] = NULL;
 	map->player_y = 4;

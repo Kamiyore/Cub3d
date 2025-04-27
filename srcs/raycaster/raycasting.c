@@ -1,6 +1,6 @@
 
 
-#include "minicub.h"
+#include "../../include/cub3d.h"
 
 //#################################################################################//
 //############################## THE RAYCASTING CODE ##############################//
@@ -57,6 +57,7 @@ void	cast_rays(t_cub *cub)
 			cub->ray->distance = horizon_inter;
 			cub->ray->is_vartical = false;
 		}
+		draw_ray_minimap_bonus(cub, cub->ray->angle, cub->ray->distance);
 		print_first_raycast(cub, ray_count, horizon_inter, varti_inter);
 		render_wall(cub, ray_count);
 		ray_count++;

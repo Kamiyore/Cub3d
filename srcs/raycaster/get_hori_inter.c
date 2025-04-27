@@ -1,5 +1,5 @@
 
-#include "minicub.h"
+#include "../../include/cub3d.h"
 
 // static float	get_step_y(t_cub *cub)
 // {

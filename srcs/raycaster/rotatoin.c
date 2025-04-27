@@ -1,5 +1,5 @@
 
-#include "minicub.h"
+#include "../../include/cub3d.h"
 
 static void	rotate_player(t_cub *cub, int sign)
 {

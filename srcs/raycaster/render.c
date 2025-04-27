@@ -1,6 +1,6 @@
 
 
-#include "minicub.h"
+#include "../../include/cub3d.h"
 
 /*
 	// cos(θ) = adjacent (x) / hypotenuse, so x = hypotenuse * cos(θ)
@@ -109,50 +109,21 @@ void	draw_floor_ceiling(t_cub *cub, int ray_count, int top_pix, int bot_pix)
 	}
 }
 
-// int	get_color(t_cub *cub)
-// {
-// 	float	a;
-
-// 	a = normalize_angle(cub->ray->angle);
-// if (cub->ray->is_vartical)
-// {
-// 	// Vertical wall: South vs North
-// 	if (a > 0.0f && a < M_PI)
-// 		return (0xD94C4CFF); // SOUTH → soft red
-// 	else
-// 		return (0x4C6ED9FF); // NORTH → soft blue
-// }
-// else
-// {
-// 	// Horizontal wall: West vs East
-// 	if (a > M_PI_2 && a < 3.0f * M_PI_2)
-// 		return (0xE1D66FFF); // WEST → warm yellow
-// 	else
-// 		return (0x6FD96FFF); // EAST → soft green
-// }
-// }
-//↑間違ってたぽい
-
-//↓あってそう
 int	get_color(t_cub *cub)
 {
-	// float	a;
-	// a = normalize_angle(cub->ray->angle);
 	if (cub->ray->is_vartical)
 	{
-		// 垂直グリッド → 東西の壁
-		if (cub->ray->angle < M_PI_2 || cub->ray->angle > 3 * M_PI_2)
-			return (0x6FD96FFF); // EAST（右壁：緑）
+		if (look_right(cub->ray->angle))
+			return (0x6FD96FFF);
 		else
-			return (0xE1D66FFF); // WEST（左壁：黄）
+			return (0xE1D66FFF);
 	}
 	else
 	{
-		// 水平グリッド → 南北の壁
-		if (cub->ray->angle > 0.0f && cub->ray->angle < M_PI)
-			return (0xD94C4CFF); // SOUTH（下方向の壁：赤）
+		if (look_down(cub->ray->angle))
+			return (0xD94C4CFF);
 		else
-			return (0x4C6ED9FF); // NORTH（上方向の壁：青）
+			return (0x4C6ED9FF);
 	}
 }
 

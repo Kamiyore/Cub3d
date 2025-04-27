@@ -1,6 +1,6 @@
 
 
-#include "minicub.h"
+#include "../../include/cub3d.h"
 
 /*
 	// To strafe perpendicular to the facing direction (θ),

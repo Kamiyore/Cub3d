@@ -1,6 +1,6 @@
 
 
-#include "minicub.h"
+#include "../../include/cub3d.h"
 
 static int	move_only_y(t_cub *cub, t_xy_i new_cell, t_xy_i old_cell,
 		t_xy_i new_ply)
