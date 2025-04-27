@@ -6,7 +6,7 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:28:59 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/22 16:23:53 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/24 11:55:36 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,16 @@ int	find_player_pos(t_map *map_data)
 	int	j;
 
 	i = 0;
-	while (map_data->map[i])
+	while (map_data->map2d[i])
 	{
 		j = 0;
-		while (map_data->map[i][j])
+		while (map_data->map2d[i][j])
 		{
-			if (is_player(map_data->map[i][j]))
+			if (is_player(map_data->map2d[i][j]))
 			{
 				map_data->player_x = j;
 				map_data->player_y = i;
-				map_data->player_dir = map_data->map[i][j];
+				map_data->player_dir = map_data->map2d[i][j];
 				return (true);
 			}
 			j++;
@@ -116,16 +116,16 @@ int	check_remaining_open_areas(char **copy)
 	return (1);
 }
 
-int	is_surrounded_by_wall(t_minicube *cube)
+int	is_surrounded_by_wall(t_cub *cub)
 {
 	char	**copy;
 
-	if (!find_player_pos(&cube->data.map))
+	if (!find_player_pos(cub->map))
 		return (ft_error("Player not found.\n"));
-	copy = copy_map(cube->data.map.map);
+	copy = copy_map(cub->map->map2d);
 	if (!copy)
 		return (ft_error("Memory allocation error.\n"));
-	if (!flood_fill(copy, cube->data.map.player_x, cube->data.map.player_y))
+	if (!flood_fill(copy, cub->map->player_x, cub->map->player_y))
 	{
 		ft_free_split(copy);
 		return (ft_error("Player area not enclosed.\n"));

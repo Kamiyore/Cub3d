@@ -1,5 +1,8 @@
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> kiki
 #include "../../include/cub3d.h"
 
 /*
@@ -58,6 +61,7 @@ double	compute_wall_height(t_cub *cub)
 	return (screen_wall_height);
 }
 
+<<<<<<< HEAD
 static inline int	pack_bgra(int raw_rgba)
 {
 	unsigned char	r;
@@ -125,17 +129,108 @@ int	get_color(t_cub *cub)
 		else
 			return (0x4C6ED9FF);
 	}
+=======
+// static void	*get_wall_image(t_cub *cub)
+// {
+// 	if (cub->ray->is_vertical)
+// 		return (cub->ray->angle < M_PI_2 || cub->ray->angle > 3
+// 			* M_PI_2) ? cub->mlx.img_ea // EAST
+// 																			: cub->mlx.img_we;
+// 	//  WEST
+// 	else
+// 		return (cub->ray->angle > 0.0f
+// 			&& cub->ray->angle < M_PI) ? cub->mlx.img_so // SOUTH
+// 																	: cub->mlx.img_no;
+// 	//  NORTH
+// }
+
+// static t_texture_slice	choose_texture_slice(t_cub *cub)
+// {
+// 	t_texture_slice	slice;
+// 	double			tile;
+
+// 	tile = (double)TILE_SIZE;
+// 	if (cub->ray->is_vertical)
+// 	{
+// 		slice.data = (cub->ray->angle < M_PI_2 || cub->ray->angle > 3
+// 				* M_PI_2) ? cub->mlx.tex_ea_data : cub->mlx.tex_we_data;
+// 		slice.offset = fmod(cub->ray->hit_y, tile) / (double)tile;
+// 	}
+// 	else
+// 	{
+// 		slice.data = (cub->ray->angle > 0
+// 				&& cub->ray->angle < M_PI) ? cub->mlx.tex_so_data : cub->mlx.tex_no_data;
+// 		slice.offset = fmod(cub->ray->hit_x, tile) / (double)tile;
+// 	}
+// 	return (slice);
+// }
+
+static t_texture_slice choose_texture_slice(t_cub *cub)
+{
+    t_texture_slice slice;
+    double           tile      = (double)TILE_SIZE;
+    double           hit_pos;
+
+    if (cub->ray->is_vertical)
+    {
+        if (cub->ray->angle < M_PI_2 || cub->ray->angle > 3*M_PI_2)
+            slice.data = cub->mlx.tex_ea_data;
+        else
+            slice.data = cub->mlx.tex_we_data;
+        hit_pos = cub->ray->hit_y;
+    }
+    else
+    {
+        if (cub->ray->angle > 0 && cub->ray->angle < M_PI)
+            slice.data = cub->mlx.tex_so_data;
+        else
+            slice.data = cub->mlx.tex_no_data;
+        hit_pos = cub->ray->hit_x;
+    }
+
+    // výpočet offsetu [0..1]
+    hit_pos = fmod(hit_pos, tile);
+    if (hit_pos < 0) hit_pos += tile;
+    slice.offset = hit_pos / tile;
+
+    // --- DEBUG PRINTS: zde ---
+    {
+        int tex_w = cub->mlx.img_w;
+        int tex_x = (int)(slice.offset * tex_w);
+        if (cub->ray->is_vertical)
+            printf("[DEBUG] VERT wall: hit_y=%.3f  offset=%.3f  tex_x=%d\n",
+                   cub->ray->hit_y, slice.offset, tex_x);
+        else
+            printf("[DEBUG] HORIZ wall: hit_x=%.3f  offset=%.3f  tex_x=%d\n",
+                   cub->ray->hit_x, slice.offset, tex_x);
+    }
+    // --- konec DEBUG ---
+
+    return slice;
+>>>>>>> kiki
 }
 
-void	draw_wall(t_cub *cub, int ray_count, int top_pix, int bot_pix)
-{
-	int	color;
 
-	color = get_color(cub);
-	while (top_pix < bot_pix)
+void	draw_wall(t_cub *cub, int ray_x, int top, int bottom)
+{
+	t_texture_slice	sl;
+	int				tex_w;
+	int				tex_h;
+	double			wall_h;
+	int				tex_x;
+	int				color;
+
+	sl = choose_texture_slice(cub);
+	tex_w = cub->mlx.img_w;
+	tex_h = cub->mlx.img_h;
+	wall_h = bottom - top;
+	tex_x = (int)(sl.offset * tex_w);
+	for (int y = top; y < bottom; y++)
 	{
-		safe_mlx_pixel_put(cub, ray_count, top_pix, color);
-		top_pix++;
+		double rel = (y - top) / wall_h; // 0..1
+		int tex_y = (int)(rel * tex_h);  // 0..tex_h-1
+		color = sl.data[tex_y * tex_w + tex_x];
+		safe_mlx_pixel_put(cub, ray_x, y, color);
 	}
 }
 

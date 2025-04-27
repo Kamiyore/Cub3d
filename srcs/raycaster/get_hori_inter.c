@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> kiki
 #include "../../include/cub3d.h"
 
 // static float	get_step_y(t_cub *cub)
@@ -59,6 +62,8 @@ float	get_horizontal_intersection(t_cub *cub)
 	{
 		if (is_wall(cub, inter_x, inter_y + inside_adjust_y(cub)))
 		{
+			cub->ray->hit_x = inter_x;
+			cub->ray->hit_y = inter_y;
 			dist_to_wall.y = inter_y - cub->ply->pixel_y;
 			dist_to_wall.x = inter_x - cub->ply->pixel_x;
 			return (compute_hypotenuse(dist_to_wall.x, dist_to_wall.y));

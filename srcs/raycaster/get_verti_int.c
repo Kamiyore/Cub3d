@@ -1,4 +1,7 @@
+<<<<<<< HEAD:srcs/raycaster/get_varti_int.c
 
+=======
+>>>>>>> kiki:srcs/raycaster/get_verti_int.c
 #include "../../include/cub3d.h"
 
 //#################################################################################//
@@ -38,14 +41,16 @@ float	get_vertical_intersection(t_cub *cub)
 	float	inter_y;
 	t_xy	dist_to_wall;
 
-	next_inter_step.x = get_vartical_step_x(cub);
-	next_inter_step.y = get_vartical_step_y(cub);
+	next_inter_step.x = get_vertical_step_x(cub);
+	next_inter_step.y = get_vertical_step_y(cub);
 	inter_x = get_first_intersection_x(cub);
 	inter_y = get_first_intersection_y(cub, inter_x);
 	while (!is_out_of_bounds(cub, inter_x + inside_adjust_x(cub), inter_y))
 	{
 		if (is_wall(cub, inter_x + inside_adjust_x(cub), inter_y))
 		{
+			cub->ray->hit_x = inter_x;
+			cub->ray->hit_y = inter_y;
 			dist_to_wall.x = inter_x - cub->ply->pixel_x;
 			dist_to_wall.y = inter_y - cub->ply->pixel_y;
 			return (compute_hypotenuse(dist_to_wall.x, dist_to_wall.y));

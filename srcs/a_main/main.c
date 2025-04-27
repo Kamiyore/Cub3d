@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
+/*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 12:12:03 by knemcova          #+#    #+#             */
+<<<<<<< HEAD
 <<<<<<< HEAD
 /*   Updated: 2025/04/27 09:29:08 by oyuhi            ###   ########.fr       */
 =======
 /*   Updated: 2025/04/23 10:42:33 by knemcova         ###   ########.fr       */
 >>>>>>> debd40837a4cc76c5c5113dbaecfd60a72b24de3
+=======
+/*   Updated: 2025/04/24 18:03:00 by knemcova         ###   ########.fr       */
+>>>>>>> kiki
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,56 +37,47 @@ int	valid_file(const char *filename)
 	return (true);
 }
 
-void	init_file_data(t_minicube *cube)
+void	init_file_data(t_cub *cub)
 {
-	cube->data.color.f_color = -1;
-	cube->data.color.c_color = -1;
-	cube->data.color.no_path = NULL;
-	cube->data.color.so_path = NULL;
-	cube->data.color.we_path = NULL;
-	cube->data.color.ea_path = NULL;
-	cube->data.map.map = NULL;
-	cube->data.map.width = 0;
-	cube->data.map.height = 0;
-	cube->data.map.player_x = -1;
-	cube->data.map.player_y = -1;
-	cube->data.map.player_dir = '\0';
+	cub->map = ft_calloc(1, sizeof(t_map));
+	if (!cub->map)
+		exit(ft_error("Memory allocation failed for map.\n"));
+	cub->color.f_color = -1;
+	cub->color.c_color = -1;
+	cub->color.no_path = NULL;
+	cub->color.so_path = NULL;
+	cub->color.we_path = NULL;
+	cub->color.ea_path = NULL;
+	cub->map->map2d = NULL;
+	cub->map->width = 0;
+	cub->map->height = 0;
+	cub->map->player_x = -1;
+	cub->map->player_y = -1;
+	cub->map->player_dir = '\0';
 }
 
-
-void	start_game(t_minicube *cube)
+void	start_game(t_cub *cub)
 {
-	int x;
-	int y;
-	cube->mlx.mlx = mlx_init();
-	if (!cube->mlx.mlx)
+	cub->ply = init_the_player(cub);
+	cub->ray = init_the_ray();
+	cub->mlx.mlx = mlx_init();
+	if (!cub->mlx.mlx)
 		exit(ft_error("mlx_init failed\n"));
-	cube->mlx.window = mlx_new_window(cube->mlx.mlx, cube->data.map.width
-			* TILE_SIZE, cube->data.map.height * TILE_SIZE, "cub3D map view");
-	load_images(cube);
-	y = 0;
-	while (cube->data.map.map[y])
-	{
-		x = 0;
-		while (cube->data.map.map[y][x])
-		{
-			if (cube->data.map.map[y][x] == '1')
-				mlx_put_image_to_window(cube->mlx.mlx, cube->mlx.window,
-					cube->mlx.img_no, x * TILE_SIZE, y * TILE_SIZE);
-			else
-				mlx_pixel_put(cube->mlx.mlx, cube->mlx.window, x * TILE_SIZE, y
-					* TILE_SIZE, 0x000000);
-			x++;
-		}
-		y++;
-	}
-	mlx_hook(cube->mlx.window, 2, 1L<<0, key_press, cube);
-	mlx_hook(cube->mlx.window, 17, 0, x_button_exit, cube);
-	mlx_key_hook(cube->mlx.window, key_press, cube);
-	mlx_hook(cube->mlx.window, 3, 1L << 1, key_release, cube);
-	mlx_loop(cube->mlx.mlx);
+	cub->mlx.window = mlx_new_window(cub->mlx.mlx, SCREEN_WIDTH, SCREEN_HEIGHT,
+			"Cub3D");
+	load_images(cub);
+	cub->img_ptr = mlx_new_image(cub->mlx.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
+	cub->img_data = (int *)mlx_get_data_addr(cub->img_ptr, &cub->bpp,
+			&cub->size_l, &cub->endian);
+	mlx_loop_hook(cub->mlx.mlx, &game_loop, cub);
+	mlx_hook(cub->mlx.window, 2, 1L << 0, key_press, cub);
+	mlx_hook(cub->mlx.window, 17, 0, x_button_exit, cub);
+	mlx_key_hook(cub->mlx.window, key_press, cub);
+	mlx_hook(cub->mlx.window, 3, 1L << 1, key_release, cub);
+	mlx_loop(cub->mlx.mlx);
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 // int	main(int argc, char **argv)
 // {
@@ -97,20 +92,49 @@ void	start_game(t_minicube *cube)
 // 	return (0);
 // }
 =======
+=======
+void	print_colors(t_cub *cub)
+{
+	int	f_r;
+	int	f_g;
+	int	f_b;
+	int	c_r;
+	int	c_g;
+	int	c_b;
+
+	f_r = (cub->color.f_color >> 16) & 0xFF;
+	f_g = (cub->color.f_color >> 8) & 0xFF;
+	f_b = cub->color.f_color & 0xFF;
+	c_r = (cub->color.c_color >> 16) & 0xFF;
+	c_g = (cub->color.c_color >> 8) & 0xFF;
+	c_b = cub->color.c_color & 0xFF;
+	printf("Floor Color (f_color):\n");
+	printf("RGB: (%d, %d, %d)\n", f_r, f_g, f_b);
+	printf("Hex: 0x%06X\n", cub->color.f_color);
+	printf("\nCeiling Color (c_color):\n");
+	printf("RGB: (%d, %d, %d)\n", c_r, c_g, c_b);
+	printf("Hex: 0x%06X\n", cub->color.c_color);
+}
+
+>>>>>>> kiki
 int	main(int argc, char **argv)
 {
-	t_minicube	cube;
+	t_cub	cub;
 
 	if (argc != 2)
 		return (ft_error("Usage: ./so_long name.ber\n"));
-	init_file_data(&cube);
+	init_file_data(&cub);
 	if (!valid_file(argv[1]))
 		return (ft_error("Invalid file format. Only '.ber'\n"));
-	if (!parse_file(&cube, argv[1]))
+	if (!parse_file(&cub, argv[1]))
 		return (true);
-	if (!validate_map(&cube))
+	if (!validate_map(&cub))
 		return (true);
-	start_game(&cube);
+	print_colors(&cub);
+	start_game(&cub);
 	return (false);
 }
+<<<<<<< HEAD
 >>>>>>> debd40837a4cc76c5c5113dbaecfd60a72b24de3
+=======
+>>>>>>> kiki

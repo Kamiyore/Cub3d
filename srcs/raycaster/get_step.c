@@ -1,5 +1,8 @@
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> kiki
 #include "../../include/cub3d.h"
 
 //#################################################################################//
@@ -33,7 +36,7 @@ float	get_horizontal_step_y(t_cub *cub)
 //##################################### VARTICAL ##################################//
 //#################################################################################//
 
-float	get_vartical_step_y(t_cub *cub)
+float	get_vertical_step_y(t_cub *cub)
 {
 	float	step;
 
@@ -45,9 +48,9 @@ float	get_vartical_step_y(t_cub *cub)
 	return (step);
 }
 
-float	get_vartical_step_x(t_cub *cub)
+float	get_vertical_step_x(t_cub *cub)
 {
-	float step;
+	float	step;
 
 	if (look_right(cub->ray->angle))
 		step = TILE_SIZE;
