@@ -28,30 +28,19 @@ DESIGN_DIR = srcs/design
 RAYCASTER_DIR = srcs/raycaster
 UTILS_DIR = srcs/utils
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 RAY_SRCS := $(wildcard srcs/raycaster/*.c)
 MINIMAP_SRCS := $(wildcard srcs/minimap/*.c)
 
-SRCS = \
-    srcs/a_main/main.c \
-    srcs/parsing/reading_file.c \
-    srcs/utils/free.c \
-    $(RAY_SRCS) \
-	$(MINIMAP_SRCS)
-=======
-=======
->>>>>>> kiki
+
 SRCS = $(MAIN_DIR)/main.c \
 		$(PARSER_DIR)/map_validation.c $(PARSER_DIR)/set_config_and_map.c $(PARSER_DIR)/reading_file.c $(PARSER_DIR)/rgb_validation.c $(PARSER_DIR)/map_layout.c\
-		 $(LOAD_IMAGE_DIR)/parsing_images.c $(LOAD_IMAGE_DIR)/key_handler.c \
-		 $(DESIGN_DIR)/floor_and_ceiling.c \
-		 $(RAYCASTER_DIR)/get_step.c $(RAYCASTER_DIR)/get_hori_inter.c $(RAYCASTER_DIR)/get_verti_int.c $(RAYCASTER_DIR)/minicub.c $(RAYCASTER_DIR)/player_direction.c $(RAYCASTER_DIR)/ray_direction.c $(RAYCASTER_DIR)/raycast_helper.c $(RAYCASTER_DIR)/render.c \
-		 $(UTILS_DIR)/free.c \
-<<<<<<< HEAD
->>>>>>> debd40837a4cc76c5c5113dbaecfd60a72b24de3
-=======
->>>>>>> kiki
+		$(LOAD_IMAGE_DIR)/parsing_images.c $(LOAD_IMAGE_DIR)/key_handler.c \
+		$(DESIGN_DIR)/floor_and_ceiling.c \
+		$(UTILS_DIR)/free.c \
+		$(RAY_SRCS) \
+		$(MINIMAP_SRCS)
+
 
 OBJS = $(SRCS:.c=.o)
 

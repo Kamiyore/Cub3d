@@ -3,18 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/13 12:12:03 by knemcova          #+#    #+#             */
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*   Updated: 2025/04/27 09:29:08 by oyuhi            ###   ########.fr       */
-=======
-/*   Updated: 2025/04/23 10:42:33 by knemcova         ###   ########.fr       */
->>>>>>> debd40837a4cc76c5c5113dbaecfd60a72b24de3
-=======
-/*   Updated: 2025/04/24 18:03:00 by knemcova         ###   ########.fr       */
->>>>>>> kiki
+/*   Created: 2025/04/27 10:01:50 by oyuhi             #+#    #+#             */
+/*   Updated: 2025/04/27 10:01:55 by oyuhi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +69,6 @@ void	start_game(t_cub *cub)
 	mlx_loop(cub->mlx.mlx);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 // int	main(int argc, char **argv)
 // {
 // 	t_config	config;
@@ -91,8 +81,7 @@ void	start_game(t_cub *cub)
 // 		return (1);
 // 	return (0);
 // }
-=======
-=======
+
 void	print_colors(t_cub *cub)
 {
 	int	f_r;
@@ -116,7 +105,6 @@ void	print_colors(t_cub *cub)
 	printf("Hex: 0x%06X\n", cub->color.c_color);
 }
 
->>>>>>> kiki
 int	main(int argc, char **argv)
 {
 	t_cub	cub;
@@ -134,7 +122,3 @@ int	main(int argc, char **argv)
 	start_game(&cub);
 	return (false);
 }
-<<<<<<< HEAD
->>>>>>> debd40837a4cc76c5c5113dbaecfd60a72b24de3
-=======
->>>>>>> kiki
