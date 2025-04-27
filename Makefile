@@ -5,6 +5,12 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 MLX_DIR = minilibx-linux
 
+# allow BONUS_MODE to be set from the command line
+ifdef BONUS_MODE
+CFLAGS += -DBONUS_MODE=true
+endif
+
+
 MLX_FLAGS = -L$(MLX_DIR) -lmlx_Linux -L/usr/lib -lXext -lX11 -lz -lm
 LIBMLX = $(MLX_DIR)/libmlx_Linux.a
 LIBFT_REPO = https://github.com/yuhi-ootani/lifbt_all.git
@@ -20,9 +26,15 @@ MAIN_DIR = srcs/a_main
 PARSER_DIR = srcs/parsing
 UTILS_DIR = srcs/utils
 
-SRCS = $(MAIN_DIR)/main.c \
-		$(PARSER_DIR)/map_validation.c $(PARSER_DIR)/set_config_and_map.c $(PARSER_DIR)/reading_file.c $(PARSER_DIR)/map_layout.c\
-		 $(UTILS_DIR)/free.c \
+RAY_SRCS := $(wildcard srcs/raycaster/*.c)
+MINIMAP_SRCS := $(wildcard srcs/minimap/*.c)
+
+SRCS = \
+    srcs/a_main/main.c \
+    srcs/parsing/reading_file.c \
+    srcs/utils/free.c \
+    $(RAY_SRCS) \
+	$(MINIMAP_SRCS)
 
 OBJS = $(SRCS:.c=.o)
 
@@ -63,4 +75,7 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean
+bonus: CFLAGS += -DBONUS_MODE=true
+bonus: re
+
+.PHONY: all clean fclean bonus ew

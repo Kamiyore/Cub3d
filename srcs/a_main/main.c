@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 12:12:03 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/15 13:50:58 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/27 09:29:08 by oyuhi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,15 @@ int	valid_map_file(const char *filename)
 	return (1);
 }
 
-int	main(int argc, char **argv)
-{
-	t_config	config;
+// int	main(int argc, char **argv)
+// {
+// 	t_config	config;
 
-	if (argc != 2)
-		return (ft_error("Usage: ./so_long name.ber"));
-	if (!valid_map_file(argv[1]))
-		return (ft_error("Invalid file format. Only '.ber'"));
-	if (!parse_file(&config, argv[1]))
-		return (1);
-	if(!validate_map(&config))
-	return(1);
-	return (0);
-}
+// 	if (argc != 2)
+// 		return (ft_error("Usage: ./so_long name.ber"));
+// 	if (!valid_map_file(argv[1]))
+// 		return (ft_error("Invalid file format. Only '.ber'"));
+// 	if (!parse_file(&config, argv[1]))
+// 		return (1);
+// 	return (0);
+// }
