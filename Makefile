@@ -24,8 +24,11 @@ LIBFT = libft/libft.a
 INC_DIR = includes
 MAIN_DIR = srcs/a_main
 PARSER_DIR = srcs/parsing
+LOAD_IMAGE_DIR = srcs/load_image
+RAYCASTER_DIR = srcs/raycaster
 UTILS_DIR = srcs/utils
 
+<<<<<<< HEAD
 RAY_SRCS := $(wildcard srcs/raycaster/*.c)
 MINIMAP_SRCS := $(wildcard srcs/minimap/*.c)
 
@@ -35,6 +38,12 @@ SRCS = \
     srcs/utils/free.c \
     $(RAY_SRCS) \
 	$(MINIMAP_SRCS)
+=======
+SRCS = $(MAIN_DIR)/main.c \
+		$(PARSER_DIR)/map_validation.c $(PARSER_DIR)/set_config_and_map.c $(PARSER_DIR)/reading_file.c $(PARSER_DIR)/rgb_validation.c $(PARSER_DIR)/map_layout.c\
+		 $(LOAD_IMAGE_DIR)/parsing_images.c $(LOAD_IMAGE_DIR)/key_handler.c \
+		 $(UTILS_DIR)/free.c \
+>>>>>>> debd40837a4cc76c5c5113dbaecfd60a72b24de3
 
 OBJS = $(SRCS:.c=.o)
 

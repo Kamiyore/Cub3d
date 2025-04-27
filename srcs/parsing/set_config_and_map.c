@@ -6,83 +6,150 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 11:10:00 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/15 13:48:16 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/21 18:04:34 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-int	parse_map_lines(t_config *config, char **lines)
+// int	parse_map_lines(t_map *map, char **lines)
+// {
+// 	int	count;
+// 	int	i;
+
+// 	count = 0;
+// 	while (lines[count])
+// 		count++;
+// 	map->map = malloc(sizeof(char *) * (count + 1));
+// 	if (!map->map)
+// 		return (false);
+// 	i = 0;
+// 	while (i < count)
+// 	{
+// 		map->map[i] = ft_strdup(lines[i]);
+// 		if (!map->map[i])
+// 			return (false);
+// 		i++;
+// 	}
+// 	map->map[i] = NULL;
+// 	return (true);
+// }
+
+int	parse_map_lines(t_map *map, char **lines)
 {
 	int	count;
 	int	i;
+	int	max_width;
+	int	len;
 
 	count = 0;
+	i = 0;
+	max_width = 0;
 	while (lines[count])
 		count++;
-	config->map = malloc(sizeof(char *) * (count + 1));
-	if (!config->map)
+	map->map = malloc(sizeof(char *) * (count + 1));
+	if (!map->map)
 		return (false);
-	i = 0;
 	while (i < count)
 	{
-		config->map[i] = ft_strdup(lines[i]);
-		if (!config->map[i])
+		map->map[i] = ft_strdup(lines[i]);
+		if (!map->map[i])
 			return (false);
+		len = ft_strlen(lines[i]);
+		if (len > max_width)
+			max_width = len;
 		i++;
 	}
-	config->map[i] = NULL;
+	map->map[i] = NULL;
+	map->height = count;
+	map->width = max_width;
 	return (true);
 }
 
 int	parse_rgb(const char *str, int *dst)
 {
-	char	**color;
-	int		r;
-	int		g;
-	int		b;
+	char			**color;
+	unsigned int	r;
+	unsigned int	g;
+	unsigned int	b;
 
-	color = ft_split(str, ",");
-	if (!color || ft_array_len(color) != 3)
-	{
-		ft_free_split(color);
+	if (!is_valid_rgb_format(str))
 		return (1);
-	}
+	color = ft_split(str, ",");
+	if (!color)
+		return (ft_error("Memory allocation error.\n"));
 	r = ft_atoi(color[0]);
 	g = ft_atoi(color[1]);
 	b = ft_atoi(color[2]);
-	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
-	{
-		ft_free_split(color);
-		return (1);
-	}
 	*dst = (r << 16) | (g << 8) | b;
 	ft_free_split(color);
 	return (0);
 }
 
-int	parse_configuration(t_config *config, char *line)
+int	validate_texture_path(const char *path)
 {
-	int	i;
+	int		fd;
+	size_t	len;
 
-	i = 0;
-	while (line[i] && ft_isspace(line[i]))
-		i++;
+	if (!path)
+		return (0);
+	len = ft_strlen(path);
+	if (len < 4 || ft_strncmp(path + len - 4, ".xpm", 4) != 0)
+		return (ft_error("Texture file must have .xpm extension.\n"));
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		return (ft_error("Texture file not found or inaccessible.\n"));
+	close(fd);
+	return (1);
+}
+
+// int	set_texture_path(char **dest, const char *line)
+// {
+// 	if (*dest)
+// 		return (ft_error("Duplicate texture path\n"));
+// 	*dest = ft_strdup(line);
+// 	if (!*dest)
+// 		return (ft_error("Memory allocation failed.\n"));
+// 	if (!validate_texture_path(*dest))
+// 		return (0);
+// 	return (1);
+// }
+
+int	set_texture_path(char **dest, const char *line)
+{
+	if (*dest)
+		return (ft_error("Duplicate texture path\n"));
+	*dest = ft_strdup(line);
+	if (!*dest)
+		return (ft_error("Memory allocation failed.\n"));
+	if (!validate_texture_path(*dest))
+	{
+		free(*dest);
+		*dest = NULL;
+		return (0);
+	}
+	return (1);
+}
+
+int	parse_configuration(t_texture *color, char *line)
+{
+	while (*line && ft_isspace(*line))
+		line++;
 	if (ft_strncmp(line, "NO ", 3) == 0)
-		config->no_path = ft_strdup(line + 3);
+		return (!set_texture_path(&color->no_path, line + 3));
 	else if (ft_strncmp(line, "SO ", 3) == 0)
-		config->so_path = ft_strdup(line + 3);
+		return (!set_texture_path(&color->so_path, line + 3));
 	else if (ft_strncmp(line, "WE ", 3) == 0)
-		config->we_path = ft_strdup(line + 3);
+		return (!set_texture_path(&color->we_path, line + 3));
 	else if (ft_strncmp(line, "EA ", 3) == 0)
-		config->ea_path = ft_strdup(line + 3);
+		return (!set_texture_path(&color->ea_path, line + 3));
 	else if (ft_strncmp(line, "F ", 2) == 0)
-		return (parse_rgb(line + 2, &config->f_color));
+		return (parse_rgb(line + 2, &color->f_color));
 	else if (ft_strncmp(line, "C ", 2) == 0)
-		return (parse_rgb(line + 2, &config->c_color));
+		return (parse_rgb(line + 2, &color->c_color));
 	else if (*line == '\0')
 		return (0);
 	else
-		return (ft_error("Unknown config element"));
+		return (ft_error("Unknown config element.\n"));
 	return (0);
 }
