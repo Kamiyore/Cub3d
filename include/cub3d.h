@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
+/*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 10:15:35 by oyuhi             #+#    #+#             */
-/*   Updated: 2025/04/28 14:50:14 by oyuhi            ###   ########.fr       */
+/*   Updated: 2025/04/28 17:40:17 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # define TILE_SIZE 64
 # define FIELD_OF_VIEW 60
 # define ROTATION_SPEED 0.045
-# define MOVEMENT_SPEED 64
+# define MOVEMENT_SPEED 10
 # define TILE_CENTER (TILE_SIZE / 2)
 
 # ifndef BONUS_MODE
@@ -217,9 +217,10 @@ void				load_images(t_cub *cub);
 int					mlx_key_press(int keycode, void *param);
 int					mlx_key_release(int keycode, void *param);
 int					x_button_exit(t_cub *cub);
-void				exit_game(t_cub *cub);
+int					exit_game(t_cub *cub);
 void				free_file_data(t_cub *cub);
 int					ft_array_len(char **array);
+void				safe_free(void **p);
 
 /*
 **  mlx_game_loop
@@ -268,5 +269,6 @@ int					parse_file(t_cub *cub, const char *filename);
 int					parse_rgb(const char *str, int *dst);
 int					is_surrounded_by_wall(t_cub *cub);
 int					validate_map(t_cub *cub);
+
 
 #endif

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exit_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
+/*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 16:04:50 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/28 14:49:58 by oyuhi            ###   ########.fr       */
+/*   Updated: 2025/04/28 17:04:36 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-void	exit_game(t_cub *cub)
+int	exit_game(t_cub *cub)
 {
 	if (cub->mlx.img_no)
 		mlx_destroy_image(cub->mlx.mlx, cub->mlx.img_no);
@@ -32,4 +32,5 @@ void	exit_game(t_cub *cub)
 	if (cub->map->map2d)
 		ft_array_free(cub->map->map2d);
 	exit(0);
+	return (0);
 }

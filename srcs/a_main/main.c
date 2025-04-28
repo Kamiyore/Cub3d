@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
+/*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 10:01:50 by oyuhi             #+#    #+#             */
-/*   Updated: 2025/04/28 12:11:40 by oyuhi            ###   ########.fr       */
+/*   Updated: 2025/04/28 16:06:43 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	init_file_data(t_cub *cub)
 	cub->map->player_y = -1;
 	cub->map->player_dir = '\0';
 }
-
 
 // int	main(int argc, char **argv)
 // {
@@ -90,14 +89,17 @@ int	main(int argc, char **argv)
 	t_cub	cub;
 
 	if (argc != 2)
-		return (ft_error("Usage: ./so_long name.ber\n"));
+		return (ft_error("Usage: ./so_long name.cub\n"));
 	init_file_data(&cub);
 	if (!valid_file(argv[1]))
-		return (ft_error("Invalid file format. Only '.ber'\n"));
+		return (ft_error("Invalid file format. Only '.cub'\n"));
 	if (!parse_file(&cub, argv[1]))
 		return (true);
 	if (!validate_map(&cub))
+	{
+		free_file_data(&cub);
 		return (true);
+	}
 	print_colors(&cub);
 	start_game(&cub);
 	return (false);

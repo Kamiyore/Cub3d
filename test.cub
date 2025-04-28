@@ -3,7 +3,7 @@ SO srcs/textures/south.xpm
 WE srcs/textures/west.xpm
 EA srcs/textures/east.xpm
 F 150,30,10
-C 150,30,10
+C 0,0,0
 
         111111111111111 111111111
         1000000000110001000000001

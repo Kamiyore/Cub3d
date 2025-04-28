@@ -29,7 +29,7 @@ void	start_game(t_cub *cub)
 	mlx_loop_hook(cub->mlx.mlx, &mlx_game_loop, cub);
 	mlx_hook(cub->mlx.window, 2, 1L << 0, mlx_key_press, cub);
 	mlx_hook(cub->mlx.window, 3, 1L << 1, mlx_key_release, cub);
-	mlx_hook(cub->mlx.window, 17, 0, x_button_exit, cub);
+	mlx_hook(cub->mlx.window, 17, 0, exit_game, cub);
 	mlx_loop(cub->mlx.mlx);
 }
 

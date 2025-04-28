@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_config_and_map.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
+/*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 11:10:00 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/28 14:49:58 by oyuhi            ###   ########.fr       */
+/*   Updated: 2025/04/28 15:50:59 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int	parse_rgb(const char *str, int *dst)
 	r = ft_atoi(color[0]);
 	g = ft_atoi(color[1]);
 	b = ft_atoi(color[2]);
-	// *dst = (r << 16) | (g << 8) | b;
 	*dst = (0xFF << 24) // alfa = 0xFF
 	| (r << 16)     // červená
 	| (g << 8)      // zelená
@@ -97,6 +96,7 @@ int	validate_texture_path(const char *path)
 // 	return (1);
 // }
 
+
 int	set_texture_path(char **dest, const char *line)
 {
 	if (*dest)
@@ -106,8 +106,7 @@ int	set_texture_path(char **dest, const char *line)
 		return (ft_error("Memory allocation failed.\n"));
 	if (!validate_texture_path(*dest))
 	{
-		free(*dest);
-		*dest = NULL;
+		safe_free((void **)dest);
 		return (0);
 	}
 	return (1);
