@@ -6,7 +6,7 @@
 /*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 10:15:35 by oyuhi             #+#    #+#             */
-/*   Updated: 2025/04/27 20:01:17 by oyuhi            ###   ########.fr       */
+/*   Updated: 2025/04/28 11:42:01 by oyuhi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # define TILE_SIZE 64
 # define FIELD_OF_VIEW 60
 # define ROTATION_SPEED 0.045
-# define MOVEMENT_SPEED 4
+# define MOVEMENT_SPEED 64
 # define TILE_CENTER (TILE_SIZE / 2)
 
 # ifndef BONUS_MODE
