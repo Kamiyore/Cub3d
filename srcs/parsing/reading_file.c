@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reading_file.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
+/*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 15:37:49 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/28 14:49:58 by oyuhi            ###   ########.fr       */
+/*   Updated: 2025/04/28 18:53:11 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,17 +99,17 @@ char	**extract_map_start(t_texture *texture, char **lines)
 	return (&lines[i]);
 }
 
-void	print_loaded_map(char **map)
-{
-	int	i;
+// void	print_loaded_map(char **map)
+// {
+// 	int	i;
 
-	i = 0;
-	while (map && map[i])
-	{
-		printf("[%d]: \"%s\"\n", i, map[i]);
-		i++;
-	}
-}
+// 	i = 0;
+// 	while (map && map[i])
+// 	{
+// 		printf("[%d]: \"%s\"\n", i, map[i]);
+// 		i++;
+// 	}
+// }
 
 int	validate_config_and_map(t_cub *cub)
 {
@@ -158,7 +158,7 @@ int	parse_file(t_cub *cub, const char *filename)
 		free_file_data(cub);
 		return (false);
 	}
-	print_loaded_map(cub->map->map2d);
+	// print_loaded_map(cub->map->map2d);
 	ft_array_free(lines);
 	return (true);
 }

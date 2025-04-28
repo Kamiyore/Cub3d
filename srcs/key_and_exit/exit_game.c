@@ -6,7 +6,7 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 16:04:50 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/28 17:04:36 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/28 18:49:35 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,16 @@ int	exit_game(t_cub *cub)
 		mlx_destroy_image(cub->mlx.mlx, cub->mlx.img_ea);
 	if (cub->mlx.window)
 		mlx_destroy_window(cub->mlx.mlx, cub->mlx.window);
+	if (cub->img_ptr)
+		mlx_destroy_image(cub->mlx.mlx, cub->img_ptr);
 	if (cub->mlx.mlx)
 	{
 		mlx_destroy_display(cub->mlx.mlx);
 		free(cub->mlx.mlx);
 	}
-	if (cub->map->map2d)
-		ft_array_free(cub->map->map2d);
+	free_file_data(cub);
+	safe_free((void **)&cub->ply);
+	safe_free((void **)&cub->ray);
 	exit(0);
 	return (0);
 }

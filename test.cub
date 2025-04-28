@@ -1,7 +1,9 @@
-NO srcs/textures/north.xpm
-SO srcs/textures/south.xpm
 WE srcs/textures/west.xpm
+NO srcs/textures/north.xpm
 EA srcs/textures/east.xpm
+SO srcs/textures/south.xpm
+
+
 F 150,30,10
 C 0,0,0
 

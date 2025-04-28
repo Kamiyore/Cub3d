@@ -36,9 +36,3 @@ int	mlx_key_release(int keycode, void *param)
 		cub->ply->rotation = 0;
 	return (0);
 }
-
-int	x_button_exit(t_cub *cub)
-{
-	exit_game(cub);
-	return (0);
-}

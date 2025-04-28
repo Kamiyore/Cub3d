@@ -6,7 +6,7 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 10:01:50 by oyuhi             #+#    #+#             */
-/*   Updated: 2025/04/28 16:06:43 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/28 18:49:26 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,28 +61,28 @@ void	init_file_data(t_cub *cub)
 // 	return (0);
 // }
 
-void	print_colors(t_cub *cub)
-{
-	int	f_r;
-	int	f_g;
-	int	f_b;
-	int	c_r;
-	int	c_g;
-	int	c_b;
+// void	print_colors(t_cub *cub)
+// {
+// 	int	f_r;
+// 	int	f_g;
+// 	int	f_b;
+// 	int	c_r;
+// 	int	c_g;
+// 	int	c_b;
 
-	f_r = (cub->color.f_color >> 16) & 0xFF;
-	f_g = (cub->color.f_color >> 8) & 0xFF;
-	f_b = cub->color.f_color & 0xFF;
-	c_r = (cub->color.c_color >> 16) & 0xFF;
-	c_g = (cub->color.c_color >> 8) & 0xFF;
-	c_b = cub->color.c_color & 0xFF;
-	printf("Floor Color (f_color):\n");
-	printf("RGB: (%d, %d, %d)\n", f_r, f_g, f_b);
-	printf("Hex: 0x%06X\n", cub->color.f_color);
-	printf("\nCeiling Color (c_color):\n");
-	printf("RGB: (%d, %d, %d)\n", c_r, c_g, c_b);
-	printf("Hex: 0x%06X\n", cub->color.c_color);
-}
+// 	f_r = (cub->color.f_color >> 16) & 0xFF;
+// 	f_g = (cub->color.f_color >> 8) & 0xFF;
+// 	f_b = cub->color.f_color & 0xFF;
+// 	c_r = (cub->color.c_color >> 16) & 0xFF;
+// 	c_g = (cub->color.c_color >> 8) & 0xFF;
+// 	c_b = cub->color.c_color & 0xFF;
+// 	printf("Floor Color (f_color):\n");
+// 	printf("RGB: (%d, %d, %d)\n", f_r, f_g, f_b);
+// 	printf("Hex: 0x%06X\n", cub->color.f_color);
+// 	printf("\nCeiling Color (c_color):\n");
+// 	printf("RGB: (%d, %d, %d)\n", c_r, c_g, c_b);
+// 	printf("Hex: 0x%06X\n", cub->color.c_color);
+// }
 
 int	main(int argc, char **argv)
 {
@@ -92,7 +92,10 @@ int	main(int argc, char **argv)
 		return (ft_error("Usage: ./so_long name.cub\n"));
 	init_file_data(&cub);
 	if (!valid_file(argv[1]))
+	{
+		free_file_data(&cub);
 		return (ft_error("Invalid file format. Only '.cub'\n"));
+	}
 	if (!parse_file(&cub, argv[1]))
 		return (true);
 	if (!validate_map(&cub))
@@ -100,7 +103,7 @@ int	main(int argc, char **argv)
 		free_file_data(&cub);
 		return (true);
 	}
-	print_colors(&cub);
+	// print_colors(&cub);
 	start_game(&cub);
 	return (false);
 }

@@ -6,7 +6,7 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 10:15:35 by oyuhi             #+#    #+#             */
-/*   Updated: 2025/04/28 17:40:17 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/28 18:52:39 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,7 +216,6 @@ void				load_images(t_cub *cub);
 */
 int					mlx_key_press(int keycode, void *param);
 int					mlx_key_release(int keycode, void *param);
-int					x_button_exit(t_cub *cub);
 int					exit_game(t_cub *cub);
 void				free_file_data(t_cub *cub);
 int					ft_array_len(char **array);

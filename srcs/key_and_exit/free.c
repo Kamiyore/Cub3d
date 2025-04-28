@@ -6,7 +6,7 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 18:48:57 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/28 16:58:21 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/28 18:10:23 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,14 @@ void	free_file_data(t_cub *cub)
 		free(cub->color.we_path);
 	if (cub->color.ea_path)
 		free(cub->color.ea_path);
-	if (cub->map->map2d)
-		ft_array_free(cub->map->map2d);
-	exit(1);
+	if (cub->map)
+	{
+		if (cub->map->map2d)
+			ft_array_free(cub->map->map2d);
+		free(cub->map);
+		cub->map = NULL;
+	}
+	// exit(1);
 }
 
 void	safe_free(void **p)
