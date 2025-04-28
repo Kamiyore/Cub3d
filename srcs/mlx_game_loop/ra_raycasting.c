@@ -68,7 +68,7 @@ void	cast_rays(t_cub *cub)
 		draw_ray_minimap_bonus(cub, cub->ray->angle, cub->ray->distance);
 		print_first_raycast(cub, ray_count, hori_inter.len_to_wall,
 			veri_inter.len_to_wall);
-		render_wall(cub, ray_count);
+		render(cub, ray_count);
 		ray_count++;
 		cub->ray->angle += (cub->ply->view_radian / SCREEN_WIDTH);
 	}

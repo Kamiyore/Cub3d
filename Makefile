@@ -23,23 +23,23 @@ LIBFT = libft/libft.a
 INC_DIR = includes
 MAIN_DIR = srcs/a_main
 PARSER_DIR = srcs/parsing
-LOAD_IMAGE_DIR = srcs/load_image
-DESIGN_DIR = srcs/design
-RAYCASTER_DIR = srcs/raycaster
+INIT_GAME_DIR = srcs/init_game
+GAME_LOOP_DIR = srcs/mlx_game_loop
+KEY_EXIT_DIR = srcs/key_and_exit
 UTILS_DIR = srcs/utils
 
-
-RAY_SRCS := $(wildcard srcs/raycaster/*.c)
 MINIMAP_SRCS := $(wildcard srcs/minimap/*.c)
+INIT_GAME_SRCS := $(wildcard $(INIT_GAME_DIR)/*.c)
+GAME_LOOP_SRCS := $(wildcard $(GAME_LOOP_DIR)/*.c)
+PARSER_SRCS := $(wildcard $(PARSER_DIR)/*.c)
 
 
 SRCS = $(MAIN_DIR)/main.c \
-		$(PARSER_DIR)/map_validation.c $(PARSER_DIR)/set_config_and_map.c $(PARSER_DIR)/reading_file.c $(PARSER_DIR)/rgb_validation.c $(PARSER_DIR)/map_layout.c\
-		$(LOAD_IMAGE_DIR)/parsing_images.c $(LOAD_IMAGE_DIR)/key_handler.c \
-		$(DESIGN_DIR)/floor_and_ceiling.c \
-		$(UTILS_DIR)/free.c \
-		$(RAY_SRCS) \
-		$(MINIMAP_SRCS)
+		$(MINIMAP_SRCS) \
+		$(INIT_GAME_SRCS) \
+		$(GAME_LOOP_SRCS) \
+		$(PARSER_SRCS) \
+		srcs/key_and_exit/exit_game.c srcs/key_and_exit/key_handler.c srcs/key_and_exit/free.c
 
 
 OBJS = $(SRCS:.c=.o)

@@ -8,7 +8,7 @@ int	mlx_key_press(int keycode, void *param)
 
 	cub = param;
 	if (keycode == XK_Escape)
-		;
+		exit_game(cub);
 	else if (keycode == XK_a)
 		cub->ply->left_right = MOVE_LEFT;
 	else if (keycode == XK_d)
@@ -34,5 +34,11 @@ int	mlx_key_release(int keycode, void *param)
 		cub->ply->up_down = 0;
 	else if (keycode == XK_Left || keycode == XK_Right)
 		cub->ply->rotation = 0;
+	return (0);
+}
+
+int	x_button_exit(t_cub *cub)
+{
+	exit_game(cub);
 	return (0);
 }

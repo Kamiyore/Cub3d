@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reading_file.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 15:37:49 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/24 16:36:03 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/28 14:49:58 by oyuhi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,23 +142,23 @@ int	parse_file(t_cub *cub, const char *filename)
 	map_start = extract_map_start(&cub->color, lines);
 	if (!map_start)
 	{
-		ft_free_split(lines);
+		ft_array_free(lines);
 		free_file_data(cub);
 		exit(1);
 		return (ft_error("Error in configuration.\n"));
 	}
 	if (!parse_map_lines(cub->map, map_start))
 	{
-		ft_free_split(lines);
+		ft_array_free(lines);
 		return (ft_error("Error in map parsing.\n"));
 	}
 	if (!validate_config_and_map(cub))
 	{
-		ft_free_split(lines);
+		ft_array_free(lines);
 		free_file_data(cub);
 		return (false);
 	}
 	print_loaded_map(cub->map->map2d);
-	ft_free_split(lines);
+	ft_array_free(lines);
 	return (true);
 }

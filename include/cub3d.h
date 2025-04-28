@@ -6,7 +6,7 @@
 /*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 10:15:35 by oyuhi             #+#    #+#             */
-/*   Updated: 2025/04/28 11:42:01 by oyuhi            ###   ########.fr       */
+/*   Updated: 2025/04/28 14:50:14 by oyuhi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct s_config
 int					ft_error(char *message);
 int					parse_rgb(const char *str, int *dst);
 int					ft_array_len(char **array);
-void				ft_free_split(char **split);
+void				ft_array_free(char **split);
 
 ///////////yuhi//////////////////////
 
@@ -205,89 +205,68 @@ typedef struct s_inter
 //#################################################################################//
 
 /*
-**  Raycasting core
+**  init_game
 */
-t_inter				get_horizontal_intersection(t_cub *cub);
-t_inter				get_vertical_intersection(t_cub *cub);
+void				start_game(t_cub *cub);
+t_player			*init_the_player(t_cub *cub);
+void				load_images(t_cub *cub);
+
+/*
+**  key_and_exit_and_free
+*/
+int					mlx_key_press(int keycode, void *param);
+int					mlx_key_release(int keycode, void *param);
+int					x_button_exit(t_cub *cub);
+void				exit_game(t_cub *cub);
+void				free_file_data(t_cub *cub);
+int					ft_array_len(char **array);
+
+/*
+**  mlx_game_loop
+*/
+int					mlx_game_loop(void *param);
+// Movement
+void				movement(t_cub *cub);
+void				move_player(t_cub *cub, t_xy_i new_ply);
+void				rotation(t_cub *cub);
 void				cast_rays(t_cub *cub);
-void				render_wall(t_cub *cub, int ray_count);
-
-/*
-**  Raycasting helpers
-*/
-int					get_quadrant(float angle);
-float				normalize_angle(float angle);
-float				compute_adjacent(float opposite, float angle);
-float				compute_opposite(float adjacent, float angle);
-float				compute_hypotenuse(float opposite, float adjacent);
-int					is_out_of_bounds(t_cub *cub, float x, float y);
-int					is_wall(t_cub *cub, float x, float y);
-
-/*
-**  Step calculation
-*/
+t_inter				get_vertical_intersection(t_cub *cub);
+t_inter				get_horizontal_intersection(t_cub *cub);
+// Step calculation
 float				get_horizontal_step_x(t_cub *cub);
 float				get_horizontal_step_y(t_cub *cub);
 float				get_vertical_step_x(t_cub *cub);
 float				get_vertical_step_y(t_cub *cub);
-
-/*
-**  Direction checks
-*/
+// Ray direction
 bool				look_left(float angle);
 bool				look_right(float angle);
 bool				look_down(float angle);
 bool				look_up(float angle);
+//  Raycast helper
+float				normalize_angle(float angle);
+int					is_out_of_bounds(t_cub *cub, float x, float y);
+int					is_wall(t_cub *cub, float x, float y);
+// Raycast compute
+float				compute_adjacent(float opposite, float angle);
+float				compute_opposite(float adjacent, float angle);
+float				compute_hypotenuse(float opposite, float adjacent);
 
-/*
-**  Input handling (Linux MLX)
-*/
-int					mlx_key_press(int keycode, void *param);
-int					mlx_key_release(int keycode, void *param);
-
-/*
-**  Movement & rotation
-*/
-void				movement(t_cub *cub);
-void				rotation(t_cub *cub);
-void				move_player(t_cub *cub, t_xy_i new_ply);
-
-/*
-**  Initialization & main loop
-*/
-t_player			*init_the_player(t_cub *cub);
-t_ray				*init_the_ray(void);
-void				load_images(t_cub *cub);
-void				free_file_data(t_cub *cub);
-int					x_button_exit(t_cub *cub);
-int					mlx_game_loop(void *param);
-
-/*
-**  Configuration & parsing
-*/
-int					ft_error(char *message);
-int					parse_file(t_cub *cub, const char *filename);
-int					parse_rgb(const char *str, int *dst);
-int					ft_array_len(char **array);
-void				ft_free_split(char **split);
-int					is_surrounded_by_wall(t_cub *cub);
-int					validate_map(t_cub *cub);
-
-/*
-**  Rendering utilities
-*/
+// render wall
+void				render(t_cub *cub, int ray_count);
+void				render_wall(t_cub *cub, int ray_x, t_wall wall);
 void				safe_mlx_pixel_put(t_cub *cub, int x, int y, int color);
 
 /*
-**  Floor & ceiling fill
+**  Parse_map
 */
-void				draw_floor_ceiling(t_cub *cub, int ray_count, int top_pix,
-						int bot_pix);
-
-// draw
 int					is_valid_rgb_format(const char *str);
 int					parse_map_lines(t_map *map, char **lines);
 int					parse_configuration(t_texture *color, char *line);
 bool				is_player(char c);
+int					ft_error(char *message);
+int					parse_file(t_cub *cub, const char *filename);
+int					parse_rgb(const char *str, int *dst);
+int					is_surrounded_by_wall(t_cub *cub);
+int					validate_map(t_cub *cub);
 
 #endif

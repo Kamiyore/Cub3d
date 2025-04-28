@@ -1,7 +1,5 @@
 
 
-
-
 #include "../../include/cub3d.h"
 
 /*
@@ -29,7 +27,7 @@ static t_xy_i	compute_side_movement(t_cub *cub, int sign)
 	return (new_ply_position);
 }
 
-void	side_movement(t_cub *cub)
+static void	side_movement(t_cub *cub)
 {
 	t_xy_i	new_ply_position;
 
@@ -61,7 +59,7 @@ static t_xy_i	compute_front_back_movement(t_cub *cub, int sign)
 	return (new_ply_position);
 }
 
-void	front_back_movement(t_cub *cub)
+static void	front_back_movement(t_cub *cub)
 {
 	t_xy_i	new_ply_position;
 

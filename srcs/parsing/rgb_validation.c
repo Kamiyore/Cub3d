@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rgb_validation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:43:42 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/21 18:40:31 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/28 14:49:58 by oyuhi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,19 +74,19 @@ int	is_valid_rgb_format(const char *str)
 	color = ft_split(str, ",");
 	if (!has_three_parts(color))
 	{
-		ft_free_split(color);
+		ft_array_free(color);
 		return (ft_error("RGB must have exactly 3 values.\n"));
 	}
 	if (!parts_are_digits(color))
 	{
-		ft_free_split(color);
+		ft_array_free(color);
 		return (ft_error("RGB values must be numeric.\n"));
 	}
 	if (!values_in_range(color))
 	{
-		ft_free_split(color);
+		ft_array_free(color);
 		return (ft_error("RGB values must be between 0 and 255.\n"));
 	}
-	ft_free_split(color);
+	ft_array_free(color);
 	return (1);
 }

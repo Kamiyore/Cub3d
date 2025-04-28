@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_config_and_map.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 11:10:00 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/23 18:58:25 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/28 14:49:58 by oyuhi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	parse_rgb(const char *str, int *dst)
 	| (r << 16)     // červená
 	| (g << 8)      // zelená
 	| (b << 0);     // modrá
-	ft_free_split(color);
+	ft_array_free(color);
 	return (0);
 }
 

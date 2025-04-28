@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_layout.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:28:59 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/24 11:55:36 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/28 14:49:58 by oyuhi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	check_remaining_open_areas(char **copy)
 				continue ;
 			if (copy[i][j] == '0' && !flood_fill(copy, j, i))
 			{
-				ft_free_split(copy);
+				ft_array_free(copy);
 				return (ft_error("Open area not enclosed.\n"));
 			}
 		}
@@ -127,11 +127,11 @@ int	is_surrounded_by_wall(t_cub *cub)
 		return (ft_error("Memory allocation error.\n"));
 	if (!flood_fill(copy, cub->map->player_x, cub->map->player_y))
 	{
-		ft_free_split(copy);
+		ft_array_free(copy);
 		return (ft_error("Player area not enclosed.\n"));
 	}
 	if (!check_remaining_open_areas(copy))
 		return (0);
-	ft_free_split(copy);
+	ft_array_free(copy);
 	return (1);
 }
