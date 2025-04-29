@@ -18,15 +18,13 @@ typedef struct s_mini
 	int					tile_size;
 }						t_mini;
 
-
-
 void					safe_mlx_pixel_put_bonus(t_cub *cub, int x, int y,
 							int color);
 void					render_minimap_bonus(t_cub *cub);
 void					init_minimap_bonus(t_cub *cub);
 void					my_mlx_pixel_put_bonus(t_cub *cub, int x, int y,
 							int color);
-void					draw_ray_minimap_bonus(t_cub *cub, double angle,
-							double distance);
+void					draw_ray_minimap_bonus(t_cub *cub, myfloat angle,
+							myfloat distance);
 
 #endif

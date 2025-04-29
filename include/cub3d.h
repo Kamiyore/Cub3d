@@ -6,7 +6,7 @@
 /*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 10:15:35 by oyuhi             #+#    #+#             */
-/*   Updated: 2025/04/29 14:42:28 by oyuhi            ###   ########.fr       */
+/*   Updated: 2025/04/29 15:50:39 by oyuhi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "../libft/libft.h"
 # include "../minilibx-linux/mlx.h"
-# include "../srcs/minimap/minimap_bonus.h"
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include <fcntl.h>
@@ -44,6 +43,10 @@
 #  define BONUS_MODE false
 # endif
 
+typedef float		myfloat;
+typedef double		t_double;
+
+# include "../srcs/minimap/minimap_bonus.h"
 typedef struct s_config
 {
 	char			*no_path;
@@ -79,7 +82,7 @@ typedef struct s_player
 {
 	int				pixel_x;
 	int				pixel_y;
-	double			angle;
+	myfloat			angle;
 	float			view_radian;
 	int				rotation;
 	int				left_right;
@@ -89,10 +92,10 @@ typedef struct s_player
 
 typedef struct s_ray
 {
-	double			angle;
-	double			distance;
+	myfloat			angle;
+	myfloat			distance;
 
-	double			inter_midpoint;
+	myfloat			inter_midpoint;
 	bool			is_vertical_wall;
 
 }					t_ray;
@@ -110,7 +113,7 @@ typedef struct s_map
 typedef struct s_texture_data
 {
 	int				*data;
-	double			offset;
+	myfloat			offset;
 	int				width;
 	int				height;
 }					t_texture_data;
@@ -168,11 +171,11 @@ typedef struct s_cub
 
 typedef struct s_wall
 {
-	double			height;
-	double			bot_pix;
-	double			top_pix;
-	double			bot_screen;
-	double			top_screen;
+	myfloat			height;
+	myfloat			bot_pix;
+	myfloat			top_pix;
+	myfloat			bot_screen;
+	myfloat			top_screen;
 }					t_wall;
 
 typedef struct s_xy
@@ -183,8 +186,8 @@ typedef struct s_xy
 
 typedef struct s_xy_d
 {
-	double			x;
-	double			y;
+	myfloat			x;
+	myfloat			y;
 }					t_xy_d;
 
 typedef struct s_xy_i
@@ -195,9 +198,9 @@ typedef struct s_xy_i
 
 typedef struct s_inter
 {
-	double			len_to_wall;
-	double			x;
-	double			y;
+	myfloat			len_to_wall;
+	myfloat			x;
+	myfloat			y;
 }					t_inter;
 
 //#################################################################################//
@@ -233,10 +236,10 @@ void				cast_rays(t_cub *cub);
 t_inter				get_vertical_intersection(t_cub *cub);
 t_inter				get_horizontal_intersection(t_cub *cub);
 // Step calculation
-double				get_horizontal_step_x(t_cub *cub);
-double				get_horizontal_step_y(t_cub *cub);
-double				get_vertical_step_x(t_cub *cub);
-double				get_vertical_step_y(t_cub *cub);
+myfloat				get_horizontal_step_x(t_cub *cub);
+myfloat				get_horizontal_step_y(t_cub *cub);
+myfloat				get_vertical_step_x(t_cub *cub);
+myfloat				get_vertical_step_y(t_cub *cub);
 // Ray direction
 bool				look_left(float angle);
 bool				look_right(float angle);
@@ -244,12 +247,12 @@ bool				look_down(float angle);
 bool				look_up(float angle);
 //  Raycast helper
 float				normalize_angle(float angle);
-int					is_out_of_bounds(t_cub *cub, double x, double y);
-int					is_wall(t_cub *cub, double x, double y);
+int					is_out_of_bounds(t_cub *cub, myfloat x, myfloat y);
+int					is_wall(t_cub *cub, myfloat x, myfloat y);
 // Raycast compute
-double				compute_adjacent(float opposite, float angle);
-double				compute_opposite(float adjacent, float angle);
-double				compute_hypotenuse(double opposite, double adjacent);
+myfloat				compute_adjacent(float opposite, float angle);
+myfloat				compute_opposite(float adjacent, float angle);
+myfloat				compute_hypotenuse(myfloat opposite, myfloat adjacent);
 
 // render wall
 void				render(t_cub *cub, int ray_count);
@@ -268,6 +271,5 @@ int					parse_file(t_cub *cub, const char *filename);
 int					parse_rgb(const char *str, int *dst);
 int					is_surrounded_by_wall(t_cub *cub);
 int					validate_map(t_cub *cub);
-
 
 #endif

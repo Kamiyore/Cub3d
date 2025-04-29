@@ -8,8 +8,8 @@
 
 #define PRINT_MODE true
 
-static void	print_first_raycast(t_cub *cub, int ray_count, double horizon_inter,
-		double verti_inter)
+static void	print_first_raycast(t_cub *cub, int ray_count,
+		myfloat horizon_inter, myfloat verti_inter)
 {
 	static int	flag = 0;
 
@@ -26,9 +26,9 @@ static void	print_first_raycast(t_cub *cub, int ray_count, double horizon_inter,
 	}
 }
 
-static double	start_angle_of_view(t_cub *cub)
+static myfloat	start_angle_of_view(t_cub *cub)
 {
-	double	start_angle;
+	myfloat	start_angle;
 
 	start_angle = cub->ply->angle - (cub->ply->view_radian / 2);
 	return (start_angle);
@@ -73,5 +73,3 @@ void	cast_rays(t_cub *cub)
 		cub->ray->angle += (cub->ply->view_radian / SCREEN_WIDTH);
 	}
 }
-
-

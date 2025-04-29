@@ -5,9 +5,9 @@
 //#################################### HORIZONTAL #################################//
 //#################################################################################//
 
-double	get_horizontal_step_x(t_cub *cub)
+myfloat	get_horizontal_step_x(t_cub *cub)
 {
-	double	step;
+	myfloat	step;
 
 	step = compute_adjacent(TILE_SIZE, cub->ray->angle);
 	if ((look_left(cub->ray->angle) && step > 0))
@@ -17,9 +17,9 @@ double	get_horizontal_step_x(t_cub *cub)
 	return (step);
 }
 
-double	get_horizontal_step_y(t_cub *cub)
+myfloat	get_horizontal_step_y(t_cub *cub)
 {
-	double	step;
+	myfloat	step;
 
 	if (look_down(cub->ray->angle))
 		step = TILE_SIZE;
@@ -32,9 +32,9 @@ double	get_horizontal_step_y(t_cub *cub)
 //##################################### vertical ##################################//
 //#################################################################################//
 
-double	get_vertical_step_y(t_cub *cub)
+myfloat	get_vertical_step_y(t_cub *cub)
 {
-	double	step;
+	myfloat	step;
 
 	step = compute_opposite(TILE_SIZE, cub->ray->angle);
 	if ((look_down(cub->ray->angle) && step < 0))
@@ -44,9 +44,9 @@ double	get_vertical_step_y(t_cub *cub)
 	return (step);
 }
 
-double	get_vertical_step_x(t_cub *cub)
+myfloat	get_vertical_step_x(t_cub *cub)
 {
-	double	step;
+	myfloat	step;
 
 	if (look_right(cub->ray->angle))
 		step = TILE_SIZE;

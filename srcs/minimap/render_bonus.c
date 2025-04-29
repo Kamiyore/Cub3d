@@ -97,7 +97,7 @@ void	draw_tile_bonus(t_cub *cub, t_xy_i start, int tile_size, int color)
 
 #define MINI_RAY_COLOR 0x00FF00FF // your green on the minimap
 
-void	draw_ray_minimap_bonus(t_cub *cub, double angle, double distance)
+void	draw_ray_minimap_bonus(t_cub *cub, myfloat angle, myfloat distance)
 {
 	float	map_scale;
 	float	wx;
@@ -113,7 +113,6 @@ void	draw_ray_minimap_bonus(t_cub *cub, double angle, double distance)
 	float	mlen;
 	int		cell_x;
 	int		cell_y;
-	
 
 	if (BONUS_MODE == false)
 		return ;

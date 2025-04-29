@@ -16,8 +16,8 @@
 */
 static t_xy_i	compute_side_movement(t_cub *cub, int sign)
 {
-	double	move_x;
-	double	move_y;
+	myfloat	move_x;
+	myfloat	move_y;
 	t_xy_i	new_ply_position;
 
 	move_x = -sign * sin(cub->ply->angle) * MOVEMENT_SPEED;
@@ -48,8 +48,8 @@ static void	side_movement(t_cub *cub)
 */
 static t_xy_i	compute_front_back_movement(t_cub *cub, int sign)
 {
-	double	move_x;
-	double	move_y;
+	myfloat	move_x;
+	myfloat	move_y;
 	t_xy_i	new_ply_position;
 
 	move_x = sign * cos(cub->ply->angle) * MOVEMENT_SPEED;

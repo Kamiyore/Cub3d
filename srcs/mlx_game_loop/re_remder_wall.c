@@ -24,12 +24,12 @@ static t_texture_data	get_texture_data(t_cub *cub)
  * Compute which column of the texture to sample based on where
  * the ray hit within a TILE_SIZE‐wide wall tile.
  */
-static double	get_texture_x(t_cub *cub, t_texture_data sl)
+static myfloat	get_texture_x(t_cub *cub, t_texture_data sl)
 {
-	double	hit;
+	myfloat	hit;
 
 	hit = fmod(cub->ray->inter_midpoint, TILE_SIZE);
-	return (hit * ((double)sl.width / TILE_SIZE));
+	return (hit * ((myfloat)sl.width / TILE_SIZE));
 }
 /**
  * calculate_texture_start_row()
@@ -45,14 +45,14 @@ static double	get_texture_x(t_cub *cub, t_texture_data sl)
  *
  * returns: first texture row to sample (≥0)
  */
-static double	calculate_texture_start_row(t_wall wall,
-		double tex_to_screen_ratio)
+static myfloat	calculate_texture_start_row(t_wall wall,
+		myfloat tex_to_screen_ratio)
 {
-	double	skipped_rows;
-	double	tex_y_start;
-	double	real_top;
-	double	screen_top;
-	double	wall_height;
+	myfloat	skipped_rows;
+	myfloat	tex_y_start;
+	myfloat	real_top;
+	myfloat	screen_top;
+	myfloat	wall_height;
 
 	real_top = wall.top_pix;
 	screen_top = wall.top_screen;
@@ -75,14 +75,14 @@ static int	get_color_from_texture(t_cub *cub, t_texture_data tx, int tex_y)
 void	render_wall(t_cub *cub, int ray_x, t_wall wall)
 {
 	t_texture_data tx;
-	double tx_step_y;
-	double tex_y;
+	myfloat tx_step_y;
+	myfloat tex_y;
 	int color;
 	int y;
 
 	y = wall.top_screen;
 	tx = get_texture_data(cub);
-	tx_step_y = (double)tx.height / wall.height;
+	tx_step_y = (myfloat)tx.height / wall.height;
 	tex_y = calculate_texture_start_row(wall, tx_step_y);
 	while (y < wall.bot_screen)
 	{

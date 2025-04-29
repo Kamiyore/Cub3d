@@ -26,7 +26,7 @@ float	normalize_angle(float angle)
 	return (angle);
 }
 
-int	is_out_of_bounds(t_cub *cub, double inter_x, double inter_y)
+int	is_out_of_bounds(t_cub *cub, myfloat inter_x, myfloat inter_y)
 {
 	int		map_index_y;
 	int		map_index_x;
@@ -43,7 +43,7 @@ int	is_out_of_bounds(t_cub *cub, double inter_x, double inter_y)
 		return (0);
 }
 
-int	is_wall(t_cub *cub, double inter_x, double inter_y)
+int	is_wall(t_cub *cub, myfloat inter_x, myfloat inter_y)
 {
 	int		map_index_y;
 	int		map_index_x;

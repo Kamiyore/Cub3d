@@ -41,16 +41,16 @@ float	fix_fisheye(t_cub *cub)
  *                           (computed as (SCREEN_WIDTH / 2) / tan(FOV / 2))
  * -screen_wall_height    : height of the wall slice on screen in pixels
  */
-double	compute_wall_height(t_cub *cub)
+myfloat	compute_wall_height(t_cub *cub)
 {
-	double	real_wall_dist;
-	double	real_wall_height;
-	double	screen_projection_dist;
-	double	screen_wall_height;
+	myfloat	real_wall_dist;
+	myfloat	real_wall_height;
+	myfloat	screen_projection_dist;
+	myfloat	screen_wall_height;
 
-	real_wall_dist = (double)cub->ray->distance;
-	real_wall_height = (double)TILE_SIZE;
-	screen_projection_dist = (double)compute_adjacent((double)SCREEN_WIDTH
+	real_wall_dist = (myfloat)cub->ray->distance;
+	real_wall_height = (myfloat)TILE_SIZE;
+	screen_projection_dist = (myfloat)compute_adjacent((myfloat)SCREEN_WIDTH
 			/ 2.0, cub->ply->view_radian / 2.0);
 	screen_wall_height = (real_wall_height / real_wall_dist)
 		* screen_projection_dist;
