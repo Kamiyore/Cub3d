@@ -6,7 +6,7 @@
 /*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 10:15:35 by oyuhi             #+#    #+#             */
-/*   Updated: 2025/04/29 13:48:18 by oyuhi            ###   ########.fr       */
+/*   Updated: 2025/04/29 14:42:28 by oyuhi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,8 +196,8 @@ typedef struct s_xy_i
 typedef struct s_inter
 {
 	double			len_to_wall;
-	float			x;
-	float			y;
+	double			x;
+	double			y;
 }					t_inter;
 
 //#################################################################################//
@@ -233,10 +233,10 @@ void				cast_rays(t_cub *cub);
 t_inter				get_vertical_intersection(t_cub *cub);
 t_inter				get_horizontal_intersection(t_cub *cub);
 // Step calculation
-float				get_horizontal_step_x(t_cub *cub);
-float				get_horizontal_step_y(t_cub *cub);
-float				get_vertical_step_x(t_cub *cub);
-float				get_vertical_step_y(t_cub *cub);
+double				get_horizontal_step_x(t_cub *cub);
+double				get_horizontal_step_y(t_cub *cub);
+double				get_vertical_step_x(t_cub *cub);
+double				get_vertical_step_y(t_cub *cub);
 // Ray direction
 bool				look_left(float angle);
 bool				look_right(float angle);
@@ -244,12 +244,12 @@ bool				look_down(float angle);
 bool				look_up(float angle);
 //  Raycast helper
 float				normalize_angle(float angle);
-int					is_out_of_bounds(t_cub *cub, float x, float y);
-int					is_wall(t_cub *cub, float x, float y);
+int					is_out_of_bounds(t_cub *cub, double x, double y);
+int					is_wall(t_cub *cub, double x, double y);
 // Raycast compute
-float				compute_adjacent(float opposite, float angle);
-float				compute_opposite(float adjacent, float angle);
-float				compute_hypotenuse(float opposite, float adjacent);
+double				compute_adjacent(float opposite, float angle);
+double				compute_opposite(float adjacent, float angle);
+double				compute_hypotenuse(double opposite, double adjacent);
 
 // render wall
 void				render(t_cub *cub, int ray_count);

@@ -18,9 +18,9 @@
 // ########################## get_horizontal_intersection ##########################//
 // #################################################################################//
 
-static float	get_first_intersection_y(t_cub *cub)
+static double	get_first_intersection_y(t_cub *cub)
 {
-	float	inter_y;
+	double	inter_y;
 
 	inter_y = floor(cub->ply->pixel_y / TILE_SIZE) * TILE_SIZE;
 	if (look_down(cub->ray->angle))
@@ -28,15 +28,15 @@ static float	get_first_intersection_y(t_cub *cub)
 	return (inter_y);
 }
 
-static float	get_first_intersection_x(t_cub *cub, float first_inter_y)
+static double	get_first_intersection_x(t_cub *cub, double first_inter_y)
 {
-	float	vert_dist;
+	double	vert_dist;
 
 	vert_dist = first_inter_y - cub->ply->pixel_y;
 	return (cub->ply->pixel_x + compute_adjacent(vert_dist, cub->ray->angle));
 }
 
-static float	inside_adjust_y(t_cub *cub)
+static double	inside_adjust_y(t_cub *cub)
 {
 	if (look_down(cub->ray->angle))
 		return (1);
@@ -46,8 +46,8 @@ static float	inside_adjust_y(t_cub *cub)
 
 t_inter	get_horizontal_intersection(t_cub *cub)
 {
-	t_xy_f	next_inter_step;
-	t_xy_f	dist_to_wall;
+	t_xy_d	next_inter_step;
+	t_xy_d	dist_to_wall;
 	t_inter	inter;
 
 	next_inter_step.x = get_horizontal_step_x(cub);

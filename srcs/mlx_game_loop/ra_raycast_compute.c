@@ -6,7 +6,7 @@
 		// tan(θ) = opposite (y) / adjacent (x), so x = y / tan(θ)
 	// Calculate x_step by dividing TILE_SIZE (y-direction) by tan(θ).
 */
-float	compute_adjacent(float opposite, float angle)
+double	compute_adjacent(float opposite, float angle)
 {
 	return (opposite / tan(angle));
 }
@@ -16,7 +16,7 @@ float	compute_adjacent(float opposite, float angle)
 	// Calculate y_step (opposite) by multiplying TILE_SIZE
 	(adjacent, x-direction) by tan(θ).
 */
-float	compute_opposite(float adjacent, float angle)
+double	compute_opposite(float adjacent, float angle)
 {
 	return (adjacent * tan(angle));
 }
@@ -24,7 +24,7 @@ float	compute_opposite(float adjacent, float angle)
 /*
 	Pythagoras’s theorem a² + b² = c²
 */
-float	compute_hypotenuse(float opposite, float adjacent)
+double	compute_hypotenuse(double opposite, double adjacent)
 {
 	return (sqrt(pow(opposite, 2) + pow(adjacent, 2)));
 }

@@ -4,7 +4,7 @@
 //############################## THE RAYCASTING CODE ##############################//
 //#################################################################################//
 
-static float	get_first_intersection_x(t_cub *cub)
+static double	get_first_intersection_x(t_cub *cub)
 {
 	float	inter_x;
 
@@ -14,7 +14,7 @@ static float	get_first_intersection_x(t_cub *cub)
 	return (inter_x);
 }
 
-static float	get_first_intersection_y(t_cub *cub, float first_itner_x)
+static double	get_first_intersection_y(t_cub *cub, float first_itner_x)
 {
 	float	hor_dist;
 
@@ -22,7 +22,7 @@ static float	get_first_intersection_y(t_cub *cub, float first_itner_x)
 	return (cub->ply->pixel_y + compute_opposite(hor_dist, cub->ray->angle));
 }
 
-static float	inside_adjust_x(t_cub *cub)
+static double	inside_adjust_x(t_cub *cub)
 {
 	if (look_right(cub->ray->angle))
 		return (1);
@@ -32,8 +32,8 @@ static float	inside_adjust_x(t_cub *cub)
 
 t_inter	get_vertical_intersection(t_cub *cub)
 {
-	t_xy_f	next_inter_step;
-	t_xy_f	dist_to_wall;
+	t_xy_d	next_inter_step;
+	t_xy_d	dist_to_wall;
 	t_inter	inter;
 
 	next_inter_step.x = get_vertical_step_x(cub);
