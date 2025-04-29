@@ -6,7 +6,7 @@
 //############################## THE RAYCASTING CODE ##############################//
 //#################################################################################//
 
-#define PRINT_MODE false
+#define PRINT_MODE true
 
 static void	print_first_raycast(t_cub *cub, int ray_count, double horizon_inter,
 		double verti_inter)

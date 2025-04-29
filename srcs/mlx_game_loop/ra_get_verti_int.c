@@ -25,9 +25,9 @@ static float	get_first_intersection_y(t_cub *cub, float first_itner_x)
 static float	inside_adjust_x(t_cub *cub)
 {
 	if (look_right(cub->ray->angle))
-		return (0.0001f);
+		return (1);
 	else
-		return (-0.0001f);
+		return (-1);
 }
 
 t_inter	get_vertical_intersection(t_cub *cub)

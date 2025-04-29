@@ -39,9 +39,9 @@ static float	get_first_intersection_x(t_cub *cub, float first_inter_y)
 static float	inside_adjust_y(t_cub *cub)
 {
 	if (look_down(cub->ray->angle))
-		return (0.0001f);
+		return (1);
 	else
-		return (-0.0001f);
+		return (-1);
 }
 
 t_inter	get_horizontal_intersection(t_cub *cub)
