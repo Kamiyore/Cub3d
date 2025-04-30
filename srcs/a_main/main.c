@@ -6,7 +6,7 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 10:01:50 by oyuhi             #+#    #+#             */
-/*   Updated: 2025/04/28 18:49:26 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/30 15:23:18 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_error(char *message)
 {
 	write(2, "Error\n", 6);
 	write(2, message, ft_strlen(message));
-	return (false);
+	return (1);
 }
 
 int	valid_file(const char *filename)
@@ -103,7 +103,8 @@ int	main(int argc, char **argv)
 		free_file_data(&cub);
 		return (true);
 	}
-	// print_colors(&cub);
 	start_game(&cub);
 	return (false);
 }
+
+	// print_colors(&cub);

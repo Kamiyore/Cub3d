@@ -6,7 +6,7 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 18:52:16 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/28 18:52:19 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/30 15:07:29 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,20 @@ t_ray	*init_the_ray(void)
 
 void	start_game(t_cub *cub)
 {
+	cub->mlx.img_no = NULL;
+	cub->mlx.img_so = NULL;
+	cub->mlx.img_we = NULL;
+	cub->mlx.img_ea = NULL;
+	cub->mlx.window = NULL;
+	cub->img_ptr = NULL;
 	cub->ply = init_the_player(cub);
 	cub->ray = init_the_ray();
 	cub->mlx.mlx = mlx_init();
 	if (!cub->mlx.mlx)
-		exit(ft_error("mlx_init failed\n"));
+		exit(ft_error("mlx_init failed.\n"));
+	load_images(cub);
 	cub->mlx.window = mlx_new_window(cub->mlx.mlx, SCREEN_WIDTH, SCREEN_HEIGHT,
 			"Cub3D");
-	load_images(cub);
 	cub->img_ptr = mlx_new_image(cub->mlx.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	cub->img_data = (int *)mlx_get_data_addr(cub->img_ptr, &cub->bpp,
 			&cub->size_l, &cub->endian);

@@ -6,7 +6,7 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 15:37:49 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/28 18:53:11 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/29 18:06:25 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,14 @@ char	**read_file(const char *file, int lines)
 		return (NULL);
 	array = (char **)malloc(sizeof(char *) * (lines + 1));
 	if (!array)
-	{
-		close(fd);
-		return (NULL);
-	}
+		return (close(fd), NULL);
 	i = 0;
 	line = ft_get_next_line(fd);
 	while (i < lines && line)
 	{
 		if (line[ft_strlen(line) - 1] == '\n')
 			line[ft_strlen(line) - 1] = '\0';
-		array[i] = line;
-		i++;
+		array[i++] = line;
 		line = ft_get_next_line(fd);
 	}
 	array[i] = NULL;
@@ -127,26 +123,34 @@ int	validate_config_and_map(t_cub *cub)
 	return (true);
 }
 
-int	parse_file(t_cub *cub, const char *filename)
+static bool	read_and_extract_map(t_cub *cub, const char *filename,
+		char ***lines_out, char ***map_start_out)
 {
-	int		line_count;
-	char	**lines;
-	char	**map_start;
+	int	line_count;
 
 	line_count = count_lines(filename);
 	if (line_count <= 0)
 		return (ft_error("Invalid line count or file error.\n"));
-	lines = read_file(filename, line_count);
-	if (!lines)
+	*lines_out = read_file(filename, line_count);
+	if (!*lines_out)
 		return (ft_error("Could not read file into lines.\n"));
-	map_start = extract_map_start(&cub->color, lines);
-	if (!map_start)
+	*map_start_out = extract_map_start(&cub->color, *lines_out);
+	if (!*map_start_out)
 	{
-		ft_array_free(lines);
+		ft_array_free(*lines_out);
 		free_file_data(cub);
-		exit(1);
 		return (ft_error("Error in configuration.\n"));
 	}
+	return (true);
+}
+
+int	parse_file(t_cub *cub, const char *filename)
+{
+	char	**lines;
+	char	**map_start;
+
+	if (!read_and_extract_map(cub, filename, &lines, &map_start))
+		return (false);
 	if (!parse_map_lines(cub->map, map_start))
 	{
 		ft_array_free(lines);
@@ -158,7 +162,6 @@ int	parse_file(t_cub *cub, const char *filename)
 		free_file_data(cub);
 		return (false);
 	}
-	// print_loaded_map(cub->map->map2d);
 	ft_array_free(lines);
 	return (true);
 }

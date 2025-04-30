@@ -7,16 +7,16 @@ static t_texture_data	get_texture_data(t_cub *cub)
 	if (cub->ray->is_vertical_wall)
 	{
 		if (look_right(cub->ray->angle))
-			return (cub->mlx.tex_ea_data);
+			return (cub->mlx.tex_we_data);  //east
 		else
-			return (cub->mlx.tex_we_data);
+			return (cub->mlx.tex_ea_data);  //west
 	}
 	else
 	{
 		if (look_down(cub->ray->angle))
-			return (cub->mlx.tex_so_data);
+			return (cub->mlx.tex_no_data); //so
 		else
-			return (cub->mlx.tex_no_data);
+			return (cub->mlx.tex_so_data); //no
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 11:10:00 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/28 15:50:59 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/30 10:00:20 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,33 @@ int	parse_map_lines(t_map *map, char **lines)
 	return (true);
 }
 
+// int	parse_map_lines(t_map *map, char **lines)
+// {
+// 	int	i;
+// 	int	len;
+
+// 	map->height = 0;
+// 	while (lines[map->height])
+// 		map->height++;
+// 	map->map2d = malloc(sizeof(char *) * (map->height + 1));
+// 	if (!map->map2d)
+// 		return (false);
+// 	map->width = 0;
+// 	i = 0;
+// 	while (i < map->height)
+// 	{
+// 		map->map2d[i] = ft_strdup(lines[i]);
+// 		if (!map->map2d[i])
+// 			return (false);
+// 		len = ft_strlen(lines[i]);
+// 		if (len > map->width)
+// 			map->width = len;
+// 		i++;
+// 	}
+// 	map->map2d[i] = NULL;
+// 	return (true);
+// } // totot ma sice 23 radku, ale pouziv height a width a nevim jeslti to je v poho
+
 int	parse_rgb(const char *str, int *dst)
 {
 	char			**color;
@@ -58,14 +85,10 @@ int	parse_rgb(const char *str, int *dst)
 	r = ft_atoi(color[0]);
 	g = ft_atoi(color[1]);
 	b = ft_atoi(color[2]);
-	*dst = (0xFF << 24) // alfa = 0xFF
-	| (r << 16)     // červená
-	| (g << 8)      // zelená
-	| (b << 0);     // modrá
+	*dst = (0xFF << 24) | (r << 16) | (g << 8) | (b << 0);
 	ft_array_free(color);
 	return (0);
 }
-
 
 int	validate_texture_path(const char *path)
 {
@@ -95,7 +118,6 @@ int	validate_texture_path(const char *path)
 // 		return (0);
 // 	return (1);
 // }
-
 
 int	set_texture_path(char **dest, const char *line)
 {

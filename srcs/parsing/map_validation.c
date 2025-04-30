@@ -6,7 +6,7 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 11:09:55 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/24 11:53:59 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:33:26 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,14 @@ bool	is_player(char c)
 	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }
 
-int	validate_map(t_cub *cub)
+static int	scan_map(t_cub *cub, int *player_cnt)
 {
 	int		y;
 	int		x;
-	int		player_count;
 	char	**map;
 
 	map = cub->map->map2d;
 	y = -1;
-	player_count = 0;
 	while (map[++y])
 	{
 		x = -1;
@@ -45,11 +43,21 @@ int	validate_map(t_cub *cub)
 				cub->map->player_x = x;
 				cub->map->player_y = y;
 				cub->map->player_dir = map[y][x];
-				player_count++;
+				(*player_cnt)++;
 			}
 		}
 	}
-	if (player_count != 1)
+	return (0);
+}
+
+int	validate_map(t_cub *cub)
+{
+	int	player_cnt;
+
+	player_cnt = 0;
+	if (scan_map(cub, &player_cnt))
+		return (1);
+	if (player_cnt != 1)
 		return (ft_error("Map must contain exactly one player.\n"));
 	return (is_surrounded_by_wall(cub));
 }

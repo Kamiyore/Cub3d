@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_layout.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
+/*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:28:59 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/28 14:49:58 by oyuhi            ###   ########.fr       */
+/*   Updated: 2025/04/29 16:41:59 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,19 +60,25 @@ int	find_player_pos(t_map *map_data)
 	return (false);
 }
 
-int	flood_fill(char **map, int x, int y)
+static int	is_out_map(char **map, int x, int y)
 {
-	int		width;
-	int		height;
-	char	c;
+	int	height;
 
 	height = 0;
 	while (map[height])
 		height++;
 	if (y < 0 || y >= height)
-		return (0);
-	width = ft_strlen(map[y]);
-	if (x < 0 || x >= width)
+		return (1);
+	if (x < 0 || x >= (int)ft_strlen(map[y]))
+		return (1);
+	return (0);
+}
+
+int	flood_fill(char **map, int x, int y)
+{
+	char	c;
+
+	if (is_out_map(map, x, y))
 		return (0);
 	c = map[y][x];
 	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
@@ -82,13 +88,10 @@ int	flood_fill(char **map, int x, int y)
 	if (c == '1')
 		return (1);
 	map[y][x] = '1';
-	if (!flood_fill(map, x + 1, y))
-		return (0);
-	if (!flood_fill(map, x - 1, y))
-		return (0);
-	if (!flood_fill(map, x, y + 1))
-		return (0);
-	if (!flood_fill(map, x, y - 1))
+	if (!flood_fill(map, x + 1, y)
+		|| !flood_fill(map, x - 1, y)
+		|| !flood_fill(map, x, y + 1)
+		|| !flood_fill(map, x, y - 1))
 		return (0);
 	return (1);
 }
