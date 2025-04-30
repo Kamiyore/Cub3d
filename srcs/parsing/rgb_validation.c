@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rgb_validation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
+/*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:43:42 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/28 14:49:58 by oyuhi            ###   ########.fr       */
+/*   Updated: 2025/04/30 16:20:05 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,17 @@ static int	parts_are_digits(char **color)
 	while (i < 3)
 	{
 		if (!color[i] || color[i][0] == '\0')
-			return (0);
+			return (-1);
 		j = 0;
 		while (color[i][j])
 		{
 			if (!ft_isdigit(color[i][j]))
-				return (0);
+				return (-1);
 			j++;
 		}
 		i++;
 	}
-	return (1);
+	return (0);
 }
 
 static int	values_in_range(char **color)
@@ -77,7 +77,7 @@ int	is_valid_rgb_format(const char *str)
 		ft_array_free(color);
 		return (ft_error("RGB must have exactly 3 values.\n"));
 	}
-	if (!parts_are_digits(color))
+	if (parts_are_digits(color)!=0)
 	{
 		ft_array_free(color);
 		return (ft_error("RGB values must be numeric.\n"));
@@ -88,5 +88,5 @@ int	is_valid_rgb_format(const char *str)
 		return (ft_error("RGB values must be between 0 and 255.\n"));
 	}
 	ft_array_free(color);
-	return (1);
+	return (0);
 }

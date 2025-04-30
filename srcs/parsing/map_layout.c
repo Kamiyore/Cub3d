@@ -6,7 +6,7 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:28:59 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/29 16:41:59 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/30 16:23:35 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ int	find_player_pos(t_map *map_data)
 				map_data->player_x = j;
 				map_data->player_y = i;
 				map_data->player_dir = map_data->map2d[i][j];
-				return (true);
+				return (0);
 			}
 			j++;
 		}
 		i++;
 	}
-	return (false);
+	return (-1);
 }
 
 static int	is_out_map(char **map, int x, int y)
@@ -68,9 +68,9 @@ static int	is_out_map(char **map, int x, int y)
 	while (map[height])
 		height++;
 	if (y < 0 || y >= height)
-		return (1);
+		return (-1);
 	if (x < 0 || x >= (int)ft_strlen(map[y]))
-		return (1);
+		return (-1);
 	return (0);
 }
 
@@ -116,14 +116,14 @@ int	check_remaining_open_areas(char **copy)
 			}
 		}
 	}
-	return (1);
+	return (0);
 }
 
 int	is_surrounded_by_wall(t_cub *cub)
 {
 	char	**copy;
 
-	if (!find_player_pos(cub->map))
+	if (find_player_pos(cub->map)!=0)
 		return (ft_error("Player not found.\n"));
 	copy = copy_map(cub->map->map2d);
 	if (!copy)
@@ -133,8 +133,8 @@ int	is_surrounded_by_wall(t_cub *cub)
 		ft_array_free(copy);
 		return (ft_error("Player area not enclosed.\n"));
 	}
-	if (!check_remaining_open_areas(copy))
-		return (0);
+	if (check_remaining_open_areas(copy)!=0)
+		return (-1);
 	ft_array_free(copy);
-	return (1);
+	return (0);
 }

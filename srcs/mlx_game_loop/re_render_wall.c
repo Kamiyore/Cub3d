@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   re_render_wall.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/30 18:06:27 by knemcova          #+#    #+#             */
+/*   Updated: 2025/04/30 18:06:32 by knemcova         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
@@ -7,16 +17,16 @@ static t_texture_data	get_texture_data(t_cub *cub)
 	if (cub->ray->is_vertical_wall)
 	{
 		if (look_right(cub->ray->angle))
-			return (cub->mlx.tex_we_data);  //east
+			return (cub->mlx.tex_we_data); // east
 		else
-			return (cub->mlx.tex_ea_data);  //west
+			return (cub->mlx.tex_ea_data); // west
 	}
 	else
 	{
 		if (look_down(cub->ray->angle))
-			return (cub->mlx.tex_no_data); //so
+			return (cub->mlx.tex_no_data); // so
 		else
-			return (cub->mlx.tex_so_data); //no
+			return (cub->mlx.tex_so_data); // no
 	}
 }
 

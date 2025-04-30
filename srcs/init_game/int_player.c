@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player_direction.c                                 :+:      :+:    :+:   */
+/*   int_player.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:32:05 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/25 11:49:04 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/30 15:37:49 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_player	*init_the_player(t_cub *cub)
 
 	ply = ft_calloc(1, sizeof(t_player));
 	if (!ply)
-		exit(ft_error("Memory allocation failed for player.\n")); //no free?
+		exit(ft_error("Memory allocation failed for player.\n"));
 	set_player_position(ply, cub->map);
 	set_player_angle(ply, cub->map->player_dir);
 	ply->view_radian = FIELD_OF_VIEW * (M_PI / 180.0);

@@ -6,7 +6,7 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 10:01:50 by oyuhi             #+#    #+#             */
-/*   Updated: 2025/04/30 15:23:18 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/30 16:48:25 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_error(char *message)
 {
 	write(2, "Error\n", 6);
 	write(2, message, ft_strlen(message));
-	return (1);
+	return (-1);
 }
 
 int	valid_file(const char *filename)
@@ -25,8 +25,8 @@ int	valid_file(const char *filename)
 
 	len = ft_strlen(filename);
 	if (len < 4 || ft_strcmp(filename + len - 4, ".cub") != 0)
-		return (false);
-	return (true);
+		return (-1);
+	return (0);
 }
 
 void	init_file_data(t_cub *cub)
@@ -91,14 +91,14 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return (ft_error("Usage: ./so_long name.cub\n"));
 	init_file_data(&cub);
-	if (!valid_file(argv[1]))
+	if (valid_file(argv[1]) !=0)
 	{
 		free_file_data(&cub);
 		return (ft_error("Invalid file format. Only '.cub'\n"));
 	}
-	if (!parse_file(&cub, argv[1]))
+	if (parse_file(&cub, argv[1])!=0)
 		return (true);
-	if (!validate_map(&cub))
+	if (validate_map(&cub)!=0)
 	{
 		free_file_data(&cub);
 		return (true);

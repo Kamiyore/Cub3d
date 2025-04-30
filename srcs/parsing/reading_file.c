@@ -6,7 +6,7 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 15:37:49 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/29 18:06:25 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/30 16:52:45 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int	validate_config_and_map(t_cub *cub)
 		return (ft_error("Missing floor or ceiling color.\n"));
 	if (!map->map2d || !map->map2d[0])
 		return (ft_error("Map is missing or empty.\n"));
-	return (true);
+	return (0);
 }
 
 static bool	read_and_extract_map(t_cub *cub, const char *filename,
@@ -141,7 +141,7 @@ static bool	read_and_extract_map(t_cub *cub, const char *filename,
 		free_file_data(cub);
 		return (ft_error("Error in configuration.\n"));
 	}
-	return (true);
+	return (0);
 }
 
 int	parse_file(t_cub *cub, const char *filename)
@@ -149,19 +149,19 @@ int	parse_file(t_cub *cub, const char *filename)
 	char	**lines;
 	char	**map_start;
 
-	if (!read_and_extract_map(cub, filename, &lines, &map_start))
-		return (false);
-	if (!parse_map_lines(cub->map, map_start))
+	if (read_and_extract_map(cub, filename, &lines, &map_start)!=0)
+		return (-1);
+	if (parse_map_lines(cub->map, map_start)!=0)
 	{
 		ft_array_free(lines);
 		return (ft_error("Error in map parsing.\n"));
 	}
-	if (!validate_config_and_map(cub))
+	if (validate_config_and_map(cub)!=0)
 	{
 		ft_array_free(lines);
 		free_file_data(cub);
-		return (false);
+		return (-1);
 	}
 	ft_array_free(lines);
-	return (true);
+	return (0);
 }

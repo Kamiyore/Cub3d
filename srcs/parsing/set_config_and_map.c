@@ -6,69 +6,69 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 11:10:00 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/30 10:00:20 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/30 17:55:54 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-int	parse_map_lines(t_map *map, char **lines)
-{
-	int	count;
-	int	i;
-	int	max_width;
-	int	len;
-
-	count = 0;
-	i = 0;
-	max_width = 0;
-	while (lines[count])
-		count++;
-	map->map2d = malloc(sizeof(char *) * (count + 1));
-	if (!map->map2d)
-		return (false);
-	while (i < count)
-	{
-		map->map2d[i] = ft_strdup(lines[i]);
-		if (!map->map2d[i])
-			return (false);
-		len = ft_strlen(lines[i]);
-		if (len > max_width)
-			max_width = len;
-		i++;
-	}
-	map->map2d[i] = NULL;
-	map->height = count;
-	map->width = max_width;
-	return (true);
-}
-
 // int	parse_map_lines(t_map *map, char **lines)
 // {
+// 	int	count;
 // 	int	i;
+// 	int	max_width;
 // 	int	len;
 
-// 	map->height = 0;
-// 	while (lines[map->height])
-// 		map->height++;
-// 	map->map2d = malloc(sizeof(char *) * (map->height + 1));
-// 	if (!map->map2d)
-// 		return (false);
-// 	map->width = 0;
+// 	count = 0;
 // 	i = 0;
-// 	while (i < map->height)
+// 	max_width = 0;
+// 	while (lines[count])
+// 		count++;
+// 	map->map2d = malloc(sizeof(char *) * (count + 1));
+// 	if (!map->map2d)
+// 		return (-1);
+// 	while (i < count)
 // 	{
 // 		map->map2d[i] = ft_strdup(lines[i]);
 // 		if (!map->map2d[i])
-// 			return (false);
+// 			return (-1);
 // 		len = ft_strlen(lines[i]);
-// 		if (len > map->width)
-// 			map->width = len;
+// 		if (len > max_width)
+// 			max_width = len;
 // 		i++;
 // 	}
 // 	map->map2d[i] = NULL;
-// 	return (true);
-// } // totot ma sice 23 radku, ale pouziv height a width a nevim jeslti to je v poho
+// 	map->height = count;
+// 	map->width = max_width;
+// 	return (0);
+// }
+
+int	parse_map_lines(t_map *map, char **lines)
+{
+	int	i;
+	int	len;
+
+	map->height = 0;
+	while (lines[map->height])
+		map->height++;
+	map->map2d = malloc(sizeof(char *) * (map->height + 1));
+	if (!map->map2d)
+		return (-1);
+	map->width = 0;
+	i = 0;
+	while (i < map->height)
+	{
+		map->map2d[i] = ft_strdup(lines[i]);
+		if (!map->map2d[i])
+			return (-1);
+		len = ft_strlen(lines[i]);
+		if (len > map->width)
+			map->width = len;
+		i++;
+	}
+	map->map2d[i] = NULL;
+	return (0);
+} 
 
 int	parse_rgb(const char *str, int *dst)
 {
@@ -77,8 +77,8 @@ int	parse_rgb(const char *str, int *dst)
 	unsigned int	g;
 	unsigned int	b;
 
-	if (!is_valid_rgb_format(str))
-		return (1);
+	if (is_valid_rgb_format(str) != 0)
+		return (-1);
 	color = ft_split(str, ",");
 	if (!color)
 		return (ft_error("Memory allocation error.\n"));
@@ -96,7 +96,7 @@ int	validate_texture_path(const char *path)
 	size_t	len;
 
 	if (!path)
-		return (0);
+		return (-1);
 	len = ft_strlen(path);
 	if (len < 4 || ft_strncmp(path + len - 4, ".xpm", 4) != 0)
 		return (ft_error("Texture file must have .xpm extension.\n"));
@@ -104,7 +104,7 @@ int	validate_texture_path(const char *path)
 	if (fd < 0)
 		return (ft_error("Texture file not found or inaccessible.\n"));
 	close(fd);
-	return (1);
+	return (0);
 }
 
 // int	set_texture_path(char **dest, const char *line)
@@ -126,12 +126,12 @@ int	set_texture_path(char **dest, const char *line)
 	*dest = ft_strdup(line);
 	if (!*dest)
 		return (ft_error("Memory allocation failed.\n"));
-	if (!validate_texture_path(*dest))
+	if (validate_texture_path(*dest) != 0)
 	{
 		safe_free((void **)dest);
-		return (0);
+		return (-1);
 	}
-	return (1);
+	return (0);
 }
 
 int	parse_configuration(t_texture *color, char *line)
@@ -139,13 +139,13 @@ int	parse_configuration(t_texture *color, char *line)
 	while (*line && ft_isspace(*line))
 		line++;
 	if (ft_strncmp(line, "NO ", 3) == 0)
-		return (!set_texture_path(&color->no_path, line + 3));
+		return (set_texture_path(&color->no_path, line + 3));
 	else if (ft_strncmp(line, "SO ", 3) == 0)
-		return (!set_texture_path(&color->so_path, line + 3));
+		return (set_texture_path(&color->so_path, line + 3));
 	else if (ft_strncmp(line, "WE ", 3) == 0)
-		return (!set_texture_path(&color->we_path, line + 3));
+		return (set_texture_path(&color->we_path, line + 3));
 	else if (ft_strncmp(line, "EA ", 3) == 0)
-		return (!set_texture_path(&color->ea_path, line + 3));
+		return (set_texture_path(&color->ea_path, line + 3));
 	else if (ft_strncmp(line, "F ", 2) == 0)
 		return (parse_rgb(line + 2, &color->f_color));
 	else if (ft_strncmp(line, "C ", 2) == 0)
@@ -154,5 +154,4 @@ int	parse_configuration(t_texture *color, char *line)
 		return (0);
 	else
 		return (ft_error("Unknown config element.\n"));
-	return (0);
 }
