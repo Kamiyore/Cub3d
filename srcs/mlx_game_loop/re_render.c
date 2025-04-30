@@ -6,7 +6,7 @@
 /*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 18:06:34 by oyuhi             #+#    #+#             */
-/*   Updated: 2025/04/30 18:52:50 by oyuhi            ###   ########.fr       */
+/*   Updated: 2025/04/30 20:57:58 by oyuhi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ void	safe_mlx_pixel_put(t_cub *cub, int x, int y, int color)
 		return ;
 	else if (y > SCREEN_HEIGHT)
 		return ;
-	idx = y * (cub->size_l / 4) + x;
-	cub->img_data[idx] = color;
+	idx = y * (cub->img.size_l / 4) + x;
+	cub->img.data[idx] = color;
 }
 
 void	draw_floor_ceiling(t_cub *cub, int ray_count, int top_pix, int bot_pix)

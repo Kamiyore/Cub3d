@@ -6,7 +6,7 @@
 /*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 10:15:35 by oyuhi             #+#    #+#             */
-/*   Updated: 2025/04/30 20:47:47 by oyuhi            ###   ########.fr       */
+/*   Updated: 2025/04/30 21:03:15 by oyuhi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@ typedef struct s_keyboard
 typedef struct s_mlx_img
 {
 	void			*img_ptr;
-	int				*img_data;
+	int				*data;
 	int				bpp;
 	int				size_l;
 	int				endian;
@@ -199,11 +199,6 @@ typedef struct s_mlx_img
 typedef struct s_cub
 {
 	t_mlx_img		img;
-	void			*img_ptr;
-	int				*img_data;
-	int				bpp;
-	int				size_l;
-	int				endian;
 	t_ray			*ray;
 	t_map			*map;
 	t_player		*ply;

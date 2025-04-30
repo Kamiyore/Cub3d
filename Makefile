@@ -27,18 +27,28 @@ GAME_LOOP_DIR = srcs/mlx_game_loop
 KEY_EXIT_DIR = srcs/key_and_exit
 UTILS_DIR = srcs/utils
 
-MINIMAP_SRCS := $(wildcard srcs/minimap/*.c)
-INIT_GAME_SRCS := $(wildcard $(INIT_GAME_DIR)/*.c)
-GAME_LOOP_SRCS := $(wildcard $(GAME_LOOP_DIR)/*.c)
+# MINIMAP_SRCS := $(wildcard srcs/minimap/*.c)
+# INIT_GAME_SRCS := $(wildcard $(INIT_GAME_DIR)/*.c)
+# GAME_LOOP_SRCS := $(wildcard $(GAME_LOOP_DIR)/*.c)
 PARSER_SRCS := $(wildcard $(PARSER_DIR)/*.c)
 
+INIT_GAME_SRCS	= 	srcs/init_game/int_player.c srcs/init_game/load_images.c srcs/init_game/start_game.c 
+KEY_EXIT_SRCS = 	srcs/key_and_exit/exit_game.c srcs/key_and_exit/free.c srcs/key_and_exit/key_handler.c 
+MINIMAP_SRCS = 		srcs/minimap/init_minimap_bonus.c srcs/minimap/minimap_utils_bonus.c \
+					srcs/minimap/render_minimap_bonus.c srcs/minimap/render_ply_ray_bonus.c
+GAME_LOOP_SRCS =	srcs/mlx_game_loop/game_loop.c srcs/mlx_game_loop/m_move_player.c srcs/mlx_game_loop/m_movement.c \
+					srcs/mlx_game_loop/m_rotatoin.c srcs/mlx_game_loop/ra_get_hori_inter.c srcs/mlx_game_loop/ra_get_step.c \
+					srcs/mlx_game_loop/ra_get_verti_int.c srcs/mlx_game_loop/ra_ray_direction.c srcs/mlx_game_loop/ra_raycast_compute.c \
+					srcs/mlx_game_loop/ra_raycast_helper.c srcs/mlx_game_loop/ra_raycasting.c srcs/mlx_game_loop/re_render_wall.c \
+					srcs/mlx_game_loop/re_render.c
 
-SRCS = $(MAIN_DIR)/main.c \
-		$(MINIMAP_SRCS) \
+
+SRCS = srcs/a_main/main.c \
 		$(INIT_GAME_SRCS) \
+		$(KEY_EXIT_SRCS) \
+		$(MINIMAP_SRCS) \
 		$(GAME_LOOP_SRCS) \
-		$(PARSER_SRCS) \
-		srcs/key_and_exit/exit_game.c srcs/key_and_exit/key_handler.c srcs/key_and_exit/free.c
+		$(PARSER_SRCS) 
 
 
 OBJS = $(SRCS:.c=.o)

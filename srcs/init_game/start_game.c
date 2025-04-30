@@ -6,7 +6,7 @@
 /*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 18:52:16 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/30 20:51:43 by oyuhi            ###   ########.fr       */
+/*   Updated: 2025/04/30 20:58:18 by oyuhi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	start_game(t_cub *cub)
 	cub->mlx.img_we = NULL;
 	cub->mlx.img_ea = NULL;
 	cub->mlx.window = NULL;
-	cub->img_ptr = NULL;
+	cub->img.img_ptr = NULL;
 	cub->ply = init_the_player(cub);
 	cub->ray = init_the_ray();
 	cub->mlx.mlx = mlx_init();
@@ -39,9 +39,9 @@ void	start_game(t_cub *cub)
 	load_images(cub);
 	cub->mlx.window = mlx_new_window(cub->mlx.mlx, SCREEN_WIDTH, SCREEN_HEIGHT,
 			"Cub3D");
-	cub->img_ptr = mlx_new_image(cub->mlx.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
-	cub->img_data = (int *)mlx_get_data_addr(cub->img_ptr, &cub->bpp,
-			&cub->size_l, &cub->endian);
+	cub->img.img_ptr = mlx_new_image(cub->mlx.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
+	cub->img.data = (int *)mlx_get_data_addr(cub->img.img_ptr, &cub->img.bpp,
+			&cub->img.size_l, &cub->img.endian);
 	init_minimap_bonus(cub);
 	mlx_loop_hook(cub->mlx.mlx, &mlx_game_loop, cub);
 	mlx_hook(cub->mlx.window, 2, 1L << 0, mlx_key_press, cub);
