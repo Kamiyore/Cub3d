@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 10:15:35 by oyuhi             #+#    #+#             */
-/*   Updated: 2025/04/30 15:05:45 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/30 19:46:30 by oyuhi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-// # define KEY_W 119
-// # define KEY_A 97
-// # define KEY_S 115
-// # define KEY_D 100
-// # define ESC 65307
+
 # define SCREEN_WIDTH 1900
 # define SCREEN_HEIGHT 1000
 # define TILE_SIZE 64
@@ -61,7 +57,6 @@ int					parse_rgb(const char *str, int *dst);
 int					ft_array_len(char **array);
 void				ft_array_free(char **split);
 
-///////////yuhi//////////////////////
 
 typedef enum e_action
 {
@@ -187,11 +182,11 @@ typedef struct s_xy_d
 	double			y;
 }					t_xy_d;
 
-typedef struct s_xy_i
-{
-	int				x;
-	int				y;
-}					t_xy_i;
+// typedef struct s_xy_i
+// {
+// 	int				x;
+// 	int				y;
+// }					t_xy_i;
 
 typedef struct s_inter
 {

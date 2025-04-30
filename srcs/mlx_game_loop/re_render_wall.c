@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   re_render_wall.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/30 18:06:27 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/30 18:06:32 by knemcova         ###   ########.fr       */
+/*   Created: 2025/04/30 18:06:39 by oyuhi             #+#    #+#             */
+/*   Updated: 2025/04/30 18:55:57 by oyuhi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ static t_texture_data	get_texture_data(t_cub *cub)
 	if (cub->ray->is_vertical_wall)
 	{
 		if (look_right(cub->ray->angle))
-			return (cub->mlx.tex_we_data); // east
+			return (cub->mlx.tex_ea_data);
 		else
-			return (cub->mlx.tex_ea_data); // west
+			return (cub->mlx.tex_we_data);
 	}
 	else
 	{
 		if (look_down(cub->ray->angle))
-			return (cub->mlx.tex_no_data); // so
+			return (cub->mlx.tex_so_data);
 		else
-			return (cub->mlx.tex_so_data); // no
+			return (cub->mlx.tex_no_data);
 	}
 }
 
@@ -41,6 +41,7 @@ static double	get_texture_x(t_cub *cub, t_texture_data sl)
 	hit = fmod(cub->ray->inter_midpoint, TILE_SIZE);
 	return (hit * ((double)sl.width / TILE_SIZE));
 }
+
 /**
  * calculate_texture_start_row()
  * -----------------------------
@@ -74,21 +75,32 @@ static double	calculate_texture_start_row(t_wall wall,
 
 static int	get_color_from_texture(t_cub *cub, t_texture_data tx, int tex_y)
 {
-	int	color;
 	int	tex_x;
 
 	tex_x = get_texture_x(cub, tx);
-	color = tx.data[tex_y * tx.width + tex_x];
-	return (color);
+	if ((cub->ray->is_vertical_wall && look_right(cub->ray->angle))
+		|| (!cub->ray->is_vertical_wall && look_down(cub->ray->angle)))
+	{
+		tex_x = tx.width - tex_x - 1;
+	}
+	if (tex_x < 0)
+		tex_x = 0;
+	else if (tex_x >= tx.width)
+		tex_x = tx.width - 1;
+	if (tex_y < 0)
+		tex_y = 0;
+	else if (tex_y >= tx.height)
+		tex_y = tx.height - 1;
+	return (tx.data[tex_y * tx.width + tex_x]);
 }
 
 void	render_wall(t_cub *cub, int ray_x, t_wall wall)
 {
-	t_texture_data tx;
-	double tx_step_y;
-	double tex_y;
-	int color;
-	int y;
+	t_texture_data	tx;
+	double			tx_step_y;
+	double			tex_y;
+	int				color;
+	int				y;
 
 	y = wall.top_screen;
 	tx = get_texture_data(cub);
@@ -96,11 +108,8 @@ void	render_wall(t_cub *cub, int ray_x, t_wall wall)
 	tex_y = calculate_texture_start_row(wall, tx_step_y);
 	while (y < wall.bot_screen)
 	{
-		// if ((int)tex_y > (int)tx.height)
-		// {
-		// 	tex_y = tx.height - 1;
-		// 	printf("ty = %f tx.height = %d \n", tex_y, tx.height);
-		// }
+		if ((int)tex_y > (int)tx.height)
+			tex_y = tx.height - 1;
 		color = get_color_from_texture(cub, tx, tex_y);
 		safe_mlx_pixel_put(cub, ray_x, y, color);
 		tex_y += tx_step_y;

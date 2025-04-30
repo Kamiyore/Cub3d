@@ -1,18 +1,17 @@
 NAME = cub3D
-
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
-MLX_DIR = minilibx-linux
 
-# allow BONUS_MODE to be set from the command line
-ifdef BONUS_MODE
-CFLAGS += -DBONUS_MODE=true
-endif
+CFLAGS       = -Wall -Wextra -Werror -g -I$(INC_DIR) -DBONUS_MODE=false
 
+# MiniLibX
+MLX_DIR      = minilibx-linux
+LIBMLX       = $(MLX_DIR)/libmlx_Linux.a
+MLX_FLAGS    = -L$(MLX_DIR) -lmlx_Linux -L/usr/lib -lXext -lX11 -lz -lm
 
-MLX_FLAGS = -L$(MLX_DIR) -lmlx_Linux -L/usr/lib -lXext -lX11 -lz -lm
-LIBMLX = $(MLX_DIR)/libmlx_Linux.a
-LIBFT_REPO = https://github.com/yuhi-ootani/lifbt_all.git
+# libft (external)
+LIBFT_REPO   = https://github.com/yuhi-ootani/lifbt_all.git
+LIBFT_DIR    = libft
+LIBFT        = $(LIBFT_DIR)/libft.a
 
 SRC_DIR = srcs
 INC_DIR = includes
@@ -45,6 +44,9 @@ SRCS = $(MAIN_DIR)/main.c \
 OBJS = $(SRCS:.c=.o)
 
 all: $(LIBFT) $(NAME) 
+
+bonus: CFLAGS += -UBONUS_MODE -DBONUS_MODE=true
+bonus: all
 
 $(NAME): $(OBJS) $(LIBMLX)
 	$(CC) $(CFLAGS)  $(OBJS) $(MLX_FLAGS) $(LIBFT) -o $(NAME)
@@ -81,7 +83,6 @@ fclean: clean
 
 re: fclean all
 
-bonus: CFLAGS += -DBONUS_MODE=true
-bonus: re
 
-.PHONY: all clean fclean bonus ew
+
+.PHONY: all clean fclean bonus re
