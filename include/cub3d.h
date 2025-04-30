@@ -6,7 +6,7 @@
 /*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 10:15:35 by oyuhi             #+#    #+#             */
-/*   Updated: 2025/04/30 19:46:30 by oyuhi            ###   ########.fr       */
+/*   Updated: 2025/04/30 20:47:47 by oyuhi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "../libft/libft.h"
 # include "../minilibx-linux/mlx.h"
-# include "../srcs/minimap/minimap_bonus.h"
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include <fcntl.h>
@@ -27,7 +26,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-
 # define SCREEN_WIDTH 1900
 # define SCREEN_HEIGHT 1000
 # define TILE_SIZE 64
@@ -36,8 +34,12 @@
 # define MOVEMENT_SPEED 10
 # define TILE_CENTER (TILE_SIZE / 2)
 
+# ifndef PRINT_MODE
+#  define PRINT_MODE false
+# endif
+
 # ifndef BONUS_MODE
-#  define BONUS_MODE false
+#  define BONUS_MODE true
 # endif
 
 typedef struct s_config
@@ -57,7 +59,6 @@ int					parse_rgb(const char *str, int *dst);
 int					ft_array_len(char **array);
 void				ft_array_free(char **split);
 
-
 typedef enum e_action
 {
 	NONE,
@@ -69,6 +70,40 @@ typedef enum e_action
 	ROTATE_RIGHT
 
 }					t_action;
+
+typedef struct s_wall
+{
+	double			height;
+	double			bot_pix;
+	double			top_pix;
+	double			bot_screen;
+	double			top_screen;
+}					t_wall;
+
+typedef struct s_xy
+{
+	float			x;
+	float			y;
+}					t_xy_f;
+
+typedef struct s_xy_d
+{
+	double			x;
+	double			y;
+}					t_xy_d;
+
+// typedef struct s_xy_i
+// {
+// 	int				x;
+// 	int				y;
+// }					t_xy_i;
+
+typedef struct s_inter
+{
+	double			len_to_wall;
+	float			x;
+	float			y;
+}					t_inter;
 
 typedef struct s_player
 {
@@ -145,13 +180,30 @@ typedef struct s_keyboard
 	int				key_esc;
 }					t_keyboard;
 
+# include "../srcs/minimap/minimap_bonus.h"
+
+// void *img_ptr; // returned by mlx_new_image()
+// 	int *img_data; // pixel buffer
+// 	int bpp;       // bits per pixel
+// 	int size_l;    // length of line (bytes)
+// 	int endian;    // endianness
+typedef struct s_mlx_img
+{
+	void			*img_ptr;
+	int				*img_data;
+	int				bpp;
+	int				size_l;
+	int				endian;
+}					t_mlx_img;
+
 typedef struct s_cub
 {
-	void *img_ptr; // returned by mlx_new_image()
-	int *img_data; // pixel buffer
-	int bpp;       // bits per pixel
-	int size_l;    // length of line (bytes)
-	int endian;    // endianness
+	t_mlx_img		img;
+	void			*img_ptr;
+	int				*img_data;
+	int				bpp;
+	int				size_l;
+	int				endian;
 	t_ray			*ray;
 	t_map			*map;
 	t_player		*ply;
@@ -160,40 +212,6 @@ typedef struct s_cub
 	t_keyboard		key;
 	t_mini			mini;
 }					t_cub;
-
-typedef struct s_wall
-{
-	double			height;
-	double			bot_pix;
-	double			top_pix;
-	double			bot_screen;
-	double			top_screen;
-}					t_wall;
-
-typedef struct s_xy
-{
-	float			x;
-	float			y;
-}					t_xy_f;
-
-typedef struct s_xy_d
-{
-	double			x;
-	double			y;
-}					t_xy_d;
-
-// typedef struct s_xy_i
-// {
-// 	int				x;
-// 	int				y;
-// }					t_xy_i;
-
-typedef struct s_inter
-{
-	double			len_to_wall;
-	float			x;
-	float			y;
-}					t_inter;
 
 //#################################################################################//
 //################################### FUNCTION ####################################//
@@ -263,6 +281,5 @@ int					parse_file(t_cub *cub, const char *filename);
 int					parse_rgb(const char *str, int *dst);
 int					is_surrounded_by_wall(t_cub *cub);
 int					validate_map(t_cub *cub);
-
 
 #endif

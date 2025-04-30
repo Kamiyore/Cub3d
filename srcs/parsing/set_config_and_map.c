@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_config_and_map.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 11:10:00 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/30 17:55:54 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/30 20:20:08 by oyuhi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	parse_map_lines(t_map *map, char **lines)
 	}
 	map->map2d[i] = NULL;
 	return (0);
-} 
+}
 
 int	parse_rgb(const char *str, int *dst)
 {

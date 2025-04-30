@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 16:04:50 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/28 18:49:35 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:52:20 by oyuhi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	exit_game(t_cub *cub)
 {
+	if (BONUS_MODE == true && cub->mini.img_ptr)
+		mlx_destroy_image(cub->mlx.mlx, cub->mini.img_ptr);
 	if (cub->mlx.img_no)
 		mlx_destroy_image(cub->mlx.mlx, cub->mlx.img_no);
 	if (cub->mlx.img_so)

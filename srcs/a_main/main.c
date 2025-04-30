@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 10:01:50 by oyuhi             #+#    #+#             */
-/*   Updated: 2025/04/30 16:48:25 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/30 20:05:47 by oyuhi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,42 +48,6 @@ void	init_file_data(t_cub *cub)
 	cub->map->player_dir = '\0';
 }
 
-// int	main(int argc, char **argv)
-// {
-// 	t_config	config;
-
-// 	if (argc != 2)
-// 		return (ft_error("Usage: ./so_long name.ber"));
-// 	if (!valid_map_file(argv[1]))
-// 		return (ft_error("Invalid file format. Only '.ber'"));
-// 	if (!parse_file(&config, argv[1]))
-// 		return (1);
-// 	return (0);
-// }
-
-// void	print_colors(t_cub *cub)
-// {
-// 	int	f_r;
-// 	int	f_g;
-// 	int	f_b;
-// 	int	c_r;
-// 	int	c_g;
-// 	int	c_b;
-
-// 	f_r = (cub->color.f_color >> 16) & 0xFF;
-// 	f_g = (cub->color.f_color >> 8) & 0xFF;
-// 	f_b = cub->color.f_color & 0xFF;
-// 	c_r = (cub->color.c_color >> 16) & 0xFF;
-// 	c_g = (cub->color.c_color >> 8) & 0xFF;
-// 	c_b = cub->color.c_color & 0xFF;
-// 	printf("Floor Color (f_color):\n");
-// 	printf("RGB: (%d, %d, %d)\n", f_r, f_g, f_b);
-// 	printf("Hex: 0x%06X\n", cub->color.f_color);
-// 	printf("\nCeiling Color (c_color):\n");
-// 	printf("RGB: (%d, %d, %d)\n", c_r, c_g, c_b);
-// 	printf("Hex: 0x%06X\n", cub->color.c_color);
-// }
-
 int	main(int argc, char **argv)
 {
 	t_cub	cub;
@@ -91,14 +55,14 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return (ft_error("Usage: ./so_long name.cub\n"));
 	init_file_data(&cub);
-	if (valid_file(argv[1]) !=0)
+	if (valid_file(argv[1]) != 0)
 	{
 		free_file_data(&cub);
 		return (ft_error("Invalid file format. Only '.cub'\n"));
 	}
-	if (parse_file(&cub, argv[1])!=0)
+	if (parse_file(&cub, argv[1]) != 0)
 		return (true);
-	if (validate_map(&cub)!=0)
+	if (validate_map(&cub) != 0)
 	{
 		free_file_data(&cub);
 		return (true);
@@ -107,4 +71,4 @@ int	main(int argc, char **argv)
 	return (false);
 }
 
-	// print_colors(&cub);
+// print_colors(&cub);

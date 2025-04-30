@@ -1,27 +1,33 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ra_raycasting.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/30 18:06:45 by oyuhi             #+#    #+#             */
+/*   Updated: 2025/04/30 19:02:23 by oyuhi            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../include/cub3d.h"
-
-//#################################################################################//
-//############################## THE RAYCASTING CODE ##############################//
-//#################################################################################//
-
-#define PRINT_MODE true
 
 static void	print_first_raycast(t_cub *cub, int ray_count, double horizon_inter,
 		double verti_inter)
 {
 	static int	flag = 0;
+	const char	*pick;
 
 	if (PRINT_MODE == false)
 		return ;
 	else if (flag < 1900)
 	{
-		printf("ray=%3d  ang=%.3f  step.y=%+.0f horiz=%.3f  vert=%.3f  pick=%s\n",
-			ray_count, cub->ray->angle, (cub->ray->angle > 0
-				&& cub->ray->angle < M_PI) ? (float)TILE_SIZE :
-			-(float)TILE_SIZE, horizon_inter, verti_inter,
-			(verti_inter < horizon_inter ? "VERT" : "HORIZ"));
+		if (verti_inter < horizon_inter)
+			pick = "VERT";
+		else
+			pick = "HORIZ";
+		printf("ray=%3d ang=%.3f horiz=%.3f vert=%.3f pick=%s\n", ray_count,
+			cub->ray->angle, horizon_inter, verti_inter, pick);
 		flag++;
 	}
 }
@@ -73,5 +79,3 @@ void	cast_rays(t_cub *cub)
 		cub->ray->angle += (cub->ply->view_radian / SCREEN_WIDTH);
 	}
 }
-
-

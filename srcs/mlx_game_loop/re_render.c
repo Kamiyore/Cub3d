@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   re_render.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/30 18:06:34 by oyuhi             #+#    #+#             */
+/*   Updated: 2025/04/30 18:52:50 by oyuhi            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
@@ -57,21 +68,10 @@ double	compute_wall_height(t_cub *cub)
 	return (screen_wall_height);
 }
 
-// static inline int	pack_bgra(int raw_rgba)
-// {
-// 	unsigned char	r;
-// 	unsigned char	g;
-// 	unsigned char	b;
-// 	unsigned char	a;
-
-// 	r = (raw_rgba >> 24) & 0xFF;
-// 	g = (raw_rgba >> 16) & 0xFF;
-// 	b = (raw_rgba >> 8) & 0xFF;
-// 	a = raw_rgba & 0xFF;
-// 	// Image buffer expects: [ byte0=B ][ byte1=G ][ byte2=R ][ byte3=A ]
-// 	return ((a << 24) | (r << 16) | (g << 8) | b);
-// }
-
+/*
+	// size_l is the number of bytes per scanline
+	// divide by 4 because img_data is an int* (4 bytes per pixel)
+*/
 void	safe_mlx_pixel_put(t_cub *cub, int x, int y, int color)
 {
 	int	idx;
@@ -84,8 +84,6 @@ void	safe_mlx_pixel_put(t_cub *cub, int x, int y, int color)
 		return ;
 	else if (y > SCREEN_HEIGHT)
 		return ;
-	// size_l is the number of bytes per scanline
-	// divide by 4 because img_data is an int* (4 bytes per pixel)
 	idx = y * (cub->size_l / 4) + x;
 	cub->img_data[idx] = color;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reading_file.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 15:37:49 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/30 16:52:45 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/04/30 20:44:58 by oyuhi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,14 +149,14 @@ int	parse_file(t_cub *cub, const char *filename)
 	char	**lines;
 	char	**map_start;
 
-	if (read_and_extract_map(cub, filename, &lines, &map_start)!=0)
+	if (read_and_extract_map(cub, filename, &lines, &map_start) != 0)
 		return (-1);
-	if (parse_map_lines(cub->map, map_start)!=0)
+	if (parse_map_lines(cub->map, map_start) != 0)
 	{
 		ft_array_free(lines);
 		return (ft_error("Error in map parsing.\n"));
 	}
-	if (validate_config_and_map(cub)!=0)
+	if (validate_config_and_map(cub) != 0)
 	{
 		ft_array_free(lines);
 		free_file_data(cub);
