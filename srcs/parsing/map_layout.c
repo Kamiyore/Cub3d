@@ -6,7 +6,7 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:28:59 by knemcova          #+#    #+#             */
-/*   Updated: 2025/05/01 12:54:45 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/05/01 14:07:36 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ int	is_surrounded_by_wall(t_cub *cub)
 	char	**copy;
 
 	if (find_player_pos(cub->map) != 0)
-		return (ft_error("Player not found.\n"));
+		if (find_player_pos(cub->map) != 0)
+			return (ft_error("Player not found.\n"));
 	copy = copy_map(cub->map->map2d);
 	if (!copy)
 		return (ft_error("Memory allocation error.\n"));
@@ -98,7 +99,8 @@ int	is_surrounded_by_wall(t_cub *cub)
 		return (ft_error("Player area not enclosed.\n"));
 	}
 	if (check_remaining_open_areas(copy) != 0)
-		return (-1);
+		if (check_remaining_open_areas(copy) != 0)
+			return (-1);
 	ft_array_free(copy);
 	return (0);
 }

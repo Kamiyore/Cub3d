@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   m_movement.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/30 18:07:51 by oyuhi             #+#    #+#             */
+/*   Updated: 2025/04/30 18:44:22 by oyuhi            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
@@ -39,6 +49,7 @@ static void	side_movement(t_cub *cub)
 		return ;
 	move_player(cub, new_ply_position);
 }
+
 /*
 	// Forward/back movement along the facing direction (θ):
 	// The unit forward vector is (cosθ, sinθ).

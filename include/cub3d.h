@@ -6,20 +6,20 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 10:15:35 by oyuhi             #+#    #+#             */
-/*   Updated: 2025/05/01 12:53:51 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/05/01 14:14:05 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
+# include "../srcs/minimap/minimap_bonus.h"
 # include "../libft/libft.h"
 # include "../minilibx-linux/mlx.h"
-# include "../srcs/minimap/minimap_bonus.h"
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include <fcntl.h>
-# include <float.h>
+// # include <float.h>
 # include <limits.h>
 # include <math.h>
 # include <stdbool.h>
@@ -27,21 +27,20 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-// # define KEY_W 119
-// # define KEY_A 97
-// # define KEY_S 115
-// # define KEY_D 100
-// # define ESC 65307
 # define SCREEN_WIDTH 1900
 # define SCREEN_HEIGHT 1000
 # define TILE_SIZE 64
 # define FIELD_OF_VIEW 60
 # define ROTATION_SPEED 0.045
 # define MOVEMENT_SPEED 10
-# define TILE_CENTER (TILE_SIZE / 2)
+# define TILE_CENTER 32
+
+# ifndef PRINT_MODE
+#  define PRINT_MODE false
+# endif
 
 # ifndef BONUS_MODE
-#  define BONUS_MODE false
+#  define BONUS_MODE true
 # endif
 
 typedef struct s_config
@@ -61,8 +60,6 @@ int					parse_rgb(const char *str, int *dst);
 int					ft_array_len(char **array);
 void				ft_array_free(char **split);
 
-///////////yuhi//////////////////////
-
 typedef enum e_action
 {
 	NONE,
@@ -72,8 +69,41 @@ typedef enum e_action
 	MOVE_RIGHT,
 	ROTATE_LEFT,
 	ROTATE_RIGHT
-
 }					t_action;
+
+typedef struct s_wall
+{
+	double			height;
+	double			bot_pix;
+	double			top_pix;
+	double			bot_screen;
+	double			top_screen;
+}					t_wall;
+
+typedef struct s_xy
+{
+	float			x;
+	float			y;
+}					t_xy_f;
+
+typedef struct s_xy_d
+{
+	double			x;
+	double			y;
+}					t_xy_d;
+
+// typedef struct s_xy_i
+// {
+// 	int				x;
+// 	int				y;
+// }					t_xy_i;
+
+typedef struct s_inter
+{
+	double			len_to_wall;
+	float			x;
+	float			y;
+}					t_inter;
 
 typedef struct s_player
 {
@@ -150,13 +180,23 @@ typedef struct s_keyboard
 	int				key_esc;
 }					t_keyboard;
 
+// void *img_ptr; // returned by mlx_new_image()
+// 	int *img_data; // pixel buffer
+// 	int bpp;       // bits per pixel
+// 	int size_l;    // length of line (bytes)
+// 	int endian;    // endianness
+typedef struct s_mlx_img
+{
+	void			*img_ptr;
+	int				*data;
+	int				bpp;
+	int				size_l;
+	int				endian;
+}					t_mlx_img;
+
 typedef struct s_cub
 {
-	void *img_ptr; // returned by mlx_new_image()
-	int *img_data; // pixel buffer
-	int bpp;       // bits per pixel
-	int size_l;    // length of line (bytes)
-	int endian;    // endianness
+	t_mlx_img		img;
 	t_ray			*ray;
 	t_map			*map;
 	t_player		*ply;
@@ -165,44 +205,6 @@ typedef struct s_cub
 	t_keyboard		key;
 	t_mini			mini;
 }					t_cub;
-
-typedef struct s_wall
-{
-	double			height;
-	double			bot_pix;
-	double			top_pix;
-	double			bot_screen;
-	double			top_screen;
-}					t_wall;
-
-typedef struct s_xy
-{
-	float			x;
-	float			y;
-}					t_xy_f;
-
-typedef struct s_xy_d
-{
-	double			x;
-	double			y;
-}					t_xy_d;
-
-typedef struct s_xy_i
-{
-	int				x;
-	int				y;
-}					t_xy_i;
-
-typedef struct s_inter
-{
-	double			len_to_wall;
-	float			x;
-	float			y;
-}					t_inter;
-
-//#################################################################################//
-//################################### FUNCTION ####################################//
-//#################################################################################//
 
 /*
 **  init_game
@@ -271,6 +273,9 @@ int					is_valid_rgb_format(const char *str);
 int					parse_rgb(const char *str, int *dst);
 int					values_in_range(char **color);
 int					parts_are_digits(char **color);
+int					has_exact_commas(const char *s, int n);
+int					has_three_parts(char **color);
+
 /*
 **  Parse_map
 */
@@ -279,6 +284,5 @@ bool				is_player(char c);
 int					is_surrounded_by_wall(t_cub *cub);
 int					validate_map(t_cub *cub);
 int					flood_fill(char **map, int x, int y);
-int					has_three_parts(char **color);
-int					has_exact_commas(const char *s, int n);
+
 #endif

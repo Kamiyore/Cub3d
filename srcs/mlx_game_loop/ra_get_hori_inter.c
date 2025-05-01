@@ -1,22 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ra_get_hori_inter.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/30 18:07:39 by oyuhi             #+#    #+#             */
+/*   Updated: 2025/04/30 18:07:41 by oyuhi            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../include/cub3d.h"
-
-// static float	get_step_y(t_cub *cub)
-// {
-// 	if (cub->ray->angle > 0 && cub->ray->angle < M_PI)
-// 		return (TILE_SIZE);
-// 	else
-// 		return (-TILE_SIZE);
-// }
-
-// static float	get_step_x(t_cub *cub, float step_y)
-// {
-// 	return (compute_adjacent(step_y, cub->ray->angle));
-// }
-
-// #################################################################################//
-// ########################## get_horizontal_intersection ##########################//
-// #################################################################################//
 
 static float	get_first_intersection_y(t_cub *cub)
 {
@@ -70,39 +64,3 @@ t_inter	get_horizontal_intersection(t_cub *cub)
 	inter.len_to_wall = FLT_MAX;
 	return (inter);
 }
-
-// int	inter_check(float angle, float *inter)
-// {
-// 	if (angle > 0 && angle < M_PI)
-// 	{
-// 		(void)inter;
-// 		// *inter += TILE_SIZE;
-// 		return (-1);
-// 	}
-// 	return (1);
-// }
-
-// float	get_horizontal_intersection(t_cub *mlx)
-// {
-// 	float	h_x;
-// 	float	h_y;
-// 	t_xy_f	step;
-// 	int		pixel;
-// 	float	angle;
-
-// 	angle = mlx->ray->angle;
-// 	step = get_horizontal_step(mlx);
-// 	h_y = get_first_intersection_y(mlx);
-// 	// h_y = floor(mlx->ply->pixel_y / TILE_SIZE) * TILE_SIZE;
-// 	pixel = inter_check(mlx->ray->angle, &h_y);
-// 	h_x = get_first_intersection_x(mlx, h_y);
-// 	while (!is_out_of_bounds(mlx, h_x, h_y - pixel))
-// 	{
-// 		if (is_wall(mlx, h_x, h_y - pixel))
-// 			return (compute_hypotenuse(h_x - mlx->ply->pixel_x, h_y
-// 					- mlx->ply->pixel_y));
-// 		h_x += step.x;
-// 		h_y += step.y;
-// 	}
-// 	return (FLT_MAX);
-// }

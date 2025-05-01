@@ -1,21 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ra_raycast_helper.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/30 18:07:08 by oyuhi             #+#    #+#             */
+/*   Updated: 2025/04/30 18:44:46 by oyuhi            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../include/cub3d.h"
-
-//#################################################################################//
-//############################# THE RAYCASTING HELPER #############################//
-//#################################################################################//
-
-// int	get_quandrant(float angle)
-// {
-// 	if (angle >= 0 && angle < M_PI / 2)
-// 		return (1);
-// 	else if (angle >= M_PI / 2 && angle < M_PI)
-// 		return (2);
-// 	else if (angle >= M_PI && angle < 3 * M_PI / 2)
-// 		return (3);
-// 	else
-// 		return (4);
-// }
 
 float	normalize_angle(float angle)
 {
@@ -57,6 +52,4 @@ int	is_wall(t_cub *cub, float inter_x, float inter_y)
 		if (map2d[map_index_y][map_index_x] == '1')
 			return (1);
 	return (0);
-	// return (cub->map->map2d[map_index_y][map_index_x] == '1');
 }
-
