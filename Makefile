@@ -1,5 +1,6 @@
 NAME = cub3D
 CC = cc
+
 CFLAGS       = -Wall -Wextra -Werror -g -I$(INC_DIR) -DBONUS_MODE=false
 
 # MiniLibX
@@ -12,7 +13,21 @@ LIBFT_REPO   = https://github.com/yuhi-ootani/lifbt_all.git
 LIBFT_DIR    = libft
 LIBFT        = $(LIBFT_DIR)/libft.a
 
+SRC_DIR = srcs
 INC_DIR = includes
+OBJ_DIR = objs
+
+LIBFT_DIR = libft
+LIBFT = libft/libft.a
+INC_DIR = includes
+MAIN_DIR = srcs/a_main
+PARSER_DIR = srcs/parsing
+INIT_GAME_DIR = srcs/init_game
+GAME_LOOP_DIR = srcs/mlx_game_loop
+KEY_EXIT_DIR = srcs/key_and_exit
+UTILS_DIR = srcs/utils
+
+
 
 INIT_GAME_SRCS	= 	srcs/init_game/int_player.c srcs/init_game/load_images.c srcs/init_game/start_game.c 
 KEY_EXIT_SRCS = 	srcs/key_and_exit/exit_game.c srcs/key_and_exit/free.c srcs/key_and_exit/key_handler.c srcs/key_and_exit/whitespaces.c
