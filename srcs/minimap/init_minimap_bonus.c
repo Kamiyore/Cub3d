@@ -6,7 +6,7 @@
 /*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 18:08:15 by oyuhi             #+#    #+#             */
-/*   Updated: 2025/04/30 18:08:15 by oyuhi            ###   ########.fr       */
+/*   Updated: 2025/05/01 12:11:30 by oyuhi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,10 @@ void	init_minimap_bonus(t_cub *cub)
 	cub->mini.height = cub->map->height * cub->mini.tile_size;
 	cub->mini.img_ptr = mlx_new_image(cub->mlx.mlx, cub->mini.width,
 			cub->mini.height);
+	if (!cub->mini.img_ptr)
+		exit_game(cub);
 	cub->mini.img_data = (int *)mlx_get_data_addr(cub->mini.img_ptr,
 			&cub->mini.bpp, &cub->mini.size_l, &cub->mini.endian);
+	if (!cub->mini.img_data)
+		exit_game(cub);
 }

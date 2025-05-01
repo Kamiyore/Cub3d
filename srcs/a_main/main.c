@@ -6,7 +6,7 @@
 /*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 10:01:50 by oyuhi             #+#    #+#             */
-/*   Updated: 2025/04/30 20:05:47 by oyuhi            ###   ########.fr       */
+/*   Updated: 2025/05/01 12:22:25 by oyuhi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,40 @@ void	init_file_data(t_cub *cub)
 	cub->map->player_dir = '\0';
 }
 
+// to avoid invalid free
+void	init_cub(t_cub *cub)
+{
+	cub->img.img_ptr = NULL;
+	cub->img.data = NULL;
+	cub->ray = NULL;
+	cub->map = NULL;
+	cub->ply = NULL;
+	cub->color.no_path = NULL;
+	cub->color.so_path = NULL;
+	cub->color.we_path = NULL;
+	cub->color.ea_path = NULL;
+	cub->mlx.mlx = NULL;
+	cub->mlx.window = NULL;
+	cub->mlx.img_no = NULL;
+	cub->mlx.img_so = NULL;
+	cub->mlx.img_we = NULL;
+	cub->mlx.img_ea = NULL;
+	cub->mlx.tex_no_data.data = NULL;
+	cub->mlx.tex_so_data.data = NULL;
+	cub->mlx.tex_we_data.data = NULL;
+	cub->mlx.tex_ea_data.data = NULL;
+	cub->map = NULL;
+	cub->mini.img_ptr = NULL;
+	cub->mini.img_data = NULL;
+}
+
 int	main(int argc, char **argv)
 {
 	t_cub	cub;
 
 	if (argc != 2)
 		return (ft_error("Usage: ./so_long name.cub\n"));
+	init_cub(&cub);
 	init_file_data(&cub);
 	if (valid_file(argv[1]) != 0)
 	{
