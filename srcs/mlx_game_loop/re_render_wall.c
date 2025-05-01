@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   re_render_wall.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
+/*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 18:06:39 by oyuhi             #+#    #+#             */
-/*   Updated: 2025/05/01 18:18:14 by oyuhi            ###   ########.fr       */
+/*   Updated: 2025/05/01 18:34:52 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ static t_texture_data	get_texture_data(t_cub *cub)
 	if (cub->ray->is_vertical_wall)
 	{
 		if (look_right(cub->ray->angle))
-			return (cub->mlx.tex_ea_data);
-		else
 			return (cub->mlx.tex_we_data);
+		else
+			return (cub->mlx.tex_ea_data);
 	}
 	else
 	{
 		if (look_down(cub->ray->angle))
-			return (cub->mlx.tex_so_data);
-		else
 			return (cub->mlx.tex_no_data);
+		else
+			return (cub->mlx.tex_so_data);
 	}
 }
 

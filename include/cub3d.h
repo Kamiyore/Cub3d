@@ -6,7 +6,7 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 10:15:35 by oyuhi             #+#    #+#             */
-/*   Updated: 2025/05/01 17:47:53 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/05/01 18:28:56 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,6 +262,8 @@ void				safe_mlx_pixel_put(t_cub *cub, int x, int y, int color);
 /*
 **  Parse_conf
 */
+char				**read_file(const char *file, int lines);
+int					count_lines(const char *file);
 int					parse_configuration(t_texture *color, char *line);
 int					ft_error(char *message);
 int					parse_file(t_cub *cub, const char *filename);

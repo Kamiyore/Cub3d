@@ -39,7 +39,7 @@ GAME_LOOP_SRCS =	srcs/mlx_game_loop/game_loop.c srcs/mlx_game_loop/m_move_player
 					srcs/mlx_game_loop/ra_raycast_helper.c srcs/mlx_game_loop/ra_raycasting.c srcs/mlx_game_loop/re_render_wall.c \
 					srcs/mlx_game_loop/re_render.c
 PARSER_SRCS = 		srcs/parsing/flood_fill.c srcs/parsing/map_layout.c srcs/parsing/map_validation.c \
-					srcs/parsing/reading_file.c srcs/parsing/rgb_validation.c srcs/parsing/rgb_validation2.c \
+					srcs/parsing/reading_file.c srcs/parsing/parse_file.c srcs/parsing/rgb_validation.c srcs/parsing/rgb_validation2.c \
 					srcs/parsing/set_config_and_map.c
 
 SRCS = srcs/a_main/main.c \

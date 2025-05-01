@@ -1,14 +1,10 @@
-    
-    SO    srcs/textures/south.xpm   
-     WE srcs/textures/west.xpm   
-NO       srcs/textures/north.xpm   
-EA ./srcs/textures/east.xpm
+SO srcs/textures/south.xpm
+WE srcs/textures/west.xpm
+NO srcs/textures/north.xpm
+EA srcs/textures/east.xpm
 
-    
-
-    F 20,    20    ,   20
-C    0    ,0,0
-
+F 20,20,20
+C 0,0,0
 
         111111111111111 111111111               
         1000000000110001000000001                           
