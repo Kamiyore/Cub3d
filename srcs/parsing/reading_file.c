@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reading_file.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 15:37:49 by knemcova          #+#    #+#             */
-/*   Updated: 2025/05/01 17:47:21 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/05/01 18:22:22 by oyuhi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,36 +82,6 @@ char	**read_file(const char *file, int lines)
 	return (array);
 }
 
-// char	**extract_map_start(t_texture *texture, char **lines)
-// {
-// 	int		i;
-// 	char	*ln;
-
-// 	i = 0;
-// 	while (lines[i])
-// 	{
-// 		ln = skip_ws(lines[i]);
-// 		if (*ln == '\0')
-// 		{
-// 			i++;
-// 			continue ;
-// 		}
-// 		if ((ft_strncmp(ln, "NO", 2) == 0 && ft_isspace(ln[2]))
-// 			|| (ft_strncmp(ln, "SO", 2) == 0 && ft_isspace(ln[2]))
-// 			|| (ft_strncmp(ln, "WE", 2) == 0 && ft_isspace(ln[2]))
-// 			|| (ft_strncmp(ln, "EA", 2) == 0 && ft_isspace(ln[2]))
-// 			|| (ft_strncmp(ln, "F", 1) == 0 && ft_isspace(ln[1]))
-// 			|| (ft_strncmp(ln, "C", 1) == 0 && ft_isspace(ln[1])))
-// 		{
-// 			if (parse_configuration(texture, ln) != 0)
-// 				return (NULL);
-// 			i++;
-// 		}
-// 		else
-// 			break ;
-// 	}
-// 	return (&lines[i]);
-// }
 
 char	**extract_map_start(t_texture *texture, char **lines)
 {
