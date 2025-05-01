@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 10:01:50 by oyuhi             #+#    #+#             */
-/*   Updated: 2025/05/01 13:12:26 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/05/01 16:46:03 by oyuhi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,16 +85,13 @@ int	main(int argc, char **argv)
 	init_file_data(&cub);
 	if (valid_file(argv[1]) != 0)
 	{
-		free_file_data(&cub);
-		return (ft_error("Invalid file format. Only '.cub'\n"));
+		ft_error("Invalid file format. Only '.cub'\n");
+		exit_game(&cub);
 	}
 	if (parse_file(&cub, argv[1]) != 0)
-		return (true);
+		return (exit_game(&cub), -1);
 	if (validate_map(&cub) != 0)
-	{
-		free_file_data(&cub);
-		return (true);
-	}
+		return (exit_game(&cub), -1);
 	start_game(&cub);
 	return (false);
 }

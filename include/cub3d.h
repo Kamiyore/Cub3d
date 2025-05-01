@@ -3,23 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 10:15:35 by oyuhi             #+#    #+#             */
-/*   Updated: 2025/05/01 14:14:05 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/05/01 14:27:13 by oyuhi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include "../srcs/minimap/minimap_bonus.h"
 # include "../libft/libft.h"
 # include "../minilibx-linux/mlx.h"
+# include "../srcs/minimap/minimap_bonus.h"
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include <fcntl.h>
-// # include <float.h>
 # include <limits.h>
 # include <math.h>
 # include <stdbool.h>
@@ -34,6 +33,7 @@
 # define ROTATION_SPEED 0.045
 # define MOVEMENT_SPEED 10
 # define TILE_CENTER 32
+# define DBL_MAX 1.7976931348623157e+308
 
 # ifndef PRINT_MODE
 #  define PRINT_MODE false

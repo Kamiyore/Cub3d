@@ -6,7 +6,7 @@
 /*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 18:07:24 by oyuhi             #+#    #+#             */
-/*   Updated: 2025/04/30 18:50:16 by oyuhi            ###   ########.fr       */
+/*   Updated: 2025/05/01 14:27:53 by oyuhi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,6 @@ t_inter	get_vertical_intersection(t_cub *cub)
 		inter.x += next_inter_step.x;
 		inter.y += next_inter_step.y;
 	}
-	inter.len_to_wall = FLT_MAX;
+	inter.len_to_wall = DBL_MAX;
 	return (inter);
 }

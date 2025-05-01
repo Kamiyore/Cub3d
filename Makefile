@@ -27,10 +27,7 @@ GAME_LOOP_DIR = srcs/mlx_game_loop
 KEY_EXIT_DIR = srcs/key_and_exit
 UTILS_DIR = srcs/utils
 
-# MINIMAP_SRCS := $(wildcard srcs/minimap/*.c)
-# INIT_GAME_SRCS := $(wildcard $(INIT_GAME_DIR)/*.c)
-# GAME_LOOP_SRCS := $(wildcard $(GAME_LOOP_DIR)/*.c)
-PARSER_SRCS := $(wildcard $(PARSER_DIR)/*.c)
+
 
 INIT_GAME_SRCS	= 	srcs/init_game/int_player.c srcs/init_game/load_images.c srcs/init_game/start_game.c 
 KEY_EXIT_SRCS = 	srcs/key_and_exit/exit_game.c srcs/key_and_exit/free.c srcs/key_and_exit/key_handler.c srcs/key_and_exit/whitespaces.c
@@ -41,7 +38,9 @@ GAME_LOOP_SRCS =	srcs/mlx_game_loop/game_loop.c srcs/mlx_game_loop/m_move_player
 					srcs/mlx_game_loop/ra_get_verti_int.c srcs/mlx_game_loop/ra_ray_direction.c srcs/mlx_game_loop/ra_raycast_compute.c \
 					srcs/mlx_game_loop/ra_raycast_helper.c srcs/mlx_game_loop/ra_raycasting.c srcs/mlx_game_loop/re_render_wall.c \
 					srcs/mlx_game_loop/re_render.c
-
+PARSER_SRCS = 		srcs/parsing/flood_fill.c srcs/parsing/map_layout.c srcs/parsing/map_validation.c \
+					srcs/parsing/reading_file.c srcs/parsing/rgb_validation.c srcs/parsing/rgb_validation2.c \
+					srcs/parsing/set_config_and_map.c
 
 SRCS = srcs/a_main/main.c \
 		$(INIT_GAME_SRCS) \

@@ -6,7 +6,7 @@
 /*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 18:06:39 by oyuhi             #+#    #+#             */
-/*   Updated: 2025/04/30 18:55:57 by oyuhi            ###   ########.fr       */
+/*   Updated: 2025/05/01 14:48:22 by oyuhi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static int	get_color_from_texture(t_cub *cub, t_texture_data tx, int tex_y)
 	int	tex_x;
 
 	tex_x = get_texture_x(cub, tx);
-	if ((cub->ray->is_vertical_wall && look_right(cub->ray->angle))
+	if ((cub->ray->is_vertical_wall && look_left(cub->ray->angle))
 		|| (!cub->ray->is_vertical_wall && look_down(cub->ray->angle)))
 	{
 		tex_x = tx.width - tex_x - 1;
