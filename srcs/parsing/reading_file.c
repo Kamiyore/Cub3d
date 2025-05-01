@@ -6,7 +6,7 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 15:37:49 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/30 16:52:45 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/05/01 13:00:33 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,29 +68,61 @@ char	**read_file(const char *file, int lines)
 	return (array);
 }
 
+// char	**extract_map_start(t_texture *texture, char **lines)
+// {
+// 	int		i;
+// 	char	*ln;
+
+// 	i = 0;
+// 	while (lines[i])
+// 	{
+// 		ln = skip_ws(lines[i]);
+// 		if (*ln == '\0')
+// 		{
+// 			i++;
+// 			continue ;
+// 		}
+// 		if ((ft_strncmp(ln, "NO", 2) == 0 && ft_isspace(ln[2]))
+// 			|| (ft_strncmp(ln, "SO", 2) == 0 && ft_isspace(ln[2]))
+// 			|| (ft_strncmp(ln, "WE", 2) == 0 && ft_isspace(ln[2]))
+// 			|| (ft_strncmp(ln, "EA", 2) == 0 && ft_isspace(ln[2]))
+// 			|| (ft_strncmp(ln, "F", 1) == 0 && ft_isspace(ln[1]))
+// 			|| (ft_strncmp(ln, "C", 1) == 0 && ft_isspace(ln[1])))
+// 		{
+// 			if (parse_configuration(texture, ln) != 0)
+// 				return (NULL);
+// 			i++;
+// 		}
+// 		else
+// 			break ;
+// 	}
+// 	return (&lines[i]);
+// }
+
 char	**extract_map_start(t_texture *texture, char **lines)
 {
-	int	i;
+	int		i;
+	char	*ln;
 
 	i = 0;
 	while (lines[i])
 	{
-		if (lines[i][0] == '\0' || lines[i][0] == '\n')
+		ln = skip_ws(lines[i]);
+		if (*ln == '\0')
 		{
 			i++;
 			continue ;
 		}
-		if (ft_strncmp(lines[i], "NO ", 3) == 0 || ft_strncmp(lines[i], "SO ",
-				3) == 0 || ft_strncmp(lines[i], "WE ", 3) == 0
-			|| ft_strncmp(lines[i], "EA ", 3) == 0 || ft_strncmp(lines[i], "F ",
-				2) == 0 || ft_strncmp(lines[i], "C ", 2) == 0)
-		{
-			if (parse_configuration(texture, lines[i]) != 0)
-				return (NULL);
-			i++;
-		}
-		else
+		if (!((ft_strncmp(ln, "NO", 2) == 0 && ft_isspace(ln[2]))
+				|| (ft_strncmp(ln, "SO", 2) == 0 && ft_isspace(ln[2]))
+				|| (ft_strncmp(ln, "WE", 2) == 0 && ft_isspace(ln[2]))
+				|| (ft_strncmp(ln, "EA", 2) == 0 && ft_isspace(ln[2]))
+				|| (ft_strncmp(ln, "F", 1) == 0 && ft_isspace(ln[1]))
+				|| (ft_strncmp(ln, "C", 1) == 0 && ft_isspace(ln[1]))))
 			break ;
+		if (parse_configuration(texture, ln))
+			return (NULL);
+		i++;
 	}
 	return (&lines[i]);
 }
@@ -106,22 +138,6 @@ char	**extract_map_start(t_texture *texture, char **lines)
 // 		i++;
 // 	}
 // }
-
-int	validate_config_and_map(t_cub *cub)
-{
-	t_texture	*tex;
-	t_map		*map;
-
-	tex = &cub->color;
-	map = cub->map;
-	if (!tex->no_path || !tex->so_path || !tex->we_path || !tex->ea_path)
-		return (ft_error("Missing texture path (NO, SO, WE, EA).\n"));
-	if (tex->f_color == -1 || tex->c_color == -1)
-		return (ft_error("Missing floor or ceiling color.\n"));
-	if (!map->map2d || !map->map2d[0])
-		return (ft_error("Map is missing or empty.\n"));
-	return (0);
-}
 
 static bool	read_and_extract_map(t_cub *cub, const char *filename,
 		char ***lines_out, char ***map_start_out)
@@ -149,14 +165,14 @@ int	parse_file(t_cub *cub, const char *filename)
 	char	**lines;
 	char	**map_start;
 
-	if (read_and_extract_map(cub, filename, &lines, &map_start)!=0)
+	if (read_and_extract_map(cub, filename, &lines, &map_start) != 0)
 		return (-1);
-	if (parse_map_lines(cub->map, map_start)!=0)
+	if (parse_map_lines(cub->map, map_start) != 0)
 	{
 		ft_array_free(lines);
 		return (ft_error("Error in map parsing.\n"));
 	}
-	if (validate_config_and_map(cub)!=0)
+	if (validate_config_and_map(cub) != 0)
 	{
 		ft_array_free(lines);
 		free_file_data(cub);

@@ -6,7 +6,7 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:28:59 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/30 16:23:35 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/05/01 12:54:45 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,42 +60,6 @@ int	find_player_pos(t_map *map_data)
 	return (-1);
 }
 
-static int	is_out_map(char **map, int x, int y)
-{
-	int	height;
-
-	height = 0;
-	while (map[height])
-		height++;
-	if (y < 0 || y >= height)
-		return (-1);
-	if (x < 0 || x >= (int)ft_strlen(map[y]))
-		return (-1);
-	return (0);
-}
-
-int	flood_fill(char **map, int x, int y)
-{
-	char	c;
-
-	if (is_out_map(map, x, y))
-		return (0);
-	c = map[y][x];
-	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
-		c = '0';
-	if (c == ' ' || c == '\0')
-		return (0);
-	if (c == '1')
-		return (1);
-	map[y][x] = '1';
-	if (!flood_fill(map, x + 1, y)
-		|| !flood_fill(map, x - 1, y)
-		|| !flood_fill(map, x, y + 1)
-		|| !flood_fill(map, x, y - 1))
-		return (0);
-	return (1);
-}
-
 int	check_remaining_open_areas(char **copy)
 {
 	int	i;
@@ -123,7 +87,7 @@ int	is_surrounded_by_wall(t_cub *cub)
 {
 	char	**copy;
 
-	if (find_player_pos(cub->map)!=0)
+	if (find_player_pos(cub->map) != 0)
 		return (ft_error("Player not found.\n"));
 	copy = copy_map(cub->map->map2d);
 	if (!copy)
@@ -133,7 +97,7 @@ int	is_surrounded_by_wall(t_cub *cub)
 		ft_array_free(copy);
 		return (ft_error("Player area not enclosed.\n"));
 	}
-	if (check_remaining_open_areas(copy)!=0)
+	if (check_remaining_open_areas(copy) != 0)
 		return (-1);
 	ft_array_free(copy);
 	return (0);

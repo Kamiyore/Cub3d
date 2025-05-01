@@ -6,87 +6,84 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:43:42 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/30 16:20:05 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/05/01 12:42:35 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-static int	has_exact_commas(const char *s, int n)
+static char	*get_clean_rgb_line(const char *str, int *error)
 {
-	int	count;
+	char	*line;
 
-	count = 0;
-	while (*s)
+	line = trim_ws(str);
+	if (!has_exact_commas(line, 2))
 	{
-		if (*s == ',')
-			count++;
-		s++;
+		*error = ft_error("RGB must contain exactly two commas.\n");
+		free(line);
+		return (NULL);
 	}
-	return (count == n);
+	return (line);
 }
 
-static int	has_three_parts(char **color)
+static char	**split_and_trim_rgb_parts(char *line, int *error)
 {
-	return (color && ft_array_len(color) == 3);
-}
+	char	**parts;
+	char	*tmp;
+	int		i;
 
-static int	parts_are_digits(char **color)
-{
-	int	i;
-	int	j;
-
+	parts = ft_split(line, ",");
+	if (!has_three_parts(parts))
+	{
+		ft_array_free(parts);
+		*error = ft_error("RGB must have exactly 3 values.\n");
+		return (NULL);
+	}
 	i = 0;
 	while (i < 3)
 	{
-		if (!color[i] || color[i][0] == '\0')
-			return (-1);
-		j = 0;
-		while (color[i][j])
-		{
-			if (!ft_isdigit(color[i][j]))
-				return (-1);
-			j++;
-		}
-		i++;
+		tmp = trim_ws(parts[i]);
+		free(parts[i]);
+		parts[i++] = tmp;
 	}
-	return (0);
+	return (parts);
 }
 
-static int	values_in_range(char **color)
+static char	**prepare_rgb_parts(const char *str, int *error)
 {
-	unsigned int	r;
-	unsigned int	g;
-	unsigned int	b;
+	char	*line;
+	char	**parts;
 
-	r = ft_atoi(color[0]);
-	g = ft_atoi(color[1]);
-	b = ft_atoi(color[2]);
-	return (r >= 0 && r <= 255 && g >= 0 && g <= 255 && b >= 0 && b <= 255);
+	*error = 0;
+	line = get_clean_rgb_line(str, error);
+	if (*error)
+		return (NULL);
+	parts = split_and_trim_rgb_parts(line, error);
+	free(line);
+	if (*error && parts)
+		ft_array_free(parts);
+	return (parts);
+}
+
+static int	validate_rgb_parts(char **parts)
+{
+	if (parts_are_digits(parts) != 0)
+		return (ft_error("RGB values must be numeric.\n"));
+	if (!values_in_range(parts))
+		return (ft_error("RGB values must be between 0 and 255.\n"));
+	return (0);
 }
 
 int	is_valid_rgb_format(const char *str)
 {
-	char	**color;
+	int		error;
+	char	**parts;
 
-	if (!has_exact_commas(str, 2))
-		return (ft_error("RGB must contain exactly two commas.\n"));
-	color = ft_split(str, ",");
-	if (!has_three_parts(color))
-	{
-		ft_array_free(color);
-		return (ft_error("RGB must have exactly 3 values.\n"));
-	}
-	if (parts_are_digits(color)!=0)
-	{
-		ft_array_free(color);
-		return (ft_error("RGB values must be numeric.\n"));
-	}
-	if (!values_in_range(color))
-	{
-		ft_array_free(color);
-		return (ft_error("RGB values must be between 0 and 255.\n"));
-	}
-	ft_array_free(color);
-	return (0);
+	error = 0;
+	parts = prepare_rgb_parts(str, &error);
+	if (error || !parts)
+		return (error);
+	error = validate_rgb_parts(parts);
+	ft_array_free(parts);
+	return (error);
 }

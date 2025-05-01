@@ -39,7 +39,7 @@ SRCS = $(MAIN_DIR)/main.c \
 		$(INIT_GAME_SRCS) \
 		$(GAME_LOOP_SRCS) \
 		$(PARSER_SRCS) \
-		srcs/key_and_exit/exit_game.c srcs/key_and_exit/key_handler.c srcs/key_and_exit/free.c
+		srcs/key_and_exit/exit_game.c srcs/key_and_exit/key_handler.c srcs/key_and_exit/free.c srcs/key_and_exit/whitespaces.c
 
 
 OBJS = $(SRCS:.c=.o)

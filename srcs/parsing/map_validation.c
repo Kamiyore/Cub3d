@@ -6,7 +6,7 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 11:09:55 by knemcova          #+#    #+#             */
-/*   Updated: 2025/04/29 16:33:26 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/05/01 12:45:22 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,20 @@ int	validate_map(t_cub *cub)
 	if (player_cnt != 1)
 		return (ft_error("Map must contain exactly one player.\n"));
 	return (is_surrounded_by_wall(cub));
+}
+
+int	validate_config_and_map(t_cub *cub)
+{
+	t_texture	*tex;
+	t_map		*map;
+
+	tex = &cub->color;
+	map = cub->map;
+	if (!tex->no_path || !tex->so_path || !tex->we_path || !tex->ea_path)
+		return (ft_error("Missing texture path (NO, SO, WE, EA).\n"));
+	if (tex->f_color == -1 || tex->c_color == -1)
+		return (ft_error("Missing floor or ceiling color.\n"));
+	if (!map->map2d || !map->map2d[0])
+		return (ft_error("Map is missing or empty.\n"));
+	return (0);
 }

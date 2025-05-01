@@ -6,7 +6,7 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 10:01:50 by oyuhi             #+#    #+#             */
-/*   Updated: 2025/04/30 16:48:25 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/05/01 13:01:05 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,14 +91,14 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return (ft_error("Usage: ./so_long name.cub\n"));
 	init_file_data(&cub);
-	if (valid_file(argv[1]) !=0)
+	if (valid_file(argv[1]) != 0)
 	{
 		free_file_data(&cub);
 		return (ft_error("Invalid file format. Only '.cub'\n"));
 	}
-	if (parse_file(&cub, argv[1])!=0)
+	if (parse_file(&cub, argv[1]) != 0)
 		return (true);
-	if (validate_map(&cub)!=0)
+	if (validate_map(&cub) != 0)
 	{
 		free_file_data(&cub);
 		return (true);
@@ -107,4 +107,4 @@ int	main(int argc, char **argv)
 	return (false);
 }
 
-	// print_colors(&cub);
+// print_colors(&cub);

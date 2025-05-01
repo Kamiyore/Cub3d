@@ -6,7 +6,7 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 10:15:35 by oyuhi             #+#    #+#             */
-/*   Updated: 2025/04/30 15:05:45 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/05/01 12:53:51 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,7 @@ t_player			*init_the_player(t_cub *cub);
 void				load_images(t_cub *cub);
 
 /*
-**  key_and_exit_and_free
+**  key_exit_free_whitespaces
 */
 int					mlx_key_press(int keycode, void *param);
 int					mlx_key_release(int keycode, void *param);
@@ -220,7 +220,8 @@ int					exit_game(t_cub *cub);
 void				free_file_data(t_cub *cub);
 int					ft_array_len(char **array);
 void				safe_free(void **p);
-
+char				*skip_ws(char *s);
+char				*trim_ws(const char *s);
 /*
 **  mlx_game_loop
 */
@@ -257,17 +258,27 @@ void				render_wall(t_cub *cub, int ray_x, t_wall wall);
 void				safe_mlx_pixel_put(t_cub *cub, int x, int y, int color);
 
 /*
-**  Parse_map
+**  Parse_conf
 */
-int					is_valid_rgb_format(const char *str);
-int					parse_map_lines(t_map *map, char **lines);
 int					parse_configuration(t_texture *color, char *line);
-bool				is_player(char c);
 int					ft_error(char *message);
 int					parse_file(t_cub *cub, const char *filename);
+int					validate_config_and_map(t_cub *cub);
+/*
+**  Parse_rgb
+*/
+int					is_valid_rgb_format(const char *str);
 int					parse_rgb(const char *str, int *dst);
+int					values_in_range(char **color);
+int					parts_are_digits(char **color);
+/*
+**  Parse_map
+*/
+int					parse_map_lines(t_map *map, char **lines);
+bool				is_player(char c);
 int					is_surrounded_by_wall(t_cub *cub);
 int					validate_map(t_cub *cub);
-
-
+int					flood_fill(char **map, int x, int y);
+int					has_three_parts(char **color);
+int					has_exact_commas(const char *s, int n);
 #endif
