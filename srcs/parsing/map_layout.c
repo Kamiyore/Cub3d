@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_layout.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:28:59 by knemcova          #+#    #+#             */
-/*   Updated: 2025/05/01 17:47:28 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/05/01 18:19:03 by oyuhi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	is_surrounded_by_wall(t_cub *cub)
 	copy = copy_map(cub->map->map2d);
 	if (!copy)
 		return (ft_error("Memory allocation error.\n"));
-if (!flood_fill(copy, cub->map->player_x, cub->map->player_y))
+	if (!flood_fill(copy, cub->map->player_x, cub->map->player_y))
 	{
 		ft_array_free(copy);
 		return (ft_error("Player area not enclosed.\n"));

@@ -6,7 +6,7 @@
 /*   By: oyuhi <oyuhi@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 18:06:39 by oyuhi             #+#    #+#             */
-/*   Updated: 2025/05/01 17:27:28 by oyuhi            ###   ########.fr       */
+/*   Updated: 2025/05/01 18:18:14 by oyuhi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ static double	get_texture_x(t_cub *cub, t_texture_data sl)
  *
  * real_top               = theoretical wall‐slice top Y (can be <0)
  * screen_top             = clamped draw start Y on screen (≥0)
- * wall_height            = wall slice height in screen pixels
  * tex_to_screen_ratio    = texture_height / wall_height
  *
  * returns: first texture row to sample (≥0)
