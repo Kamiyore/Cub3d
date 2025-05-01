@@ -6,7 +6,7 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 10:15:35 by oyuhi             #+#    #+#             */
-/*   Updated: 2025/05/01 14:14:05 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/05/01 14:17:51 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include <fcntl.h>
-// # include <float.h>
+# include <float.h>
 # include <limits.h>
 # include <math.h>
 # include <stdbool.h>

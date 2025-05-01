@@ -6,7 +6,7 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 11:10:00 by knemcova          #+#    #+#             */
-/*   Updated: 2025/05/01 13:12:15 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/05/01 17:10:41 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ int	set_texture_path(char **dst, const char *raw)
 
 int	parse_configuration(t_texture *tex, char *line)
 {
-	line = skip_ws(line);
 	if (ft_strncmp(line, "NO", 2) == 0 && ft_isspace(line[2]))
 		return (set_texture_path(&tex->no_path, skip_ws(line + 2)));
 	if (ft_strncmp(line, "SO", 2) == 0 && ft_isspace(line[2]))

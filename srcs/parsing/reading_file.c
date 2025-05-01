@@ -6,38 +6,52 @@
 /*   By: knemcova <knemcova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 15:37:49 by knemcova          #+#    #+#             */
-/*   Updated: 2025/05/01 13:19:13 by knemcova         ###   ########.fr       */
+/*   Updated: 2025/05/01 16:35:04 by knemcova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
+static ssize_t	count_newlines(int fd, int *count_line, char *last_char)
+{
+	char	buffer[BUFFER_SIZE];
+	ssize_t	bytes_read;
+	ssize_t	i;
+
+	bytes_read = read(fd, buffer, BUFFER_SIZE);
+	while (bytes_read > 0)
+	{
+		i = 0;
+		while (i < bytes_read)
+		{
+			if (buffer[i] == '\n')
+				(*count_line)++;
+			*last_char = buffer[i];
+			i++;
+		}
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
+	}
+	return (bytes_read);
+}
+
 int	count_lines(const char *file)
 {
 	int		fd;
-	char	buffer[BUFFER_SIZE];
-	ssize_t	bytes_read;
 	int		count_line;
-	ssize_t	i;
+	char	last_char;
+	ssize_t	result;
 
 	fd = open(file, O_RDONLY);
-	count_line = 0;
-	bytes_read = 1;
-	while (!(fd < 0) && bytes_read > 0)
-	{
-		bytes_read = read(fd, buffer, sizeof(buffer));
-		i = -1;
-		while (++i < bytes_read)
-		{
-			if (count_line == INT_MAX && buffer[i] == '\n')
-				return (-2);
-			if (buffer[i] == '\n')
-				count_line++;
-		}
-	}
-	close(fd);
-	if (fd < 0 || bytes_read < 0)
+	if (fd < 0)
 		return (-1);
+	count_line = 0;
+	last_char = '\0';
+	result = count_newlines(fd, &count_line, &last_char);
+	close(fd);
+	if (result < 0)
+		return (-1);
+	if (last_char != '\0' && last_char != '\n')
+		count_line++;
 	return (count_line);
 }
 
@@ -127,17 +141,17 @@ char	**extract_map_start(t_texture *texture, char **lines)
 	return (&lines[i]);
 }
 
-// void	print_loaded_map(char **map)
-// {
-// 	int	i;
+void	print_loaded_map(char **map)
+{
+	int	i;
 
-// 	i = 0;
-// 	while (map && map[i])
-// 	{
-// 		printf("[%d]: \"%s\"\n", i, map[i]);
-// 		i++;
-// 	}
-// }
+	i = 0;
+	while (map && map[i])
+	{
+		printf("[%d]: \"%s\"\n", i, map[i]);
+		i++;
+	}
+}
 
 static bool	read_and_extract_map(t_cub *cub, const char *filename,
 		char ***lines_out, char ***map_start_out)
@@ -178,6 +192,7 @@ int	parse_file(t_cub *cub, const char *filename)
 		free_file_data(cub);
 		return (-1);
 	}
+	print_loaded_map(cub->map->map2d);
 	ft_array_free(lines);
 	return (0);
 }

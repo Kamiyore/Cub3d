@@ -5,9 +5,9 @@ WE      demo/textures/west.xpm
 
 F       150,30,10
 
-EA       demo/textures/south.xpm
+    EA       demo/textures/south.xpm
 
-SO       demo/textures/east.xpm
+    SO       demo/textures/east.xpm
 
 C 150,30,10
 NO        demo/textures/north.xpm       
